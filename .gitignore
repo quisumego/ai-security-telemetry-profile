@@ -1,0 +1,38 @@
+# Secrets. The API key lives only in the environment or a local .env.
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+
+# Test and tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Editor and OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Working artefacts that must not be committed.
+# Captured runs under runs/ ARE committed, deliberately, so every published
+# figure traces to a capture. Scratch output does not.
+scratch/
+tmp/
+*.log
+fixtures/throwaway/
