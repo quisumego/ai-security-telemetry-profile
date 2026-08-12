@@ -1,0 +1,571 @@
+# AI Security Telemetry Profile (ASTP) field register
+#
+# This is the authoritative list of fields the profile defines. It is settled at
+# M0 and frozen at M1, because every field must be emitted from the first run or
+# the ablation cannot test it later.
+#
+# Tiers are NOT set here. The `tier` key stays null until M5, when tiers are
+# assigned by applying the tiering rule in docs/methodology.md mechanically to
+# the necessity matrix. `predicted_tier` records a pre-registered expectation,
+# written before any run exists, so the ablation is a genuine test rather than a
+# confirmation. Where prediction and result disagree, the result stands and the
+# disagreement is reported.
+#
+# OpenTelemetry mappings are stated against the pinned snapshot recorded in
+# schema/otel-mapping.md. No attribute name in this file was written from
+# memory: each was read from that snapshot on the retrieval date recorded there.
+
+profile: AI Security Telemetry Profile
+profile_short: ASTP
+register_version: 0.1.0
+settled_at: M0
+settled_date: 2026-08-12
+frozen_at: M1
+field_count: 37
+
+# Mapping vocabulary used by the `otel` key on each field.
+#   full    - an OpenTelemetry GenAI attribute carries the same meaning
+#   partial - a related attribute exists but does not carry the same meaning
+#   none    - no equivalent attribute exists in the GenAI conventions
+#
+# `security_only: true` marks the fields this profile adds for detection that
+# have no counterpart in the conventions. These seven fields are the hypothesis
+# the ablation is built to test.
+
+fields:
+
+  # ---------------------------------------------------------------- session --
+  - name: session.id
+    group: session
+    type: string
+    otel: full
+    otel_attribute: gen_ai.conversation.id
+    security_only: false
+    rationale: >-
+      Correlates every event in one interaction. Without it, events cannot be
+      grouped and no multi-step attack chain can be reconstructed.
+    bears_on: [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10]
+    predicted_tier: recommended
+    tier: null
+
+  - name: session.start_time
+    group: session
+    type: string
+    format: date-time
+    otel: partial
+    otel_attribute: null
+    otel_note: >-
+      Carried by span start time in the conventions rather than by a named
+      GenAI attribute.
+    security_only: false
+    rationale: >-
+      Anchors the forensic timeline for a session. Incident response value
+      rather than detection value.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  - name: session.user_id
+    group: session
+    type: string
+    otel: full
+    otel_attribute: user.id
+    otel_note: >-
+      From the general OpenTelemetry attribute registry, not the GenAI
+      conventions.
+    security_only: false
+    rationale: >-
+      Attribution of activity to a principal. Needed to tell a compromised
+      account from a hostile one, and to establish the expected access scope.
+    bears_on: [A3, A9]
+    predicted_tier: recommended
+    tier: null
+
+  - name: session.tenant_id
+    group: session
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Records which tenant the session belongs to. Cross-tenant retrieval is
+      only detectable if the session tenant can be compared with the tenant
+      that owns each retrieved document.
+    bears_on: [A9]
+    predicted_tier: required
+    tier: null
+
+  - name: session.client_app
+    group: session
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Origin of the request. Useful for scoping an incident to one surface,
+      weak as a detection signal on its own.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  - name: session.agent_id
+    group: session
+    type: string
+    otel: full
+    otel_attribute: gen_ai.agent.id
+    security_only: false
+    rationale: >-
+      Identifies which agent handled the session. In a single-agent lab this
+      is constant, so it is expected to carry no detection signal here.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  - name: session.config_version
+    group: session
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Reproducibility marker. Already recorded in the run manifest, and
+      constant within a corpus, so no detection signal is expected.
+    bears_on: []
+    predicted_tier: not_required
+    tier: null
+
+  # ------------------------------------------------------------------- turn --
+  - name: turn.index
+    group: turn
+    type: integer
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Ordering within a session. Ordering can usually be recovered from
+      timestamps, so this is expected to be redundant.
+    bears_on: [A10]
+    predicted_tier: optional
+    tier: null
+
+  - name: turn.timestamp
+    group: turn
+    type: string
+    format: date-time
+    otel: partial
+    otel_attribute: null
+    otel_note: Carried by span timing rather than a named GenAI attribute.
+    security_only: false
+    rationale: >-
+      Rate and burst analysis, and the ordering of a staged chain. Needed to
+      distinguish sustained abuse from normal use.
+    bears_on: [A8, A10]
+    predicted_tier: recommended
+    tier: null
+
+  - name: turn.model_id
+    group: turn
+    type: string
+    otel: full
+    otel_attribute: gen_ai.request.model
+    security_only: false
+    rationale: >-
+      Which model was asked. Constant in this lab because the model is pinned,
+      so no detection signal is expected from the corpus.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  - name: turn.model_version
+    group: turn
+    type: string
+    otel: full
+    otel_attribute: gen_ai.response.model
+    security_only: false
+    rationale: >-
+      Which model answered. Pinned for the whole corpus, therefore zero
+      variance and no detection signal. Predicted to fail the ablation.
+    bears_on: []
+    predicted_tier: not_required
+    tier: null
+
+  - name: turn.tokens_in
+    group: turn
+    type: integer
+    otel: full
+    otel_attribute: gen_ai.usage.input_tokens
+    security_only: false
+    rationale: >-
+      Input volume. A primary signal for unbounded consumption and for
+      oversized injected content arriving through retrieval.
+    bears_on: [A8]
+    predicted_tier: recommended
+    tier: null
+
+  - name: turn.tokens_out
+    group: turn
+    type: integer
+    otel: full
+    otel_attribute: gen_ai.usage.output_tokens
+    security_only: false
+    rationale: >-
+      Output volume. Bulk disclosure and runaway generation both show here.
+    bears_on: [A3, A8]
+    predicted_tier: recommended
+    tier: null
+
+  - name: turn.latency
+    group: turn
+    type: number
+    otel: partial
+    otel_attribute: gen_ai.response.time_to_first_chunk
+    otel_note: >-
+      The conventions define time to first chunk, which is not the same
+      measurement as total turn latency.
+    security_only: false
+    rationale: >-
+      Resource exhaustion often shows as latency before it shows as token
+      count. Expected to be correlated with token counts and therefore
+      possibly redundant.
+    bears_on: [A8]
+    predicted_tier: optional
+    tier: null
+
+  - name: turn.finish_reason
+    group: turn
+    type: string
+    otel: full
+    otel_attribute: gen_ai.response.finish_reasons
+    security_only: false
+    rationale: >-
+      Distinguishes a completed answer from a truncated or refused one.
+      Separates attack refusal from attack failure.
+    bears_on: [A8]
+    predicted_tier: optional
+    tier: null
+
+  # ---------------------------------------------------------------- content --
+  - name: content.prompt_text
+    group: content
+    type: string
+    otel: full
+    otel_attribute: gen_ai.input.messages
+    otel_note: Content capture is opt-in in the conventions.
+    security_only: false
+    rationale: >-
+      The instruction the model received. Direct injection is visible here and
+      nowhere else.
+    bears_on: [A1, A7, A8]
+    predicted_tier: recommended
+    tier: null
+
+  - name: content.prompt_hash
+    group: content
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Integrity and correlation without retaining the text. Supports a
+      deployment that declines to store content. No detection signal expected
+      when the text itself is present.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  - name: content.response_text
+    group: content
+    type: string
+    otel: full
+    otel_attribute: gen_ai.output.messages
+    otel_note: Content capture is opt-in in the conventions.
+    security_only: false
+    rationale: >-
+      What the model said. Sensitive disclosure and system prompt leakage are
+      both observable only in the response.
+    bears_on: [A3, A5, A7]
+    predicted_tier: recommended
+    tier: null
+
+  - name: content.response_hash
+    group: content
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Integrity of the response, and detection of identical responses repeated
+      across sessions. Expected to be redundant when response text is present.
+    bears_on: [A6]
+    predicted_tier: optional
+    tier: null
+
+  - name: content.system_prompt_version
+    group: content
+    type: string
+    otel: partial
+    otel_attribute: gen_ai.system_instructions
+    otel_note: >-
+      The conventions carry the system instruction content, not a version
+      identifier for it.
+    security_only: false
+    rationale: >-
+      Identifies which system prompt was in force, so leaked fragments can be
+      matched against a known text rather than judged by eye.
+    bears_on: [A7]
+    predicted_tier: recommended
+    tier: null
+
+  - name: content.redaction_applied
+    group: content
+    type: boolean
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Records whether content was redacted before storage. Data protection and
+      evidential value rather than detection value.
+    bears_on: []
+    predicted_tier: optional
+    tier: null
+
+  # -------------------------------------------------------------- retrieval --
+  - name: retrieval.document_ids
+    group: retrieval
+    type: array
+    items: string
+    otel: partial
+    otel_attribute: gen_ai.retrieval.documents
+    otel_note: >-
+      The conventions define an unstructured documents attribute that may
+      carry identifiers. There is no dedicated identifier attribute.
+    security_only: false
+    rationale: >-
+      Which documents were retrieved. The link between a planted document and
+      a changed answer runs through this field.
+    bears_on: [A2, A6, A9]
+    predicted_tier: recommended
+    tier: null
+
+  - name: retrieval.chunk_ids
+    group: retrieval
+    type: array
+    items: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Sub-document granularity. Locates which passage carried injected
+      content. Expected to be redundant with document identifiers in a corpus
+      of small documents.
+    bears_on: [A2, A6]
+    predicted_tier: optional
+    tier: null
+
+  - name: retrieval.scores
+    group: retrieval
+    type: array
+    items: number
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Relevance scores. A poisoned document that suddenly outranks legitimate
+      ones is visible here. Weak on its own.
+    bears_on: [A6]
+    predicted_tier: optional
+    tier: null
+
+  - name: retrieval.query_text
+    group: retrieval
+    type: string
+    otel: full
+    otel_attribute: gen_ai.retrieval.query.text
+    security_only: false
+    rationale: >-
+      What was asked of the index. Shows whether retrieval was driven by the
+      user or by injected instructions.
+    bears_on: [A2, A9]
+    predicted_tier: optional
+    tier: null
+
+  - name: retrieval.source_provenance
+    group: retrieval
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Labels each retrieved chunk with where it came from and whether that
+      source is trusted. This is what separates content the organisation wrote
+      from content someone else supplied. Indirect injection is a trust
+      problem before it is a content problem, so without provenance the
+      detector has no basis to treat retrieved instructions as suspicious.
+    bears_on: [A2, A6, A10]
+    predicted_tier: required
+    tier: null
+
+  - name: retrieval.permission_context
+    group: retrieval
+    type: object
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Records the access scope under which retrieval ran and the scope each
+      returned document requires. A document returned outside the caller's
+      scope is a boundary violation, and it is only visible if both sides of
+      the comparison are logged.
+    bears_on: [A9, A3]
+    predicted_tier: required
+    tier: null
+
+  # ----------------------------------------------------------------- action --
+  - name: action.tool_name
+    group: action
+    type: string
+    otel: full
+    otel_attribute: gen_ai.tool.name
+    security_only: false
+    rationale: >-
+      Which capability was exercised. The first question in any tool misuse
+      investigation.
+    bears_on: [A4, A10]
+    predicted_tier: recommended
+    tier: null
+
+  - name: action.tool_arguments
+    group: action
+    type: object
+    otel: full
+    otel_attribute: gen_ai.tool.call.arguments
+    security_only: false
+    rationale: >-
+      What the tool was asked to do. Canary strings appear in outbound
+      arguments, which is how exfiltration is caught by string match rather
+      than by judgement.
+    bears_on: [A3, A4, A10]
+    predicted_tier: recommended
+    tier: null
+
+  - name: action.result_hash
+    group: action
+    type: string
+    otel: partial
+    otel_attribute: gen_ai.tool.call.result
+    otel_note: >-
+      The conventions carry the result content, not a hash of it.
+    security_only: false
+    rationale: >-
+      Integrity of what a tool returned, without storing the payload. Supports
+      detection of a tool whose output changed unexpectedly.
+    bears_on: [A6]
+    predicted_tier: optional
+    tier: null
+
+  - name: action.result_bytes
+    group: action
+    type: integer
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Size of the tool result. Bulk reads show as volume before they show as
+      content.
+    bears_on: [A3, A8]
+    predicted_tier: optional
+    tier: null
+
+  - name: action.permission_decision
+    group: action
+    type: string
+    enum: [allowed, denied, escalated, not_evaluated]
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Records the authorisation outcome for each tool call, including the
+      calls that were permitted. Excessive agency is an authorisation
+      question: a tool used outside its intended task looks identical to
+      legitimate use unless the decision and its basis are logged. Logging
+      only denials hides the case that matters, which is the harmful action
+      that was allowed.
+    bears_on: [A4, A10]
+    predicted_tier: required
+    tier: null
+
+  - name: action.egress_target
+    group: action
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      The destination of any outbound call, recorded as a normalised target
+      rather than buried in free-form arguments. Exfiltration is defined by
+      where data went, so the destination has to be a field a detector can
+      compare against an allow list.
+    bears_on: [A10, A3]
+    predicted_tier: required
+    tier: null
+
+  - name: action.context_document_ids
+    group: action
+    type: array
+    items: string
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Records which retrieved documents were in the model's context at the
+      moment the tool call was made. This is the field that turns "the agent
+      sent an email" into "the agent sent an email while an externally sourced
+      document was in context". Retrieval and action are logged separately by
+      every existing convention, and the causal link between them is exactly
+      what an indirect injection or a staged exfiltration chain consists of.
+      Expected to be the single most load-bearing field in the profile.
+    bears_on: [A2, A4, A6, A10]
+    predicted_tier: required
+    tier: null
+
+  # ---------------------------------------------------------------- control --
+  - name: control.canary_triggered
+    group: control
+    type: boolean
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Fires when a planted high-entropy string leaves the system. Converts
+      exfiltration from a judgement call into a string match, which is what
+      keeps the scoring path free of manual adjudication.
+    bears_on: [A3, A10]
+    predicted_tier: required
+    tier: null
+
+  - name: control.policy_version
+    group: control
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: false
+    rationale: >-
+      Which guardrail policy was in force. Constant across the corpus, so no
+      detection signal is expected. Retained for audit if it fails.
+    bears_on: []
+    predicted_tier: not_required
+    tier: null
+
+  - name: control.block_reason
+    group: control
+    type: string
+    otel: none
+    otel_attribute: null
+    security_only: true
+    rationale: >-
+      Why a guardrail fired, when one did. Separates an attack the system
+      stopped from an attack that never worked, which are different security
+      outcomes that look the same in the response text.
+    bears_on: [A1, A4, A5]
+    predicted_tier: recommended
+    tier: null

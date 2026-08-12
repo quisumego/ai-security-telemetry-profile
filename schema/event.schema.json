@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/quisumego/ai-security-telemetry-profile/blob/main/schema/event.schema.json",
+  "title": "AI Security Telemetry Profile event",
+  "description": "One event in an ASTP telemetry stream. Emitted as a single line of JSON Lines. Field names are nested by group: the register entry session.id is carried as session.id in this schema, and so on for every entry in schema/fields.yaml.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["astp_version", "event_type", "session"],
+
+  "properties": {
+    "astp_version": {
+      "type": "string",
+      "description": "Version of the field register this event was emitted against.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+
+    "event_type": {
+      "type": "string",
+      "description": "Which emission point produced this event.",
+      "enum": [
+        "session_start",
+        "session_end",
+        "turn",
+        "retrieval",
+        "tool_pre",
+        "tool_post"
+      ]
+    },
+
+    "session": {
+      "type": "object",
+      "description": "Group: session. Identity and scope of the interaction.",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "start_time": { "type": "string", "format": "date-time" },
+        "user_id": { "type": ["string", "null"] },
+        "tenant_id": { "type": ["string", "null"] },
+        "client_app": { "type": ["string", "null"] },
+        "agent_id": { "type": ["string", "null"] },
+        "config_version": { "type": ["string", "null"] }
+      }
+    },
+
+    "turn": {
+      "type": "object",
+      "description": "Group: turn. One model call.",
+      "additionalProperties": false,
+      "properties": {
+        "index": { "type": ["integer", "null"], "minimum": 0 },
+        "timestamp": { "type": ["string", "null"], "format": "date-time" },
+        "model_id": { "type": ["string", "null"] },
+        "model_version": { "type": ["string", "null"] },
+        "tokens_in": { "type": ["integer", "null"], "minimum": 0 },
+        "tokens_out": { "type": ["integer", "null"], "minimum": 0 },
+        "latency": { "type": ["number", "null"], "minimum": 0 },
+        "finish_reason": { "type": ["string", "null"] }
+      }
+    },
+
+    "content": {
+      "type": "object",
+      "description": "Group: content. Prompt and response material. Retention posture is stated in docs/methodology.md.",
+      "additionalProperties": false,
+      "properties": {
+        "prompt_text": { "type": ["string", "null"] },
+        "prompt_hash": { "type": ["string", "null"] },
+        "response_text": { "type": ["string", "null"] },
+        "response_hash": { "type": ["string", "null"] },
+        "system_prompt_version": { "type": ["string", "null"] },
+        "redaction_applied": { "type": ["boolean", "null"] }
+      }
+    },
+
+    "retrieval": {
+      "type": "object",
+      "description": "Group: retrieval. What was fetched from the index, and under what trust and access conditions.",
+      "additionalProperties": false,
+      "properties": {
+        "document_ids": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "chunk_ids": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "scores": {
+          "type": ["array", "null"],
+          "items": { "type": "number" }
+        },
+        "query_text": { "type": ["string", "null"] },
+        "source_provenance": {
+          "type": ["string", "null"],
+          "description": "Trust label for the retrieved material. Security-only field with no OpenTelemetry equivalent.",
+          "enum": [
+            "internal_authored",
+            "external_supplied",
+            "user_supplied",
+            "third_party_feed",
+            "unknown",
+            null
+          ]
+        },
+        "permission_context": {
+          "type": ["object", "null"],
+          "description": "Access scope of the caller and of the returned material. Security-only field with no OpenTelemetry equivalent.",
+          "additionalProperties": false,
+          "properties": {
+            "caller_scope": { "type": ["string", "null"] },
+            "document_scopes": {
+              "type": ["array", "null"],
+              "items": { "type": "string" }
+            },
+            "scope_match": { "type": ["boolean", "null"] }
+          }
+        }
+      }
+    },
+
+    "action": {
+      "type": "object",
+      "description": "Group: action. One tool call, and the conditions under which it was made.",
+      "additionalProperties": false,
+      "properties": {
+        "tool_name": { "type": ["string", "null"] },
+        "tool_arguments": { "type": ["object", "null"] },
+        "result_hash": { "type": ["string", "null"] },
+        "result_bytes": { "type": ["integer", "null"], "minimum": 0 },
+        "permission_decision": {
+          "type": ["string", "null"],
+          "description": "Authorisation outcome for this call, recorded for permitted calls as well as refused ones. Security-only field with no OpenTelemetry equivalent.",
+          "enum": ["allowed", "denied", "escalated", "not_evaluated", null]
+        },
+        "egress_target": {
+          "type": ["string", "null"],
+          "description": "Normalised destination of any outbound call. Security-only field with no OpenTelemetry equivalent."
+        },
+        "context_document_ids": {
+          "type": ["array", "null"],
+          "description": "Retrieved documents that were in the model's context when this call was made. Security-only field with no OpenTelemetry equivalent. This is the field that links untrusted retrieved content to the action it produced.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "control": {
+      "type": "object",
+      "description": "Group: control. Guardrail and canary state. No group in the OpenTelemetry GenAI conventions corresponds to this one.",
+      "additionalProperties": false,
+      "properties": {
+        "canary_triggered": { "type": ["boolean", "null"] },
+        "policy_version": { "type": ["string", "null"] },
+        "block_reason": { "type": ["string", "null"] }
+      }
+    }
+  },
+
+  "allOf": [
+    {
+      "if": { "properties": { "event_type": { "const": "turn" } }, "required": ["event_type"] },
+      "then": { "required": ["turn"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "retrieval" } }, "required": ["event_type"] },
+      "then": { "required": ["retrieval"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "tool_pre" } }, "required": ["event_type"] },
+      "then": { "required": ["action"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "tool_post" } }, "required": ["event_type"] },
+      "then": { "required": ["action"] }
+    }
+  ]
+}
