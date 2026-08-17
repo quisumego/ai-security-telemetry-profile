@@ -251,4 +251,4 @@ smaller model is cheaper and more injectable remains true, and it is a
 pre-commitment file. Editing pre-commitment files without cause is the habit
 this project is built to avoid.
 
-**Hours:** to be recorded by the owner.
+**Hours:** 2, against a 3 hour estimate.
