@@ -52,6 +52,13 @@ class LabSession:
     user_prompt: str | None = None
     tool_calls: int = 0
 
+    # Captured from any hook input. The completed per-turn token counts and
+    # stop reason are read back from here, because the streamed
+    # AssistantMessage carries pre-completion figures. See lab/transcript.py.
+    transcript_path: Path | None = None
+    turns_enriched: int = 0
+    turns_unenriched: int = 0
+
     # ------------------------------------------------------------- context --
     def add_context_document(self, document_id: str) -> None:
         if document_id not in self.context_document_ids:

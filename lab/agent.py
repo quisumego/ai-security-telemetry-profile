@@ -54,6 +54,7 @@ from lab.hooks import build_hooks
 from lab.permissions import PermissionPolicy
 from lab.session import LabSession, now_iso
 from lab.telemetry import Emitter, SessionIdentity, register_group_keys
+from lab.transcript import await_completed_turn
 from lab.tools import QUALIFIED_TOOL_NAMES, SERVER_NAME, build_tool_server
 
 
@@ -73,6 +74,9 @@ class SessionResult:
     model_usage: dict[str, Any] | None = None
     final_text: str = ""
     stderr_lines: list[str] = field(default_factory=list)
+    turns_enriched: int = 0
+    turns_unenriched: int = 0
+    transcript_path: str | None = None
 
     @property
     def models_seen(self) -> list[str]:
@@ -123,6 +127,30 @@ def total_input_tokens(usage: dict[str, Any] | None) -> int | None:
         int(usage.get("input_tokens", 0) or 0)
         + int(usage.get("cache_creation_input_tokens", 0) or 0)
         + int(usage.get("cache_read_input_tokens", 0) or 0)
+    )
+
+
+def _completed_figures(
+    session: LabSession, message: AssistantMessage
+) -> tuple[int | None, int | None, str | None]:
+    """Completed tokens in, tokens out and finish reason for one model call.
+
+    The streamed `AssistantMessage` arrives before the message has finished
+    generating, so its `output_tokens` and `stop_reason` are pre-completion
+    values and cannot be used. lab/transcript.py records the evidence. The
+    completed record is read from the CLI transcript instead, and a lookup that
+    misses emits null rather than a wrong number, counted on the session so the
+    miss reaches the run manifest.
+    """
+    completed = await_completed_turn(session.transcript_path, message.message_id)
+    if completed is None:
+        session.turns_unenriched += 1
+        return total_input_tokens(message.usage), None, None
+    session.turns_enriched += 1
+    return (
+        completed.input_tokens_total or total_input_tokens(message.usage),
+        completed.output_tokens,
+        completed.stop_reason,
     )
 
 
@@ -248,17 +276,14 @@ async def run_session(
         text = "".join(pending_text)
         if text.strip():
             final_text = text
+        tokens_in, tokens_out, finish_reason = _completed_figures(session, pending_message)
         session.emit_turn(
             model_id=config.model_id,
             model_version=pending_message.model,
-            tokens_in=total_input_tokens(pending_message.usage),
-            tokens_out=(
-                int(pending_message.usage.get("output_tokens", 0))
-                if pending_message.usage
-                else None
-            ),
+            tokens_in=tokens_in,
+            tokens_out=tokens_out,
             latency=round(time.monotonic() - boundary, 4),
-            finish_reason=pending_message.stop_reason,
+            finish_reason=finish_reason,
             response_text=text,
         )
         boundary = time.monotonic()
@@ -302,4 +327,7 @@ async def run_session(
         model_usage=result_message.model_usage if result_message else None,
         final_text=final_text,
         stderr_lines=stderr_sink,
+        turns_enriched=session.turns_enriched,
+        turns_unenriched=session.turns_unenriched,
+        transcript_path=str(session.transcript_path) if session.transcript_path else None,
     )

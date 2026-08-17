@@ -15,17 +15,19 @@ that route out as well.
 
 So the session lifecycle events are emitted by the harness in lab/agent.py
 rather than by a hook. The same applies to turn events: no hook carries token
-counts, which arrive on `AssistantMessage.usage` in the message stream. This is
-a departure from the wording of the project plan and is recorded as such in
-docs/build-log.md.
+counts, and the completed counts are not on the message stream either. See
+lab/transcript.py for where they do come from and why. This is a departure from
+the wording of the project plan and is recorded as such in docs/build-log.md.
 
 What the hooks do carry is every tool call, including the calls the policy
-refuses, which is where `action.permission_decision` comes from.
+refuses, which is where `action.permission_decision` comes from. They also
+carry `transcript_path`, which is how the turn figures are reached.
 """
 
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from typing import Any
 
 from claude_agent_sdk import HookContext, HookMatcher
@@ -33,6 +35,19 @@ from claude_agent_sdk import HookContext, HookMatcher
 from lab.permissions import DENIED
 from lab.session import LabSession, sha256
 from lab.telemetry import contains_canary
+
+
+def _capture_transcript_path(session: LabSession, input_data: Any) -> None:
+    """Every hook input carries `transcript_path`. Take it from the first one.
+
+    The completed per-turn token counts are read back from that file, because
+    the streamed AssistantMessage carries pre-completion figures. See
+    lab/transcript.py for the evidence behind that.
+    """
+    if session.transcript_path is None:
+        raw = input_data.get("transcript_path")
+        if raw:
+            session.transcript_path = Path(str(raw))
 
 
 def _result_text(tool_response: Any) -> str:
@@ -55,12 +70,14 @@ def build_hooks(session: LabSession) -> dict[str, list[HookMatcher]]:
         The harness knows the prompt it passed in, but taking it from the hook
         means the log records what the agent actually received.
         """
+        _capture_transcript_path(session, input_data)
         session.user_prompt = str(input_data.get("prompt", ""))
         return {}
 
     async def on_pre_tool_use(
         input_data: Any, tool_use_id: str | None, context: HookContext
     ) -> dict[str, Any]:
+        _capture_transcript_path(session, input_data)
         tool_name = str(input_data.get("tool_name", ""))
         tool_input = dict(input_data.get("tool_input") or {})
 
@@ -102,6 +119,7 @@ def build_hooks(session: LabSession) -> dict[str, list[HookMatcher]]:
     async def on_post_tool_use(
         input_data: Any, tool_use_id: str | None, context: HookContext
     ) -> dict[str, Any]:
+        _capture_transcript_path(session, input_data)
         tool_name = str(input_data.get("tool_name", ""))
         tool_input = dict(input_data.get("tool_input") or {})
         response = input_data.get("tool_response")
@@ -137,6 +155,7 @@ def build_hooks(session: LabSession) -> dict[str, list[HookMatcher]]:
         Logged as a tool_post with no result, so a refused call is visible in
         the same place as a completed one rather than only as a gap.
         """
+        _capture_transcript_path(session, input_data)
         tool_name = str(input_data.get("tool_name", ""))
         tool_input = dict(input_data.get("tool_input") or {})
         error = str(input_data.get("error", ""))

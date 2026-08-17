@@ -68,10 +68,30 @@ ablation at M5 tests that claim and may refute it.
 | `turn.timestamp` | partial | none | Carried by span timing, not a named attribute |
 | `turn.model_id` | full | `gen_ai.request.model` | |
 | `turn.model_version` | full | `gen_ai.response.model` | |
-| `turn.tokens_in` | full | `gen_ai.usage.input_tokens` | |
+| `turn.tokens_in` | full | `gen_ai.usage.input_tokens` | **Measured wider than the attribute name suggests, see below** |
 | `turn.tokens_out` | full | `gen_ai.usage.output_tokens` | |
 | `turn.latency` | partial | `gen_ai.response.time_to_first_chunk` | Time to first chunk is not total turn latency |
 | `turn.finish_reason` | full | `gen_ai.response.finish_reasons` | |
+
+### What `turn.tokens_in` counts, and why it is wider than the attribute
+
+Recorded at M1, on 17 August 2026, before the first scored capture.
+
+The lab emits `turn.tokens_in` as the sum of the uncached, cache creation and
+cache read input counts, not as the provider's own `input_tokens` figure alone.
+
+The reason is prompt caching. The register says this field measures input
+volume and names oversized injected content and unbounded consumption as what
+it is for. Under caching, the provider's `input_tokens` counts only the
+uncached remainder of the request: the M1 authentication probe reported
+`input_tokens` of 10 against 4,601 cache creation tokens for the same call.
+Recording 10 would leave the field blind to exactly the growth it exists to
+detect, and the A8 measurement would be meaningless.
+
+The mapping is still stated as `full`, because the field carries the same
+quantity the attribute names, total tokens sent into the model call. Anyone
+comparing an ASTP capture against a provider's own billing figures should
+expect this field to read higher, and the difference is the cached portion.
 
 ## Content group
 

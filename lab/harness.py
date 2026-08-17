@@ -153,6 +153,12 @@ def build_manifest(
             "tool_calls": result.tool_calls,
             "subtype": result.subtype,
             "is_error": result.is_error,
+            # Turn figures are read back from the CLI transcript, because
+            # the streamed message carries pre-completion values. A rise in
+            # turns_unenriched means that lookup stopped working, which is
+            # why it is recorded rather than left implicit.
+            "turns_enriched": result.turns_enriched,
+            "turns_unenriched": result.turns_unenriched,
         },
         "tokens": result.token_totals(),
         "usage_raw": result.usage,
