@@ -173,18 +173,40 @@ pre-commitment hash corrected, and the reason documented.
 does not change the substance of Q1: the model stays pinned and token counts
 are still recorded per run.
 
-Since 15 June 2026, Claude subscription plans carry a separate monthly Agent
-SDK credit, its amount set by the plan. It covers Agent SDK usage in
-your own Python or TypeScript projects, which is what M1 builds under plan
-decision Q2.
+Agent SDK usage, and `claude -p`, **draw directly from the subscription's normal
+usage limits**. The owner's plan was confirmed the same day.
 
-The saving is real but secondary. This project's whole model spend is roughly
-$8 to $15 across M2 and M3, so any tier covers it. The better reason is the
-stop behaviour: **if the credit is exhausted and usage credits are disabled,
-requests stop rather than spending money.** That is a mechanically enforced
-ceiling instead of an alert that arrives after the fact, which is the same
-discipline applied everywhere else in this project. It also replaces the
-outstanding M0 item, which was to configure a spend alert.
+This project's whole model consumption is roughly $8 to $15 equivalent across
+M2 and M3, comfortably inside that allowance, so no API credit purchase is
+needed. That was the point of the amendment and it stands.
+
+#### Correction, same day
+
+This entry was first written on the basis that a **separate monthly Agent SDK
+credit** existed, claimed once and refreshing monthly.
+**That was wrong.**
+
+Anthropic announced such a credit to begin on 15 June 2026 and **paused it on
+that date**. The help centre article describing the scheme carries an update
+notice at the top, article last updated 16 June 2026, saying the changes are
+paused and that Agent SDK usage still draws from subscription usage limits. The
+body of the article still describes the withdrawn scheme, which is how the
+error was made: the banner was missed and the body read as current.
+
+The error surfaced when the owner went looking for the claim button and could
+not find one. Recorded here rather than quietly edited, because a project whose
+method is built on verified sources and dated retrieval should show its
+corrections as readily as its findings. It is also a fair illustration of why
+this project records retrieval dates at all: the article was accurate when
+written and stale within a day.
+
+**Consequence for the method.** Because there is no separate pool, capture runs
+draw on the same allowance as day-to-day interactive use. A 100-session capture
+can therefore exhaust a usage window and stop part-way. **The M2 runner must be
+resumable**, recording which trials completed so an interrupted capture
+continues rather than restarts. That is now a checklist item. No money is at
+risk either way, since the subscription is flat rate; the cost of overrun is
+disruption and time.
 
 Verified against live documentation on 17 August 2026 **before** the amendment
 was recorded, because an amendment that broke model pinning would be worse than
@@ -207,11 +229,16 @@ Two caveats came out of those checks and are carried into M1 as tasks:
   rests on without any visible failure.
 
 One thing remains unverified and is the first task of M1: **the exact mechanism
-for authenticating the Agent SDK against the subscription credit.** The
-published quickstart documents an API key only, and the help centre article
-describing the credit gives no setup steps. If it does not work, the fallback
-is purchased API credits with a spend limit and auto-reload off, which
-costs nothing but the saving.
+for authenticating the Agent SDK against the subscription.** The published
+quickstart documents an API key only.
+
+This matters more than it first appeared. The Console API account was read on
+17 August 2026 as **holding no credit, with auto-reload off**. An empty
+account means that if the SDK falls
+through to API-key authentication it will not merely bill differently, it will
+**fail outright**. The subscription path is required rather than preferred. If
+it cannot be made to work, the fallback is to buy a small amount of credit
+for the API account.
 
 On the terms of use, since the two sources read as contradictory at first
 glance: the Agent SDK documentation prohibits third-party developers offering
