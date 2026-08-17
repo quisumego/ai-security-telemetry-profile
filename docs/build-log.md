@@ -156,4 +156,72 @@ Nothing else changed:
 The trailer-bearing commits were then made unreachable, so the published
 history contains one authorship and one only.
 
+---
+
+## Interim, 17 August 2026
+
+No milestone work. Two decisions taken, both recorded before M1 starts.
+
+### 1. Commit history rewritten
+
+Covered above. Co-authorship trailers removed from the four M0 commits, the
+pre-commitment hash corrected, and the reason documented.
+
+### 2. Funding amended: subscription Agent SDK credit, not purchased API credits
+
+**Supersedes plan decision Q1 as far as the billing path is concerned.** It
+does not change the substance of Q1: the model stays pinned and token counts
+are still recorded per run.
+
+Since 15 June 2026, Claude subscription plans carry a separate monthly Agent
+SDK credit, its amount set by the plan. It covers Agent SDK usage in
+your own Python or TypeScript projects, which is what M1 builds under plan
+decision Q2.
+
+The saving is real but secondary. This project's whole model spend is roughly
+$8 to $15 across M2 and M3, so any tier covers it. The better reason is the
+stop behaviour: **if the credit is exhausted and usage credits are disabled,
+requests stop rather than spending money.** That is a mechanically enforced
+ceiling instead of an alert that arrives after the fact, which is the same
+discipline applied everywhere else in this project. It also replaces the
+outstanding M0 item, which was to configure a spend alert.
+
+Verified against live documentation on 17 August 2026 **before** the amendment
+was recorded, because an amendment that broke model pinning would be worse than
+no amendment:
+
+| Check | Result |
+|---|---|
+| Can the pinned model be set? | Yes. `ClaudeAgentOptions` takes a `model` option accepting full model IDs, so `claude-haiku-4-5` pins as required |
+| Is cost reported per run? | Yes. `ResultMessage` carries `total_cost_usd` |
+
+Two caveats came out of those checks and are carried into M1 as tasks:
+
+- `total_cost_usd` is documented as an **estimate** with stated accuracy
+  caveats, so **token counts remain the primary record** in the run manifest.
+  The exact token-count field names were not confirmed and must be read from
+  the Agent SDK cost-tracking documentation at M1.
+- The SDK exposes a `fallback_model` option. **It must not be set.** A fallback
+  firing part-way through a capture would silently run some sessions on a
+  different model, which would break the pinned-model guarantee the corpus
+  rests on without any visible failure.
+
+One thing remains unverified and is the first task of M1: **the exact mechanism
+for authenticating the Agent SDK against the subscription credit.** The
+published quickstart documents an API key only, and the help centre article
+describing the credit gives no setup steps. If it does not work, the fallback
+is purchased API credits with a spend limit and auto-reload off, which
+costs nothing but the saving.
+
+On the terms of use, since the two sources read as contradictory at first
+glance: the Agent SDK documentation prohibits third-party developers offering
+claude.ai login **for their products**, meaning running other people's traffic
+through one subscription. Using your own subscription for your own personal
+project is what the help centre article describes. The two are consistent.
+
+`docs/methodology.md` was deliberately **not** edited. Its statement that a
+smaller model is cheaper and more injectable remains true, and it is a
+pre-commitment file. Editing pre-commitment files without cause is the habit
+this project is built to avoid.
+
 **Hours:** to be recorded by the owner.

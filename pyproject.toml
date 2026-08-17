@@ -13,8 +13,11 @@ dependencies = [
 
 [project.optional-dependencies]
 # Needed from M1 onward, when the lab agent starts making model calls.
+# Plan decision Q2: the lab agent runs on the Claude Agent SDK. Funded by the
+# subscription Agent SDK credit, not purchased API credits, amended 17 August
+# 2026. Version bound is left open until M1 installs and verifies it.
 lab = [
-    "anthropic>=0.40",
+    "claude-agent-sdk",
     "python-dotenv>=1.0",
 ]
 dev = [
