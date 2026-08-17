@@ -159,7 +159,16 @@ def build_options(
     session: LabSession,
     server: Any,
     stderr_sink: list[str],
+    thinking: str | None = None,
 ) -> ClaudeAgentOptions:
+    """Build the SDK options for one session.
+
+    `thinking` overrides `config.thinking` for this run only. It exists so the
+    setting can be compared against itself under otherwise identical
+    conditions, which is the only honest way to decide it. A scored capture
+    passes None and takes the configured value, and the manifest records which
+    value was in force.
+    """
     if config.fallback_model is not None:
         raise ValueError(
             "fallback_model is set. It must stay null: a fallback firing "
@@ -167,8 +176,9 @@ def build_options(
             "break the pinned-model guarantee without any visible failure."
         )
 
-    thinking = (
-        ThinkingConfigDisabled(type="disabled") if config.thinking == "disabled" else None
+    setting = thinking if thinking is not None else config.thinking
+    thinking_config = (
+        ThinkingConfigDisabled(type="disabled") if setting == "disabled" else None
     )
 
     options = ClaudeAgentOptions(
@@ -183,17 +193,29 @@ def build_options(
         hooks=build_hooks(session),
         stderr=stderr_sink.append,
     )
-    if thinking is not None:
-        options.thinking = thinking
+    if thinking_config is not None:
+        options.thinking = thinking_config
     return options
 
 
-def build_session(config: LabConfig, run_dir: Path, session_id: str) -> LabSession:
-    """Assemble the session state, the index, the policy and the emitter."""
+def build_session(
+    config: LabConfig,
+    run_dir: Path,
+    session_id: str,
+    overlay_dirs: tuple[Path, ...] = (),
+) -> LabSession:
+    """Assemble the session state, the index, the policy and the emitter.
+
+    `overlay_dirs` adds documents to this session's index without touching
+    lab/corpus/, which stays the benign estate. M2 uses it to put scenario
+    documents in front of the agent, so a poisoned document never enters the
+    corpus the M3 benign sessions read.
+    """
     index = CorpusIndex.build(
         CORPUS_DIR,
         chunk_words=config.chunk_words,
         overlap_words=config.chunk_overlap_words,
+        overlay_dirs=overlay_dirs,
     )
     claims = {str(claim["reference"]): claim for claim in load_claims()}
     canaries = tuple(load_canary_values())
@@ -247,16 +269,18 @@ async def run_session(
     run_dir: Path,
     config: LabConfig | None = None,
     session_id: str | None = None,
+    overlay_dirs: tuple[Path, ...] = (),
+    thinking: str | None = None,
 ) -> SessionResult:
     """Run one session end to end and return what it produced."""
     config = config or load_config()
     session_id = session_id or f"s-{uuid.uuid4().hex[:12]}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    session = build_session(config, run_dir, session_id)
+    session = build_session(config, run_dir, session_id, overlay_dirs=overlay_dirs)
     stderr_sink: list[str] = []
     server = build_tool_server(session)
-    options = build_options(config, session, server, stderr_sink)
+    options = build_options(config, session, server, stderr_sink, thinking=thinking)
 
     session.user_prompt = prompt
     session.emit_session_start()
