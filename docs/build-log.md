@@ -128,10 +128,32 @@ are the deliverable. Three tests are worth naming:
 
 | Artefact | Commit |
 |---|---|
-| Pre-commitment (`docs/methodology.md`) | `ad13606b3d71e718271b9767d6222afec53782dd` |
+| Pre-commitment (`docs/methodology.md`) | `c8b28dd00be4be5fcdb7ee2d6751a60aec8eda9e` |
 
 The pre-commitment was committed on its own, before the schema, before any
 detector and before any capture. The ordering is checkable with
 `git log --oneline --reverse`.
+
+### History rewritten, 17 August 2026
+
+The four M0 commits were rewritten to remove co-authorship trailers. The work
+is the owner's alone and the repository carries no attribution to a tool.
+
+Rewriting changes commit hashes, so **the hash in the table above is the
+post-rewrite one**. Its previous value was `ad13606b`. Anyone comparing this
+file against an earlier copy will see the difference, so it is recorded here
+rather than left to look like a discrepancy.
+
+Nothing else changed:
+
+- File contents at every commit are byte-identical to before the rewrite,
+  verified with `git diff` against a backup tag taken beforehand.
+- Commit order is unchanged.
+- No capture existed on either side of the rewrite, so the claim the
+  pre-commitment hash exists to support, that the rules predate every scored
+  run, is unaffected. The rules remain the second commit in the repository.
+
+The trailer-bearing commits were then made unreachable, so the published
+history contains one authorship and one only.
 
 **Hours:** to be recorded by the owner.
