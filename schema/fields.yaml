@@ -21,7 +21,13 @@ register_version: 0.1.0
 settled_at: M0
 settled_date: 2026-08-12
 frozen_at: M1
+frozen_date: 2026-08-17
 field_count: 37
+
+# FROZEN. Every field below was emitted, with a value, in the M1 captures under
+# runs/, and tests/test_captures.py holds that. Adding or renaming a field from
+# here means re-running every capture, because a field absent from a capture
+# cannot be ablated against it at M5.
 
 # Mapping vocabulary used by the `otel` key on each field.
 #   full    - an OpenTelemetry GenAI attribute carries the same meaning

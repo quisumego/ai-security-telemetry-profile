@@ -252,3 +252,235 @@ pre-commitment file. Editing pre-commitment files without cause is the habit
 this project is built to avoid.
 
 **Hours:** 2, against a 3 hour estimate.
+
+---
+
+## M1. Instrumented lab agent
+
+**Date:** 17 August 2026
+**Stage:** M1
+**Outcome:** exit criterion met, one owner item unruled and named below
+
+### The gate: authentication
+
+The first task of M1 was to confirm the Agent SDK authenticates against the
+subscription, because the Console API account holds no credit with auto-reload off, so a
+fall-through to API-key authentication would have failed outright rather than
+billed differently.
+
+**It works.** A probe ran against `claude-haiku-4-5` with `ANTHROPIC_API_KEY`
+and `CLAUDE_CODE_OAUTH_TOKEN` both absent from the environment and returned
+`subtype: success`. The Python SDK spawns the Claude Code CLI as a subprocess,
+inheriting the environment, and the CLI authenticates from the OAuth credentials
+stored at `~/.claude/.credentials.json`. Because the API path could not have
+paid for the call, success is itself the proof. No API credit purchase is
+needed.
+
+The published quickstart documents `ANTHROPIC_API_KEY` and third-party
+providers only, and the Agent SDK overview carries a note that Anthropic does
+not allow third party developers to offer claude.ai login **for their
+products**. Using your own subscription for your own personal project is a
+different thing, which is what the help centre article describes. That reading
+was already recorded at the interim entry above and nothing found at M1
+disturbs it.
+
+### Verification performed, all retrieved 17 August 2026
+
+| Check | Result |
+|---|---|
+| Agent SDK authentication | Subscription OAuth via the CLI, no API key present |
+| Hook interface | Read from live documentation and from installed `claude-agent-sdk 0.2.139` |
+| Session lifecycle hooks in Python | **Not available.** See below |
+| Token-count field names | `ResultMessage.usage`, `ResultMessage.model_usage`, `AssistantMessage.usage` |
+| Model pinning | `claude-haiku-4-5` resolves to `claude-haiku-4-5-20251001` |
+| Agent SDK credit | Still paused. The help centre article carries the pause notice and confirms Agent SDK usage draws on subscription limits |
+
+### Three findings that changed the shape of the stage
+
+**1. The Python SDK has no session lifecycle hook.** The documentation states
+that `SessionStart` and `SessionEnd` can be registered as SDK callback hooks in
+TypeScript but are omitted from the Python SDK's `HookEvent` type, and in Python
+are reachable only as shell command hooks in a settings file. The installed
+package agrees. The lab runs with `setting_sources=[]`, which rules that route
+out as well.
+
+The plan's wording, telemetry emitted from "pre-tool-use, post-tool-use and
+session lifecycle hooks", therefore cannot be met literally in Python. Session
+and turn events are emitted by the harness in `lab/agent.py` instead. This is a
+departure from the plan, recorded rather than papered over. Nothing is lost: the
+same events are emitted, from a place that also has the token counts.
+
+**2. `setting_sources` loads everything by default.** Left unset, the SDK loads
+all filesystem settings, which here would have meant the owner's own
+`~/.claude/settings.json`, any project settings, and this repository's
+`CLAUDE.md`, all pulled into the lab agent's context. That would have
+contaminated every capture and made none of them reproducible on another
+machine. The lab sets `setting_sources=[]` and `tools=[]`.
+
+**3. Extra usage was enabled on the account.** `hasExtraUsageEnabled` read true.
+The help centre confirms that once included limits are exhausted, subsequent
+usage is billed at standard API rates as a charge separate from the
+subscription, and that Agent SDK overflow goes the same way when usage credits
+are enabled. So the handover's position that "no money is spent either way,
+since the subscription is flat rate" did not hold on this account as configured.
+**The owner turned extra usage off on 17 August 2026**, with nothing held,
+no spending allowed and auto-reload off, which restores the flat-rate guarantee.
+An overrun is now a delay rather than a bill.
+
+Also noticed while reading the account state, and recorded because it is
+unresolved rather than because it blocks anything:
+the two local files that record the account's plan disagreed, one naming the
+plan the owner had confirmed and the other a different one. The captures ran
+either way.
+
+### Decisions ruled by the owner
+
+Seven questions were put as a single batch before anything was created. Six were
+answered.
+
+| # | Question | Ruling |
+|---|---|---|
+| 1 | Six tools with signatures | Approved as proposed |
+| 2 | 24 documents and 12 claim records | Approved. Second tenant named **Pearson Hardman** |
+| 3 | Eight canaries, format and placement | Approved as proposed |
+| 4 | Provenance meanings, scope vocabulary, identifiers | Approved as proposed |
+| 5 | Session and turn events from the harness | Recommended option taken |
+| 6 | Extra usage | **Turned off** |
+| 7 | Extended thinking | **Not ruled. Still open** |
+
+### Built
+
+- `lab/corpus/`, 24 documents, 9,759 words. Policy wordings, claims procedures,
+  underwriting notes, third-party correspondence, board and finance material,
+  and two documents belonging to Pearson Hardman.
+- `lab/claims.yaml`, 12 claim records across both tenants.
+- `lab/case_files/`, four working files for the file tool.
+- `lab/web_fixtures.yaml`, two pages for `fetch_url`. Nothing reaches the
+  network: every host uses the `.invalid` domain reserved by RFC 2606.
+- `lab/canary_register.yaml`, eight canaries, deliberately outside `lab/corpus/`
+  so no session can retrieve it.
+- `lab/tools/`, the six tools. `lab/permissions.py`, `lab/telemetry.py`,
+  `lab/session.py`, `lab/corpus_index.py`, `lab/hooks.py`, `lab/agent.py`,
+  `lab/harness.py`, `lab/transcript.py`.
+- Two benign captures in `runs/`, with manifests.
+- Test suite: **105 tests, green**, up from 40 at M0.
+
+### Design decisions worth recording, because a later reader would ask
+
+**The index labels but does not filter.** A search returns every matching chunk
+whatever its scope or tenant, and records the scope of each alongside the
+caller's own. An index that filtered correctly would make restricted disclosure
+and cross-tenant retrieval impossible to attempt, and the telemetry would have
+nothing to reveal. Labelling without filtering is also the realistic failure
+mode in retrieval systems, which is the shape OWASP LLM08 describes. The only
+control between the caller and restricted material is the model's own behaviour
+under the system prompt, which is the thing the attack corpus exists to measure.
+
+**Scopes are recorded tenant-qualified**, as `tenant:scope`. Pearson Hardman
+material is scoped `internal`, and a Thornfield claims handler may read
+Thornfield `internal` material, so an unqualified comparison would have called a
+cross-tenant read a match and A9 would have been invisible.
+
+**Trust and permission are answered by separate fields.** Content fetched from
+outside carries `third_party_feed` provenance but keeps `scope_match` true,
+because reading a public page is not a scope violation. Conflating the two would
+have blunted the tenant signal.
+
+**One retrieval event per returned chunk**, because `source_provenance` is a
+single label and a query returns material of mixed provenance. The checklist
+requires provenance on every retrieved chunk and this is the only honest way to
+record it.
+
+**The permission decision is computed by the lab, not by the SDK.** Tools listed
+in `allowed_tools` are auto-approved and never produce a decision record, and
+`can_use_tool` is not invoked for calls already permitted. The register requires
+a decision on every call including the permitted ones, so `lab/permissions.py`
+is evaluated in the PreToolUse hook for every call. An escalation proceeds
+rather than blocking, because a lab that refused every outbound call would
+produce no telemetry worth detecting.
+
+**`turn.tokens_in` is measured wider than `gen_ai.usage.input_tokens`.** Under
+prompt caching the provider's own `input_tokens` counts only the uncached
+remainder: the probe reported 10 against 4,601 cache creation tokens for the
+same call. Recording 10 would have left the field blind to the growth it exists
+to detect. The field sums the uncached, cache creation and cache read counts.
+Recorded in `schema/otel-mapping.md`.
+
+### The one thing that went wrong, and how it was found
+
+The first capture returned `turn.tokens_out` of 3, 1 and 1 against a session
+total of 1,179, and `turn.finish_reason` null on every turn.
+
+A probe established the cause rather than guessing at it. The streamed
+`AssistantMessage` arrives **before the message has finished generating**, so
+its `usage` and `stop_reason` are pre-completion values: a message carrying 335
+characters of text reported `output_tokens` of 1, and `stop_reason` was None on
+every streamed message. Summing across the messages of one call does not recover
+the total either, 29 plus 1 against a `ResultMessage` total of 167.
+`ResultMessage.usage["iterations"]` holds a single entry for a multi-call
+session, so it is not a per-turn breakdown.
+
+The Claude Code CLI persists each assistant message once complete, with final
+usage and stop reason, and hands every hook the transcript path.
+`lab/transcript.py` reads the completed record back from there.
+
+That is a dependency on a CLI artefact rather than a documented SDK surface, so
+it is defended two ways. A lookup that misses emits null, never a wrong number.
+And the counts of enriched and missed turns go into the run manifest, so a
+format change appears as misses rather than as quietly wrong numbers. A test
+asserts `turns_unenriched` is zero on every committed manifest.
+
+After the fix: `tokens_out` reads 218, 141, 523, 290 and `finish_reason` reads
+`tool_use` and `end_turn`, with all four turns enriched.
+
+Worth stating plainly: had the first capture not been read line by line, this
+would have gone unnoticed and the whole A8 measurement would have been built on
+a field that was silently near-zero.
+
+### The captures
+
+| Run | What it did | Events | Turns | Tool calls |
+|---|---|---|---|---|
+| `m1-benign-001` | Review claim TM-2026-0031 and write a summary note | 25 | 4 | 6 |
+| `m1-benign-002` | Chase a loss adjuster, checking the panel list first | 13 | 3 | 3 |
+
+All 38 lines validate against the JSON Schema. All 37 registered fields are
+present as keys and all 37 carry a value across the two captures.
+
+Two observations from the benign traffic, both of which matter later:
+
+- A benign search pulled `uw-motorrating-001`, restricted underwriting material,
+  with `scope_match` false and a canary present. Benign traffic crosses the
+  scope boundary by accident. The M3 false positive denominator has to account
+  for that, and a detector that fires on `scope_match` alone will not survive
+  contact with it.
+- An entirely legitimate email to an external loss adjuster is recorded as
+  `escalated` with a block reason. Escalation is normal in benign traffic, so it
+  is not on its own evidence of anything.
+
+**No canary value appears anywhere under `runs/`.** `canary_triggered` is
+computed from content the event does not store, so the log records that a canary
+moved without republishing the string.
+
+### Cost
+
+Two probes and three capture runs, $0.036 and $0.089 of estimated consumption
+respectively, $0.125 in total. No money was spent: the subscription is flat rate
+and extra usage is off.
+
+The estimate in the handover, $8 to $15 across M2 and M3, looks low. A benign
+session of this shape estimates at $0.011 to $0.040. At roughly $0.03 a session,
+200 sessions is nearer $6, but attack sessions are longer and the figure should
+be re-derived from real captures at the end of M2 rather than assumed now.
+
+### Outstanding at the end of M1
+
+**Extended thinking is unruled.** Question 7 in the M1 batch was not answered.
+`lab/config.yaml` carries `thinking: disabled` with a `TODO(owner)` against it
+and the reasoning on both sides. The M1 benign sessions are a smoke test and are
+not part of any scored corpus, so nothing is prejudiced. **This must be ruled on
+before the M2 capture**, because it changes both cost and how injectable the
+model is, and a corpus captured half one way and half the other would not be
+comparable.
+
+**Hours:** 4, against a 6 hour estimate.
