@@ -129,14 +129,24 @@ Held-out and developed-against results are reported separately, and the gap
 between them is stated whatever it shows. A large gap means the detectors did
 not generalise, and that is a finding to publish rather than a problem to hide.
 
-> **To be filled at M2:** the two held-out scenario identifiers, the date the
-> choice was committed, and the commit hash of that choice. This placeholder is
-> deliberately left open. It must be completed before any detector is written,
-> and it must not be edited afterwards.
+> **Committed at M2, 21 September 2026.** The held-out scenarios are **A5,
+> improper output handling** and **A9, cross-tenant retrieval**. Ruled by the
+> owner. This commit is made before any scenario file exists in
+> `attacks/scenarios/`, so the ordering in `git log` shows the commitment
+> preceded the corpus. The commit hash is recorded in `docs/build-log.md`
+> against the M2 entry. This paragraph is not edited afterwards.
+>
+> Reason for the pair, as ruled: A9 is structurally close to A3, sensitive
+> information disclosure, so it tests whether a detector written against A3
+> generalises across a tenant boundary. A5 is unlike every other class, so it
+> tests whether the detector set covers an output sink it was never shown.
 
-The plan names A5 (improper output handling) and A9 (cross-tenant retrieval) as
-holdout **candidates**. That is a candidacy, not the commitment. The commitment
-is made at M2 and recorded above.
+The plan named A5 and A9 as holdout **candidates**. The commitment above
+confirms that candidacy. It was a choice, not a default: the alternative
+considered was to hold out A10, the staged exfiltration chain, as the harder
+test of generalisation, and it was rejected because A10 is the scenario the
+egress and context fields were designed around and the detectors need to be
+developed against it.
 
 ---
 
