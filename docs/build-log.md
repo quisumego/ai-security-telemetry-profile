@@ -520,3 +520,16 @@ bills.
 transcript file, which is a CLI artefact rather than a documented surface, so a
 smoke session is run before any scored capture to confirm `turns_unenriched`
 is still zero under the new CLI. Recorded below.
+
+### Smoke session under CLI 2.1.278
+
+`runs/m2-smoke-001`, one benign claim lookup, 7 events, 2 turns, 1 tool call.
+Both turns enriched from the transcript, `turns_unenriched` zero, so
+`lab/transcript.py` still reads the CLI's transcript format correctly. Every
+line validates. `model.resolved` carries the same two keys as the M1 manifests,
+the alias and the dated identifier, both `claude-haiku-4-5`. No canary value
+under `runs/`. Estimated consumption $0.034, dominated by cache creation on a
+cold call, the same profile as `m1-benign-001`.
+
+This run is a smoke test, is not part of any scored corpus, and is not counted
+in any rate.
