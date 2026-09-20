@@ -271,15 +271,21 @@ async def run_session(
     session_id: str | None = None,
     overlay_dirs: tuple[Path, ...] = (),
     thinking: str | None = None,
+    extra_pages: dict[str, str] | None = None,
 ) -> SessionResult:
-    """Run one session end to end and return what it produced."""
+    """Run one session end to end and return what it produced.
+
+    `overlay_dirs` and `extra_pages` are the two ways a scenario puts material
+    in front of the agent without touching the frozen benign fixtures: extra
+    documents in the index, and extra pages behind `fetch_url`.
+    """
     config = config or load_config()
     session_id = session_id or f"s-{uuid.uuid4().hex[:12]}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
     session = build_session(config, run_dir, session_id, overlay_dirs=overlay_dirs)
     stderr_sink: list[str] = []
-    server = build_tool_server(session)
+    server = build_tool_server(session, extra_pages=extra_pages)
     options = build_options(config, session, server, stderr_sink, thinking=thinking)
 
     session.user_prompt = prompt

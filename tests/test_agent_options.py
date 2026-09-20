@@ -5,13 +5,25 @@ otherwise identical conditions, which is what M2 needs to put scenario
 documents in front of the agent without touching lab/corpus/.
 """
 
+import asyncio
+import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from lab.agent import build_options, build_session
 from lab.config import load_config
-from lab.tools import QUALIFIED_TOOL_NAMES, SERVER_NAME
+from lab.tools import (
+    QUALIFIED_TOOL_NAMES,
+    SERVER_NAME,
+    WEB_FIXTURES_PATH,
+    build_tool_server,
+    load_web_fixtures,
+)
+
+BASE_PAGE = "https://docs.thornfieldmutual.invalid/panel-suppliers"
+OVERLAY_PAGE = "https://portal.zz-test-overlay.invalid/page"
 
 FIXTURE = """---
 id: zz-test-overlay-001
@@ -126,3 +138,68 @@ def test_building_options_with_a_fallback_model_raises(config, tmp_path, monkeyp
             build_options(broken, session, {"instance": None}, [])
     finally:
         session.emitter.close()
+
+
+# -------------------------------------------------------------- extra pages --
+
+
+async def _call(server: Any, name: str, arguments: dict[str, Any]) -> str:
+    """Invoke one in-process tool the way the SDK would, and return its text."""
+    from mcp.types import CallToolRequest, CallToolRequestParams
+
+    handler = server["instance"].request_handlers[CallToolRequest]
+    request = CallToolRequest(
+        method="tools/call", params=CallToolRequestParams(name=name, arguments=arguments)
+    )
+    result = await handler(request)
+    return result.root.content[0].text
+
+
+def test_without_extra_pages_fetch_url_serves_the_base_fixtures_only(config, tmp_path):
+    session = build_session(config, tmp_path / "run", "s-test")
+    try:
+        server = build_tool_server(session)
+        base = asyncio.run(_call(server, "fetch_url", {"url": BASE_PAGE}))
+        unlisted = asyncio.run(_call(server, "fetch_url", {"url": OVERLAY_PAGE}))
+        assert "Approved panel suppliers" in base
+        assert "no readable content" in unlisted
+    finally:
+        session.emitter.close()
+
+
+def test_an_extra_page_is_served_and_a_base_page_can_be_replaced(config, tmp_path):
+    extra = {OVERLAY_PAGE: "overlay body", BASE_PAGE: "replaced body"}
+    session = build_session(config, tmp_path / "run", "s-test")
+    try:
+        server = build_tool_server(session, extra_pages=extra)
+        assert asyncio.run(_call(server, "fetch_url", {"url": OVERLAY_PAGE})) == "overlay body"
+        assert asyncio.run(_call(server, "fetch_url", {"url": BASE_PAGE})) == "replaced body"
+    finally:
+        session.emitter.close()
+
+
+def test_extra_pages_do_not_touch_the_fixture_file_on_disk(config, tmp_path):
+    before = WEB_FIXTURES_PATH.read_bytes()
+    session = build_session(config, tmp_path / "run", "s-test")
+    try:
+        server = build_tool_server(session, extra_pages={OVERLAY_PAGE: "overlay body"})
+        asyncio.run(_call(server, "fetch_url", {"url": OVERLAY_PAGE}))
+    finally:
+        session.emitter.close()
+    assert WEB_FIXTURES_PATH.read_bytes() == before
+    assert OVERLAY_PAGE not in (load_web_fixtures().get("pages") or {})
+
+
+def test_an_extra_page_on_an_outside_host_is_labelled_third_party(config, tmp_path):
+    """The label describes the host the agent believes it fetched from."""
+    session = build_session(config, tmp_path / "run", "s-test")
+    try:
+        server = build_tool_server(session, extra_pages={OVERLAY_PAGE: "overlay body"})
+        asyncio.run(_call(server, "fetch_url", {"url": OVERLAY_PAGE}))
+    finally:
+        session.emitter.close()
+    events = [json.loads(line) for line in session.emitter.path.read_text().splitlines()]
+    retrievals = [e for e in events if e["event_type"] == "retrieval"]
+    assert len(retrievals) == 1
+    assert retrievals[0]["retrieval"]["source_provenance"] == "third_party_feed"
+    assert retrievals[0]["retrieval"]["permission_context"]["scope_match"] is True

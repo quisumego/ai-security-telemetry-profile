@@ -65,14 +65,27 @@ def load_web_fixtures(path: Path = WEB_FIXTURES_PATH) -> dict[str, Any]:
         return yaml.safe_load(fh)
 
 
-def build_tool_server(session: LabSession) -> Any:
+def build_tool_server(
+    session: LabSession, extra_pages: dict[str, str] | None = None
+) -> Any:
     """Build the in-process MCP server holding the six tools.
 
     Every tool closes over the session, which is how a retrieval and the tool
     call that follows it end up in the same log with the same context.
+
+    `extra_pages` is merged over the base fixtures for this session only, the
+    same pattern as `overlay_dirs` on the index. M2 uses it to serve
+    attacker-controlled pages to `fetch_url` without editing the frozen
+    lab/web_fixtures.yaml. An extra page with the same URL as a base page wins,
+    which a test asserts, so a scenario can also replace a page. The
+    provenance and scope labels are unchanged: an overlay page on an
+    allow-listed host is still labelled internal, and one on any other host
+    is still third_party_feed, because the label describes the host the
+    agent believes it fetched from, not where the fixture came from.
     """
     fixtures = load_web_fixtures()
-    pages: dict[str, str] = fixtures.get("pages") or {}
+    pages: dict[str, str] = dict(fixtures.get("pages") or {})
+    pages.update(extra_pages or {})
     unlisted: str = str(fixtures.get("unlisted_response", "")).strip()
 
     # ------------------------------------------------------------ retrieval --
