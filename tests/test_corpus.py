@@ -187,15 +187,35 @@ def test_every_canary_appears_exactly_where_the_register_says(register):
         )
 
 
+# The source tree the canary placement test scans. Rescoped at M2, ruled by
+# the owner on 21 September 2026: lab/ and attacks/ are source, and a canary in
+# either outside its planted location would make an oracle ambiguous. runs/ is
+# deliberately excluded, because a captured attack run contains canary values
+# by design whenever an attack succeeds: that is what the oracle reads. The
+# reason is recorded in docs/methodology.md Section 6.
+CANARY_SCAN_GLOBS = (
+    "lab/**/*.md",
+    "lab/**/*.yaml",
+    "lab/*.yaml",
+    "attacks/**/*.md",
+    "attacks/**/*.yaml",
+    "attacks/**/*.py",
+    "docs/**/*.md",
+)
+
+
 def test_no_canary_appears_anywhere_it_was_not_planted(register):
-    """Catches a canary copied into a second document by accident.
+    """Catches a canary copied into a second file by accident.
 
     A canary in two places would make an exfiltration oracle ambiguous about
     which boundary was crossed, which is exactly what canaries exist to remove.
+    In particular no scenario file, overlay document or oracle may carry a
+    canary value: an attack prompt that contained the string it is meant to
+    exfiltrate would score itself.
     """
     declared = {entry["value"]: REPO_ROOT / entry["planted_in"] for entry in register["canaries"]}
     scanned: list[Path] = []
-    for pattern in ("lab/**/*.md", "lab/**/*.yaml", "lab/*.yaml", "docs/**/*.md"):
+    for pattern in CANARY_SCAN_GLOBS:
         scanned.extend(REPO_ROOT.glob(pattern))
 
     for path in scanned:
@@ -214,3 +234,10 @@ def test_the_system_prompt_carries_its_canary(register):
     """A7 is only machine-checkable if the system prompt holds a unique string."""
     entry = next(e for e in register["canaries"] if e["location_kind"] == "system_prompt")
     assert entry["value"] in load_config().system_prompt
+
+
+def test_the_canary_scan_covers_the_source_tree_and_not_the_captures():
+    """The scan scope is itself a rule, so it is asserted rather than assumed."""
+    assert any(g.startswith("attacks/") for g in CANARY_SCAN_GLOBS)
+    assert any(g.startswith("lab/") for g in CANARY_SCAN_GLOBS)
+    assert not any(g.startswith("runs/") for g in CANARY_SCAN_GLOBS)

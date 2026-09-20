@@ -37,13 +37,19 @@ from lab.tools import TOOL_NAMES
 
 RUNS_DIR = REPO_ROOT / "runs"
 
-# Everything that must be identical for two runs to be comparable.
+OVERLAYS_DIR = REPO_ROOT / "attacks" / "overlays"
+
+# Everything that must be identical for two runs to be comparable. The attack
+# overlays are included from M2: a scenario's documents and pages are as much
+# an input to its capture as the benign estate is, and the digest has to
+# catch a post-freeze edit to either.
 CORPUS_INPUTS = (
     CORPUS_DIR,
     REPO_ROOT / "lab" / "case_files",
     CLAIMS_PATH,
     CANARY_REGISTER_PATH,
     REPO_ROOT / "lab" / "web_fixtures.yaml",
+    OVERLAYS_DIR,
 )
 
 
@@ -69,20 +75,32 @@ def corpus_digest(inputs: tuple[Path, ...] = CORPUS_INPUTS) -> str:
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
 
 
-def git_state() -> dict[str, Any]:
-    def run(*args: str) -> str | None:
-        try:
-            return subprocess.run(
-                args, cwd=REPO_ROOT, capture_output=True, text=True, check=True
-            ).stdout.strip()
-        except (subprocess.CalledProcessError, OSError):
-            return None
+def _git(*args: str) -> str | None:
+    try:
+        return subprocess.run(
+            ("git", *args), cwd=REPO_ROOT, capture_output=True, text=True, check=True
+        ).stdout.strip()
+    except (subprocess.CalledProcessError, OSError):
+        return None
 
-    status = run("git", "status", "--porcelain")
+
+def git_state() -> dict[str, Any]:
+    status = _git("status", "--porcelain")
     return {
-        "commit": run("git", "rev-parse", "HEAD"),
+        "commit": _git("rev-parse", "HEAD"),
         "working_tree_clean": status == "" if status is not None else None,
     }
+
+
+def freeze_tag() -> str | None:
+    """The nearest `freeze-*` tag reachable from HEAD, or null if none.
+
+    Set at the M2 freeze. Every scored capture is taken at or after that tag,
+    so the manifest names the frozen state it was captured against, and the
+    post-capture check asserts the name is the same on every manifest. The
+    digest is the stronger check; the tag is the readable one.
+    """
+    return _git("describe", "--tags", "--match", "freeze-*", "--abbrev=0") or None
 
 
 def sdk_versions() -> dict[str, Any]:
@@ -109,7 +127,15 @@ def build_manifest(
     prompt: str,
     seed: int,
     result: SessionResult,
+    scenario: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    """The manifest for one run.
+
+    `scenario` is null for an ad hoc run from the command line. A scored
+    attack trial passes a block carrying `id`, `trial`, `holdout` and
+    `overlay_digest`, so a capture can be tied to the scenario file and the
+    overlay material that produced it without parsing the run label.
+    """
     config = load_config()
     return {
         "run_id": run_id,
@@ -135,9 +161,9 @@ def build_manifest(
         },
         "corpus": {
             "digest": corpus_digest(),
-            # Set at the M2 freeze. Null here because no tag exists yet.
-            "tag": None,
+            "tag": freeze_tag(),
         },
+        "scenario": scenario,
         "git": git_state(),
         "agent": {
             "tools": list(TOOL_NAMES),

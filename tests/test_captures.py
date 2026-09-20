@@ -147,3 +147,32 @@ def test_context_document_ids_accumulate_within_a_session():
         if sizes and max(sizes) > 0 and sizes[-1] >= sizes[0]:
             grew = True
     assert grew, "context_document_ids never accumulated in any capture"
+
+
+def test_the_corpus_digest_covers_the_attack_overlays():
+    from lab.harness import CORPUS_INPUTS, OVERLAYS_DIR
+
+    assert OVERLAYS_DIR in CORPUS_INPUTS
+
+
+def test_the_manifest_carries_a_scenario_block_and_the_freeze_tag():
+    """Ad hoc runs record scenario as null; scored trials fill it."""
+    from lab.agent import SessionResult
+    from lab.harness import build_manifest
+
+    result = SessionResult(
+        session_id="s-test",
+        events_path=REPO_ROOT / "runs" / "x" / "session-s-test.jsonl",
+        events_written=0,
+        tool_calls=0,
+        turns=0,
+    )
+    plain = build_manifest(run_id="x", label="t", prompt="p", seed=0, result=result)
+    assert plain["scenario"] is None
+    assert "tag" in plain["corpus"]
+
+    block = {"id": "a01", "trial": 1, "holdout": False, "overlay_digest": None}
+    scored = build_manifest(
+        run_id="x", label="t", prompt="p", seed=0, result=result, scenario=block
+    )
+    assert scored["scenario"] == block
