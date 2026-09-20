@@ -484,3 +484,39 @@ model is, and a corpus captured half one way and half the other would not be
 comparable.
 
 **Hours:** 4, against a 6 hour estimate.
+
+---
+
+## M2. Attack corpus and capture
+
+**Date:** 21 September 2026, opened
+**Stage:** M2
+**Outcome:** in progress
+
+### The gate
+
+**Extended thinking: ruled disabled.** Question 7 of the M1 batch had been left
+open for five weeks. The owner ruled on 21 September 2026 that thinking stays
+disabled for the whole scored corpus. The ruling is recorded against the
+setting in `lab/config.yaml`, and the limitation it creates is stated in
+`docs/methodology.md` Section 7.3: attack success rates may sit above what a
+production agent with thinking enabled would show, which affects the absolute
+figures this work does not claim and is not expected to affect the necessity
+matrix, which it does. The per-run override added at `afa1da9` stays available
+for a side-by-side probe and is never used for a scored capture.
+
+`config_version` is unchanged at `0.1.0`. The effective configuration is the
+same as it was at M1; only the comment against it changed. Bumping the version
+without a change in behaviour would break the tie between version and
+behaviour that the manifest exists to record.
+
+**Extra usage: confirmed off**, 21 September 2026. Read from
+`~/.claude.json`, `hasExtraUsageEnabled: false`, and confirmed by the owner in
+the same session. An exhausted usage window during capture delays rather than
+bills.
+
+**Version drift since M1.** Claude Code CLI has moved from 2.1.234 to 2.1.278.
+`claude-agent-sdk` is unchanged at 0.2.139. `lab/transcript.py` reads the CLI's
+transcript file, which is a CLI artefact rather than a documented surface, so a
+smoke session is run before any scored capture to confirm `turns_unenriched`
+is still zero under the new CLI. Recorded below.

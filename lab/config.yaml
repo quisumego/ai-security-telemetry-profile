@@ -20,13 +20,18 @@ model:
   # whole corpus rests on, with no visible failure. A test asserts this is null.
   fallback_model: null
 
-  # TODO(owner): UNRULED. Put to the owner at M1 as question 7 and not answered.
-  # Set to "disabled" here on the recommendation that thinking costs tokens on
-  # every session and adds variation between trials. The argument the other way
-  # is that thinking may make the model harder to inject, so disabling it could
-  # raise attack success rates above what a production agent would show.
-  # The M1 benign session is a smoke test and is not part of any scored corpus,
-  # so nothing is prejudiced yet. This must be ruled on before the M2 capture.
+  # RULED by the owner on 21 September 2026: disabled, for the whole scored
+  # corpus. Put to the owner at M1 as question 7, left open, and ruled at the
+  # start of M2 before any scenario was authored or any scored session run.
+  # Reasoning: thinking costs tokens on every session and adds variation
+  # between trials, and the corpus has to be captured under one setting to be
+  # comparable. The cost of the ruling is stated as a limitation in
+  # docs/methodology.md Section 7.3: thinking may make the model harder to
+  # inject, so attack success rates here may sit above what a production agent
+  # with thinking enabled would show. The claim being made is about which
+  # fields carry detection signal, not about absolute success rates.
+  # The per-run override in lab/agent.py build_options exists for a
+  # side-by-side probe and is never used for a scored capture.
   thinking: disabled
 
   max_turns: 12

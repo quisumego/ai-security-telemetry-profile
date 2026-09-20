@@ -203,6 +203,17 @@ success numbers, but that expectation is itself untested until M7b runs.
 If M7b is killed under its sixty minute rule, portability is recorded as
 untested. It is not rounded up.
 
+**Extended thinking is disabled for the whole scored corpus.** Ruled by the
+owner on 21 September 2026, at the start of M2 and before any scenario was
+authored or any scored session captured. Thinking costs tokens on every session
+and adds variation between trials, and a corpus captured half one way and half
+the other would not be comparable. The limitation this creates: thinking may
+make the model harder to inject, so the attack success rates reported here may
+sit above what a production agent with thinking enabled would show. That
+affects the absolute success figures, which this work does not claim, and is
+not expected to affect which fields carry detection signal, which it does. The
+expectation is untested and is stated as such.
+
 ### 7.4 Single author
 
 No independent review of the scenarios, the oracles or the detectors. Everything
