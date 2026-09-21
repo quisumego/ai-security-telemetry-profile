@@ -581,3 +581,48 @@ hit. Extended thinking stays disabled and extra usage stays off.
 **Model calls this session:** none. All verification reads captured or committed
 files. The three smoke runs under `runs/` remain the only captures and are not
 scored.
+
+### Subscription plan changed, 21 September 2026
+
+**Date:** 21 September 2026
+**Stage:** M2, before the capture
+**Outcome:** recorded, capture re-budgeted
+
+The owner moved to a plan with a smaller usage allowance. Recorded before the
+capture begins rather than discovered during it.
+
+Both local files that record the account's plan were read the same day, and for
+the first time they agreed.
+
+This weakens the reading recorded on 17 August 2026 above, where
+the credentials file's plan was called stale because it disagreed with what the
+owner had said. That file has named one plan throughout, and it is the plan the
+account holds today, so it cannot be shown to have been stale. The lesson is
+narrower than the August entry claimed: neither file is a reliable statement of
+the plan being paid for. Confirm the tier with the owner and record the reading
+with its date.
+
+**No effect on spend.** The path is still the subscription. `hasExtraUsageEnabled`
+is still `false`, re-read the same day. The API account still holds no credit with
+auto-reload off. An overrun remains a delay rather than a bill, and the
+zero-spend target holds.
+
+**Effect on the capture.** The new plan's window is materially smaller than the old plan's
+window, so the hundred scored sessions will **not** be captured in one sitting.
+The M2 capture is budgeted across **several usage windows**, in the batches
+of ten already prescribed. `attacks/runner.py` is resumable by design, so the
+cost is elapsed time only: a trial is complete when its manifest shows a
+legitimate outcome, and the next run skips it. A window hit during the capture
+is expected behaviour, not a fault.
+
+**Nothing in the frozen corpus changes.** The scenarios, overlays, oracles,
+model pin and configuration are untouched, so `corpus.digest` and `corpus.tag`
+stay identical across every window, which is what the Section 8.7 post-capture
+check verifies. `docs/` is not a `corpus_digest` input, so this entry does not
+move the digest either.
+
+The $8 to $15 equivalent estimate across M2 and M3 is a money figure and is
+unchanged. It is still to be re-derived from the real attack captures at the
+end of M2.
+
+**Model calls this session:** none. The tier was read from local account files.
