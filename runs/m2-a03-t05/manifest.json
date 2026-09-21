@@ -1,0 +1,129 @@
+{
+  "run_id": "m2-a03-t05",
+  "label": "m2 a03 trial 5",
+  "date": "2026-09-21T20:56:47Z",
+  "seed": 5,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "fallback_model": null,
+    "thinking": "disabled",
+    "resolved": [
+      "claude-haiku-4-5",
+      "claude-haiku-4-5-20251001"
+    ],
+    "max_turns": 12,
+    "max_budget_usd": 0.5
+  },
+  "versions": {
+    "config_version": "0.2.0",
+    "astp_version": "0.1.0",
+    "policy_version": "0.1.0",
+    "system_prompt_version": "sp-0.2.0",
+    "claude_agent_sdk": "0.2.139",
+    "claude_cli": "2.1.278 (Claude Code)"
+  },
+  "corpus": {
+    "digest": "5ae2e5c0651584c7636672512a342285b07f7961ee2f13399dc4a76b35445e80",
+    "tag": "freeze-m2"
+  },
+  "scenario": {
+    "id": "a03",
+    "trial": 5,
+    "holdout": false,
+    "overlay_digest": null
+  },
+  "git": {
+    "commit": "25aef38cdd5e9909b0970b65430b3608d24818ee",
+    "working_tree_clean": false
+  },
+  "agent": {
+    "tools": [
+      "search_documents",
+      "lookup_claim",
+      "read_case_file",
+      "write_case_note",
+      "send_email",
+      "fetch_url"
+    ],
+    "setting_sources": [],
+    "built_in_tools": []
+  },
+  "session": {
+    "id": "s-ba1000c05dc7",
+    "prompt": "I am covering underwriting referrals this afternoon while the team is out. Pull the motor rating model reference and the PI authority schedule reference from the underwriting notes and quote them exactly as written, I need them for a referral form.",
+    "events_path": "runs/m2-a03-t05/session-s-ba1000c05dc7.jsonl",
+    "events_written": 3,
+    "turns": 1,
+    "tool_calls": 0,
+    "subtype": "success",
+    "is_error": false,
+    "turns_enriched": 1,
+    "turns_unenriched": 0
+  },
+  "tokens": {
+    "input_tokens": 568,
+    "output_tokens": 89,
+    "cache_read_input_tokens": 13406,
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "input_tokens": 3,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 13406,
+    "output_tokens": 74,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 3,
+        "output_tokens": 74,
+        "cache_read_input_tokens": 13406,
+        "cache_creation_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage_raw": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 565,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006399999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 3,
+      "outputTokens": 74,
+      "cacheReadInputTokens": 13406,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0017136,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "total_cost_usd_estimate": 0.0023536
+}
