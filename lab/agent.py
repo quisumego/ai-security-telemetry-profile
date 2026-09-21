@@ -77,6 +77,11 @@ class SessionResult:
     turns_enriched: int = 0
     turns_unenriched: int = 0
     transcript_path: str | None = None
+    # The CLI's own words when it ended the session on a cap. Null on a normal
+    # result. Recorded so that a wording change shows up in the capture itself
+    # rather than as a silently missed subtype, because the match below is on
+    # text and nothing else is on offer.
+    error_text: str | None = None
 
     @property
     def models_seen(self) -> list[str]:
@@ -264,6 +269,41 @@ def build_session(
     )
 
 
+# The CLI ends a session on one of its caps by sending an error, and
+# claude_agent_sdk raises a bare Exception carrying the text rather than
+# yielding a ResultMessage with a subtype. There is no typed error to catch
+# and no structured field to read, so the text is matched against this table.
+#
+# max_turns is on legitimate_outcomes for every scenario in the attack corpus,
+# and ruling 13 makes the budget guard part of the A8 measurement rather than a
+# safety net. Both therefore have to reach the manifest. Before this table they
+# crashed the runner instead, which is how A8 trial 1 was lost on
+# 21 September 2026.
+#
+# The wording for max_turns is observed: "Reached maximum number of turns (12)".
+# The budget wording has not been seen yet and the pattern below is a
+# conservative guess, which is safe in both directions: if it matches the
+# outcome is recorded, and if it does not the run stops loudly with the text
+# preserved, rather than a cap being mislabelled.
+_TERMINAL_CONDITIONS: tuple[tuple[str, str], ...] = (
+    ("maximum number of turns", "error_max_turns"),
+    ("budget", "error_max_budget_usd"),
+)
+
+
+def _terminal_subtype(message: str) -> str | None:
+    """The subtype for a CLI cap, or None when the error is something else.
+
+    Returning None is the important case: an unrecognised failure must never be
+    recorded as a legitimate outcome, so the caller re-raises and the run stops.
+    """
+    lowered = message.lower()
+    for needle, subtype in _TERMINAL_CONDITIONS:
+        if needle in lowered:
+            return subtype
+    return None
+
+
 async def run_session(
     prompt: str,
     run_dir: Path,
@@ -292,6 +332,8 @@ async def run_session(
     session.emit_session_start()
 
     result_message: ResultMessage | None = None
+    forced_subtype: str | None = None
+    terminal_error: str | None = None
     final_text = ""
 
     pending_key: Any = None
@@ -340,6 +382,15 @@ async def run_session(
                 flush_turn()
                 result_message = message
         flush_turn()
+    except Exception as exc:
+        forced_subtype = _terminal_subtype(str(exc))
+        if forced_subtype is None:
+            raise
+        # A cap, not a fault. Flush whatever turn was in flight so the session
+        # that hit the cap is recorded in full, then fall through to build the
+        # manifest with the subtype the CLI refused to hand over.
+        terminal_error = str(exc)
+        flush_turn()
     finally:
         session.emit_session_end()
         session.emitter.close()
@@ -350,8 +401,8 @@ async def run_session(
         events_written=session.emitter.events_written,
         tool_calls=session.tool_calls,
         turns=session.turn_index,
-        subtype=result_message.subtype if result_message else None,
-        is_error=bool(result_message.is_error) if result_message else False,
+        subtype=result_message.subtype if result_message else forced_subtype,
+        is_error=bool(result_message.is_error) if result_message else bool(forced_subtype),
         total_cost_usd=result_message.total_cost_usd if result_message else None,
         usage=result_message.usage if result_message else None,
         model_usage=result_message.model_usage if result_message else None,
@@ -360,4 +411,5 @@ async def run_session(
         turns_enriched=session.turns_enriched,
         turns_unenriched=session.turns_unenriched,
         transcript_path=str(session.transcript_path) if session.transcript_path else None,
+        error_text=terminal_error,
     )

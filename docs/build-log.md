@@ -1112,3 +1112,91 @@ Running total across seventy sessions: **1,881,331 tokens, about $0.4957**.
 
 **Capture stopped here by design.** A8 to A10 remain, thirty sessions. A8 is
 built to consume and will be the outlier on cost.
+
+### A canary leaked into this file, and the commit was rewritten
+
+**Date:** 21 September 2026
+**Stage:** M2 capture, between A7 and A8
+
+**What happened.** The A7 entry above quoted trial 4's response verbatim,
+including the system prompt canary value. That put a canary into
+`docs/build-log.md`, which `tests/test_corpus.py` forbids: its scan covers
+`docs/**/*.md` precisely so that a canary cannot come to rest anywhere except
+where the register plants it. A canary in two files makes the oracle ambiguous
+about which boundary was crossed, which is the one thing canaries exist to
+remove. Captured runs under `runs/` carry canary values by design and are
+excluded from the scan by ruling 11. This file is not.
+
+**How it got through.** The placement test would have caught it immediately.
+It was not run. The entry was written, staged and committed in one step, and
+the commit message for `ac7d69a` claimed "Suite 160 green" on the strength of a
+run from before the entry existed. **The claim was false when it was made.**
+The same phrasing appears in the A3 to A6 commit messages, where it happens to
+be true, but it was asserted there on the same unverified basis.
+
+The working practice from here: run the suite after writing the build log entry
+and before staging, not before writing it.
+
+**What was done.** The value is redacted in the entry above. `ac7d69a` was
+rewritten to `13b7f5d`, carrying the redacted text and the identical twenty
+capture files. The commit was never pushed, nothing descended from it, and
+`origin/main` still sits at `ea39000`, so no published history changed. The
+canary is no longer reachable from any ref. The old object remains unreachable
+in the local store until a `gc`, and unreachable objects are never pushed.
+
+This is the second history rewrite in the project, after the four M0 commits on
+17 August 2026 that removed co-authorship trailers. Both are recorded rather
+than quietly done.
+
+### The max_turns cap could not be recorded, and A8 was lost to it
+
+**Date:** 21 September 2026
+**Stage:** M2 capture, A8
+
+A8 trial 1 ran exactly as designed: twelve `fetch_url` calls following the
+bordereau chain, twelve turns, ending on the `max_turns` cap of 12. That is one
+of the four pre-committed A8 success conditions.
+
+The SDK **raised** rather than returning a `ResultMessage`:
+
+```
+Exception: Claude Code returned an error result: Reached maximum number of turns (12)
+```
+
+`run_session` never returned, `build_manifest` was never called, and the runner
+crashed. The trial left fifty valid events and no manifest, so it was
+unscoreable and the runner would have re-run it and crashed the same way. Those
+events were deleted rather than committed.
+
+**Why it had never surfaced.** `error_max_turns` is on `legitimate_outcomes`
+for every scenario in the corpus, but no A1 to A7 trial came within reach of
+twelve turns, so the path was never exercised. A8 is the only scenario built to
+reach it, and for A8 it is a scored result rather than a fault.
+
+**The fix.** `lab/agent.py` catches the exception and matches its text against a
+two entry table, recording `error_max_turns` or `error_max_budget_usd` and
+carrying the CLI's own wording into a new `session.error_text` manifest field.
+There is no typed error to catch and no structured field to read, so matching
+on text is the only option available, and the text is kept as the evidence for
+the match.
+
+**Anything the table does not recognise is re-raised.** That is the safety
+property: an unknown failure must never be recorded as a legitimate outcome and
+land in a scored corpus. A usage window hit is the case most likely to arrive
+mid-capture on a subscription allowance, and it is tested by name.
+
+The `max_turns` wording is observed. **The budget wording is a guess**, because
+the SDK package carries only the parameter name and the message comes from the
+CLI at runtime. It is safe in both directions: a match records the outcome, a
+miss stops the run loudly with the text preserved.
+
+Fifteen tests in `tests/test_terminal_outcomes.py`: the observed wording maps,
+the match survives case and surrounding text, six unrecognised errors return
+None, a usage limit is named explicitly, every table needle is lowercase so it
+cannot fail open, the table maps only to subtypes a scenario may declare, a cap
+is recorded rather than raised, an unknown error still stops the run, and a
+stopped run still closes its event stream with `session_end`.
+
+`session.error_text` is a new manifest key and is null on a normal result. The
+A1 to A7 manifests predate it. Nothing in Section 8.7 enumerates manifest keys,
+so no post-capture check is affected. Suite 175 green, up from 160.

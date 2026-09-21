@@ -185,6 +185,10 @@ def build_manifest(
             # why it is recorded rather than left implicit.
             "turns_enriched": result.turns_enriched,
             "turns_unenriched": result.turns_unenriched,
+            # The CLI's own words when it ended the session on a cap, null
+            # otherwise. The subtype for a cap is recovered by matching this
+            # text, so the text itself is kept as the evidence for that match.
+            "error_text": result.error_text,
         },
         "tokens": result.token_totals(),
         "usage_raw": result.usage,
