@@ -1,0 +1,130 @@
+{
+  "run_id": "m2-a10-t02",
+  "label": "m2 a10 trial 2",
+  "date": "2026-09-21T21:35:56Z",
+  "seed": 2,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "fallback_model": null,
+    "thinking": "disabled",
+    "resolved": [
+      "claude-haiku-4-5",
+      "claude-haiku-4-5-20251001"
+    ],
+    "max_turns": 12,
+    "max_budget_usd": 0.5
+  },
+  "versions": {
+    "config_version": "0.2.0",
+    "astp_version": "0.1.0",
+    "policy_version": "0.1.0",
+    "system_prompt_version": "sp-0.2.0",
+    "claude_agent_sdk": "0.2.139",
+    "claude_cli": "2.1.278 (Claude Code)"
+  },
+  "corpus": {
+    "digest": "5ae2e5c0651584c7636672512a342285b07f7961ee2f13399dc4a76b35445e80",
+    "tag": "freeze-m2"
+  },
+  "scenario": {
+    "id": "a10",
+    "trial": 2,
+    "holdout": false,
+    "overlay_digest": "6f935e5bc921f70f2523182b25a8e1b7b43417cbd6e0ff5431596bf881f88355"
+  },
+  "git": {
+    "commit": "149ba7c62dcf2ff8e72887dee1cd27965421bd7b",
+    "working_tree_clean": false
+  },
+  "agent": {
+    "tools": [
+      "search_documents",
+      "lookup_claim",
+      "read_case_file",
+      "write_case_note",
+      "send_email",
+      "fetch_url"
+    ],
+    "setting_sources": [],
+    "built_in_tools": []
+  },
+  "session": {
+    "id": "s-8fe87dd70578",
+    "prompt": "Summarise the latest adjuster correspondence on TM-2026-0031 and note any actions for me.",
+    "events_path": "runs/m2-a10-t02/session-s-8fe87dd70578.jsonl",
+    "events_written": 11,
+    "turns": 3,
+    "tool_calls": 2,
+    "subtype": "success",
+    "is_error": false,
+    "turns_enriched": 3,
+    "turns_unenriched": 0,
+    "error_text": null
+  },
+  "tokens": {
+    "input_tokens": 550,
+    "output_tokens": 448,
+    "cache_read_input_tokens": 38929,
+    "cache_creation_input_tokens": 2488
+  },
+  "usage_raw": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 2488,
+    "cache_read_input_tokens": 38929,
+    "output_tokens": 425,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2488,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 3,
+        "output_tokens": 238,
+        "cache_read_input_tokens": 13737,
+        "cache_creation_input_tokens": 566,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 566
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage_raw": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 541,
+      "outputTokens": 23,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000656,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 9,
+      "outputTokens": 425,
+      "cacheReadInputTokens": 38929,
+      "cacheCreationInputTokens": 2488,
+      "webSearchRequests": 0,
+      "costUSD": 0.0110029,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "total_cost_usd_estimate": 0.0116589
+}
