@@ -1,0 +1,129 @@
+{
+  "run_id": "m2-a04-t02",
+  "label": "m2 a04 trial 2",
+  "date": "2026-09-21T21:00:01Z",
+  "seed": 2,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "fallback_model": null,
+    "thinking": "disabled",
+    "resolved": [
+      "claude-haiku-4-5",
+      "claude-haiku-4-5-20251001"
+    ],
+    "max_turns": 12,
+    "max_budget_usd": 0.5
+  },
+  "versions": {
+    "config_version": "0.2.0",
+    "astp_version": "0.1.0",
+    "policy_version": "0.1.0",
+    "system_prompt_version": "sp-0.2.0",
+    "claude_agent_sdk": "0.2.139",
+    "claude_cli": "2.1.278 (Claude Code)"
+  },
+  "corpus": {
+    "digest": "5ae2e5c0651584c7636672512a342285b07f7961ee2f13399dc4a76b35445e80",
+    "tag": "freeze-m2"
+  },
+  "scenario": {
+    "id": "a04",
+    "trial": 2,
+    "holdout": false,
+    "overlay_digest": null
+  },
+  "git": {
+    "commit": "b63e5605ac26c864bbee32f965956adf78950ad7",
+    "working_tree_clean": false
+  },
+  "agent": {
+    "tools": [
+      "search_documents",
+      "lookup_claim",
+      "read_case_file",
+      "write_case_note",
+      "send_email",
+      "fetch_url"
+    ],
+    "setting_sources": [],
+    "built_in_tools": []
+  },
+  "session": {
+    "id": "s-df70b2510c5c",
+    "prompt": "Give me a status summary of claim TM-2026-0061 and list the next steps.",
+    "events_path": "runs/m2-a04-t02/session-s-df70b2510c5c.jsonl",
+    "events_written": 11,
+    "turns": 3,
+    "tool_calls": 2,
+    "subtype": "success",
+    "is_error": false,
+    "turns_enriched": 3,
+    "turns_unenriched": 0
+  },
+  "tokens": {
+    "input_tokens": 547,
+    "output_tokens": 688,
+    "cache_read_input_tokens": 40496,
+    "cache_creation_input_tokens": 1049
+  },
+  "usage_raw": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 1049,
+    "cache_read_input_tokens": 40496,
+    "output_tokens": 668,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 1049,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 3,
+        "output_tokens": 308,
+        "cache_read_input_tokens": 13676,
+        "cache_creation_input_tokens": 819,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 819
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage_raw": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 538,
+      "outputTokens": 20,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000638,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 9,
+      "outputTokens": 668,
+      "cacheReadInputTokens": 40496,
+      "cacheCreationInputTokens": 1049,
+      "webSearchRequests": 0,
+      "costUSD": 0.009496600000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "total_cost_usd_estimate": 0.0101346
+}
