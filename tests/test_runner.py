@@ -15,6 +15,8 @@ from typing import Any
 import pytest
 
 from attacks import runner
+from attacks.oracles import load_scenario
+from lab import harness
 from lab.agent import SessionResult
 
 
@@ -95,3 +97,55 @@ def test_a_success_with_is_error_is_not_complete(stub, tmp_path, monkeypatch):
         json.dumps({"session": {"subtype": "success", "is_error": True}}), encoding="utf-8"
     )
     assert runner.trial_is_complete(run_dir, {"success"}) is False
+
+
+# The overlay digest. It was a stub returning None until the A2 capture of
+# 21 September 2026 showed every manifest carrying a null where the overlay
+# identity should be. These tests exist so it cannot silently become a stub
+# again.
+
+
+def test_overlay_digest_is_recorded_for_every_scenario_that_serves_one():
+    for scenario_id in ("a02", "a05", "a06", "a08", "a10"):
+        scenario = load_scenario(scenario_id)
+        digest = runner._overlay_digest(scenario)
+        assert digest is not None, f"{scenario_id} serves an overlay and must record its digest"
+        assert len(digest) == 64
+
+
+def test_overlay_digest_is_null_only_when_a_scenario_serves_no_overlay():
+    for scenario_id in ("a01", "a03", "a04", "a07", "a09"):
+        scenario = load_scenario(scenario_id)
+        assert runner._overlay_digest(scenario) is None
+
+
+def test_each_overlay_scenario_has_a_digest_of_its_own():
+    digests = {
+        scenario_id: runner._overlay_digest(load_scenario(scenario_id))
+        for scenario_id in ("a02", "a05", "a06", "a08", "a10")
+    }
+    assert len(set(digests.values())) == len(digests), digests
+
+
+def test_the_overlay_digest_follows_the_overlay_bytes(tmp_path, monkeypatch):
+    overlay = tmp_path / "corpus"
+    overlay.mkdir()
+    document = overlay / "doc.md"
+    document.write_text("one", encoding="utf-8")
+    # corpus_digest resolves paths against lab.harness.REPO_ROOT, so both have
+    # to move for a temporary overlay to be digestible at all.
+    monkeypatch.setattr(runner, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(harness, "REPO_ROOT", tmp_path)
+
+    scenario = {"overlay": {"corpus": "corpus", "web_fixtures": None}}
+    before = runner._overlay_digest(scenario)
+    document.write_text("two", encoding="utf-8")
+    after = runner._overlay_digest(scenario)
+
+    assert before != after
+
+
+def test_the_manifest_carries_the_overlay_digest(stub, tmp_path):
+    asyncio.run(runner.run_scenario("a02", 1))
+    manifest = json.loads((tmp_path / "m2-a02-t01" / "manifest.json").read_text())
+    assert manifest["scenario"]["overlay_digest"] == runner._overlay_digest(load_scenario("a02"))

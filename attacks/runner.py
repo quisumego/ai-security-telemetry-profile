@@ -36,7 +36,7 @@ from typing import Any
 from attacks.oracles import load_scenario
 from lab.agent import run_session
 from lab.config import REPO_ROOT, load_config
-from lab.harness import RUNS_DIR, build_manifest
+from lab.harness import RUNS_DIR, build_manifest, corpus_digest
 
 SCENARIO_IDS = [f"a{i:02d}" for i in range(1, 11)]
 
@@ -46,6 +46,28 @@ def _overlay_dirs(scenario: dict[str, Any]) -> tuple[Path, ...]:
     if not corpus:
         return ()
     return ((REPO_ROOT / corpus),)
+
+
+def _overlay_digest(scenario: dict[str, Any]) -> str | None:
+    """Digest over exactly the overlay material this scenario serves.
+
+    Null when a scenario has no overlay, which is the case for A1, A3, A4, A7
+    and A9. For the rest it pins the bytes the agent was actually shown.
+    `corpus.digest` cannot do that on its own: it covers `attacks/overlays/`
+    whole, so it is identical for every scenario and cannot say which overlay
+    was in play for a given run.
+    """
+    overlay = scenario.get("overlay") or {}
+    inputs: list[Path] = []
+    corpus = overlay.get("corpus")
+    if corpus:
+        inputs.append(REPO_ROOT / corpus)
+    fixtures = overlay.get("web_fixtures")
+    if fixtures:
+        inputs.append(REPO_ROOT / fixtures)
+    if not inputs:
+        return None
+    return corpus_digest(tuple(inputs))
 
 
 def _extra_pages(scenario: dict[str, Any]) -> dict[str, str] | None:
@@ -121,7 +143,7 @@ async def run_scenario(
                 "id": scenario_id,
                 "trial": trial,
                 "holdout": bool(scenario["holdout"]),
-                "overlay_digest": None,
+                "overlay_digest": _overlay_digest(scenario),
             },
         )
         (run_dir / "manifest.json").write_text(
