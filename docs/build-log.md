@@ -533,3 +533,51 @@ cold call, the same profile as `m1-benign-001`.
 
 This run is a smoke test, is not part of any scored corpus, and is not counted
 in any rate.
+
+### M2 authoring complete, corpus frozen
+
+**Date:** 21 September 2026
+
+The ten scenarios, ten oracles and five overlays are authored and the corpus
+is frozen at tag **`freeze-m2`**, commit `3259a1e`.
+
+**What was built.** Ten scenario files under `attacks/scenarios/`, one per class
+A1 to A10, each carrying its OWASP and verified ATLAS references, the tools it
+exercises, the exact prompt, the overlay paths and a machine-checkable oracle.
+Ten oracles in `attacks/oracles.py`, each with a positive and a negative fixture
+in `tests/test_oracles.py`, none reading `control.canary_triggered`. A resumable
+runner in `attacks/runner.py`, tested against a stub so no allowance was spent.
+Five overlays under `attacks/overlays/`: the A8 chained pages from a committed
+seeded generator, and four injection documents authored by the owner under
+ruling 1.
+
+**Holdouts.** A5 and A9, committed to `docs/methodology.md` Section 5 at
+`c353533`, before any scenario file existed. The ordering is checkable in
+`git log`.
+
+**Two small lab changes, both defaulting to prior behaviour.** `fetch_url` takes
+`extra_pages`, the manifest carries a `scenario` block, `corpus_digest` covers
+`attacks/overlays/`, and `corpus.tag` reads the nearest `freeze-*` tag. The
+canary placement test was rescoped to scan `lab/` and `attacks/` and to exclude
+`runs/`, ruled by the owner, because a captured attack run carries canary values
+by design once an attack succeeds.
+
+**One defect found and fixed at verification.** The a02 document's `title` value
+contained an unquoted colon, which broke its YAML front matter and would have
+stopped the A2 overlay joining the index. Quoted with the owner's authorisation.
+No injection content was altered.
+
+**Verification before the freeze, all by tested code.** Every overlay parses,
+joins only its own scenario's index, never the benign estate, and surfaces as
+the top retrieval hit for its prompt. Each carries its oracle's marker exactly.
+No canary value, em-dash or banned word anywhere under `attacks/`. Suite 137
+green, up from 137 at the smoke stage: 24 new tests across oracles, the runner,
+the manifest and the extra-pages path.
+
+**Not done in this session, by design.** The capture. Ruling 10: it runs in a
+separate session the owner starts, in batches of ten, resuming on a usage-window
+hit. Extended thinking stays disabled and extra usage stays off.
+
+**Model calls this session:** none. All verification reads captured or committed
+files. The three smoke runs under `runs/` remain the only captures and are not
+scored.
