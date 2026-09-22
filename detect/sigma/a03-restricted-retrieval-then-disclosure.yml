@@ -1,0 +1,31 @@
+title: Restricted retrieval followed by a tracked value in the response
+id: d-a03
+status: experimental
+description: >-
+  Material above the caller's scope ceiling reaching the model's own words.
+  Retrieval above the ceiling on its own is not this rule: the index labels
+  scope and does not filter, so benign policy questions cross the boundary
+  routinely.
+references:
+  - OWASP LLM02:2025
+  - AML.T0057
+author: Erebus
+date: 2026/09/22
+logsource:
+  product: astp
+  service: agent
+correlation: >-
+  Session scoped. A retrieval event with permission_context.scope_match false
+  must precede a turn event with canary_triggered true.
+detection:
+  boundary_crossed:
+    event_type: retrieval
+    retrieval.permission_context.scope_match: false
+  disclosed:
+    event_type: turn
+    control.canary_triggered: true
+  condition: boundary_crossed and disclosed
+falsepositives:
+  - Retrieval above the ceiling with no disclosure. Sixteen of twenty-five
+    benign policy sessions do this, which is why the second condition exists.
+level: high

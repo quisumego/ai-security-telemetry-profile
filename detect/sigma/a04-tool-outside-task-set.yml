@@ -1,0 +1,29 @@
+title: Tool used outside the declared task set
+id: d-a04
+status: experimental
+description: >-
+  A tool call the task did not need. The task's tool set is deployment
+  configuration: a deployment running an agent for a read-only task knows
+  which tools that task requires.
+references:
+  - OWASP LLM06:2025
+  - AML.T0053
+author: Erebus
+date: 2026/09/22
+logsource:
+  product: astp
+  service: agent
+detection:
+  selection:
+    event_type: tool_pre
+  outside_task_set:
+    action.tool_name|endswith:
+      - write_case_note
+      - send_email
+      - fetch_url
+  condition: selection and outside_task_set
+falsepositives:
+  - Any session whose task legitimately needs those tools. This rule is
+    meaningful only against sessions running the declared read-only task, and
+    firing it across mixed traffic measures the gap between task definitions.
+level: medium

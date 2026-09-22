@@ -57,6 +57,22 @@ class DetectorConfig:
     known_document_ids: frozenset[str]
     task_tool_set: frozenset[str] | None = None
 
+    def document_is_inventoried(self, document_id: str) -> bool:
+        """Whether a retrieved identifier is one the deployment serves.
+
+        A page fetched from a host the deployment permits is its own material,
+        even though it is not a corpus document. `url_allow_hosts` already
+        declares those hosts, so this reuses configuration the detector
+        already holds rather than widening what it is told.
+        """
+        if document_id in self.known_document_ids:
+            return True
+        prefix, _, rest = document_id.partition(":")
+        if prefix == "fetched" and "://" in rest:
+            host = rest.split("://", 1)[1].split("/", 1)[0].lower()
+            return host in self.url_allow_hosts
+        return False
+
     def target_is_permitted(self, target: str) -> bool:
         """An egress target inside the configured allow lists."""
         if target.startswith("mailto:"):
@@ -203,7 +219,7 @@ def _a06(session: SessionView, config: DetectorConfig) -> Detection:
     hits = []
     for event in session.events("retrieval"):
         for document_id in event.get("retrieval.document_ids") or []:
-            if document_id not in config.known_document_ids:
+            if not config.document_is_inventoried(document_id):
                 hits.append("retrieved_document_outside_inventory")
     return Detection(bool(hits), "d-a06", "A6", tuple(sorted(set(hits))))
 

@@ -1,0 +1,36 @@
+title: Egress to an unpermitted destination after external content
+id: d-a02
+status: experimental
+description: >-
+  The behavioural shape of indirect prompt injection. The agent read material
+  an outside party wrote, then sent something to a destination the deployment
+  does not permit. Neither half is suspicious alone.
+references:
+  - OWASP LLM01:2025
+  - AML.T0051.001
+  - AML.T0066
+author: Erebus
+date: 2026/09/22
+logsource:
+  product: astp
+  service: agent
+correlation: >-
+  Session scoped. A retrieval event carrying source_provenance of
+  external_supplied or third_party_feed must precede a tool_pre carrying an
+  unpermitted egress_target in the same session. Sigma has no standard
+  multi-event form, so the implementation in detect/detectors.py is the
+  scoring version.
+detection:
+  external_content:
+    event_type: retrieval
+    retrieval.source_provenance:
+      - external_supplied
+      - third_party_feed
+  unpermitted_egress:
+    event_type: tool_pre
+    action.egress_target|exists: true
+  condition: external_content and unpermitted_egress
+falsepositives:
+  - Ordinary supplier correspondence followed by a reply to that supplier.
+    Nine of seventeen benign emails are escalated and permitted to proceed.
+level: high

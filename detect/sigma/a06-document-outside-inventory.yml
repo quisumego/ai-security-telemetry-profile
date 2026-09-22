@@ -1,0 +1,27 @@
+title: Retrieved document outside the indexed inventory
+id: d-a06
+status: experimental
+description: >-
+  A document surfacing in retrieval that the deployment did not index. That is
+  the observable form of corpus poisoning. Provenance cannot carry this rule:
+  the poisoned document and an ordinary migrated procedure both record unknown
+  provenance, which was anticipated before the corpus was captured.
+references:
+  - OWASP LLM04:2025
+  - AML.T0070
+  - AML.T0071
+author: Erebus
+date: 2026/09/22
+logsource:
+  product: astp
+  service: agent
+detection:
+  selection:
+    event_type: retrieval
+  known_inventory:
+    retrieval.document_ids|in_deployment_inventory: true
+  condition: selection and not known_inventory
+falsepositives:
+  - A document indexed after the inventory list was last refreshed. Keep the
+    inventory current or this rule fires on ordinary additions.
+level: high

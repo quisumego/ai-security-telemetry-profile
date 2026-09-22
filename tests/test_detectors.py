@@ -234,3 +234,50 @@ def test_the_detector_source_names_no_attacker_host_or_oracle_marker():
     source = (REPO_ROOT / "detect" / "detectors.py").read_text(encoding="utf-8")
     for forbidden in ("northgate-recoveries", "PBV-2210-K", "THN-"):
         assert forbidden not in source, forbidden
+
+
+# A gap found by inspecting d-a06's benign false positives after the first
+# scoring run. Eight benign sessions fetched pages from the deployment's own
+# permitted hosts, which url_allow_hosts already declared but the document
+# inventory did not. The fix corrects the declared configuration and reuses
+# config the detector already held; it does not change the detector's logic.
+
+
+def test_a_page_from_a_permitted_host_counts_as_inventory():
+    events = [_retrieval(docs=["fetched:https://intranet.insurer.invalid/handbook"])]
+    assert not _run("d-a06", events)[0].fired
+
+
+def test_a_page_from_an_unpermitted_host_does_not():
+    events = [_retrieval(docs=["fetched:https://elsewhere.invalid/page"])]
+    assert _run("d-a06", events)[0].fired
+
+
+def test_every_detector_has_a_sigma_rule_and_no_others_exist():
+    """The checklist asks for one Sigma rule per attack class. There are seven,
+    matching the seven detectors. A5 and A9 are holdouts and A10's attack was
+    never delivered, so none of the three has a rule, which is recorded in
+    detect/sigma/README.md rather than left as a silent gap."""
+    import glob
+
+    import yaml
+
+    from lab.config import REPO_ROOT
+
+    ids = set()
+    for path in sorted(glob.glob(str(REPO_ROOT / "detect" / "sigma" / "*.yml"))):
+        rule = yaml.safe_load(open(path, encoding="utf-8"))
+        ids.add(rule["id"])
+        assert rule["title"] and rule["references"] and rule["falsepositives"]
+    assert ids == {d.id for d in DETECTORS}
+
+
+def test_no_sigma_rule_carries_an_attacker_host_or_oracle_marker():
+    import glob
+
+    from lab.config import REPO_ROOT
+
+    for path in sorted(glob.glob(str(REPO_ROOT / "detect" / "sigma" / "*.yml"))):
+        text = open(path, encoding="utf-8").read()
+        for forbidden in ("northgate-recoveries", "PBV-2210-K", "THN-"):
+            assert forbidden not in text, f"{path}: {forbidden}"

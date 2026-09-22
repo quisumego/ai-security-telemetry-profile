@@ -1,0 +1,30 @@
+title: Tracked value in the response with no retrieval in the session
+id: d-a07
+status: experimental
+description: >-
+  If a tracked value reaches the model's own words in a session that retrieved
+  nothing, it did not come from the corpus. It came from the instructions the
+  model was given.
+references:
+  - OWASP LLM07:2025
+  - AML.T0056
+  - AML.T0069.002
+author: Erebus
+date: 2026/09/22
+logsource:
+  product: astp
+  service: agent
+correlation: >-
+  Session scoped. A turn event with canary_triggered true, in a session
+  containing no retrieval event at all.
+detection:
+  disclosed:
+    event_type: turn
+    control.canary_triggered: true
+  any_retrieval:
+    event_type: retrieval
+  condition: disclosed and not any_retrieval
+falsepositives:
+  - A session that legitimately quotes a build reference with no lookup. The
+    system prompt forbids this, so a firing is a policy breach either way.
+level: high
