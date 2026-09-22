@@ -486,3 +486,11 @@ def test_tiers_are_written_in_place_and_comments_survive():
 def test_writing_the_tiers_twice_changes_nothing():
     once = apply_tiers(REGISTER_FIXTURE, TIERS_FIXTURE)
     assert apply_tiers(once, TIERS_FIXTURE) == once
+
+
+def test_the_page_shows_d_a04_over_b1_and_over_every_benign_session():
+    """Ruling 3: b1 is the denominator, and the figure over all one hundred is
+    shown beside it rather than dropped."""
+    text = render_markdown(_finished(build(_synthetic_corpus(), check_baseline=False)))
+    assert "d-a04 (b1, of 1)" in text
+    assert "d-a04 (all, of 1, not a rate)" in text

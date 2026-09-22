@@ -458,10 +458,11 @@ def _header(cls: str, info: dict[str, Any]) -> str:
     return label
 
 
-def _fp_text(row: dict[str, Any]) -> str:
-    if row["before"] == row["after"]:
-        return str(row["before"])
-    return f"{row['before']} to {row['after']}"
+def _fp_text(row: dict[str, Any], over_all: bool = False) -> str:
+    before, after = (row["all_before"], row["all_after"]) if over_all else (row["before"], row["after"])
+    if before == after:
+        return str(before)
+    return f"{before} to {after}"
 
 
 def render_markdown(doc: dict[str, Any]) -> str:
@@ -544,20 +545,26 @@ def render_markdown(doc: dict[str, Any]) -> str:
 
     add("## False positives per detector, before and after nulling")
     add("")
-    detectors = list(doc["detectors"])
-    fp_headers = []
-    for d in detectors:
+    # Each detector over its ruled denominator, and beside it, for a detector
+    # ruled onto b1, the same detector over all the benign sessions (ruling 3).
+    columns: list[tuple[str, bool, str]] = []
+    for d in doc["detectors"]:
         den = doc["baseline"]["false_positives"][d]["denominator"]
-        which = doc["rulings"]["fp_denominator"][d]
-        fp_headers.append(f"{d} ({'b1, ' if which == 'b1' else ''}of {den})")
+        if doc["rulings"]["fp_denominator"][d] == "b1":
+            columns.append((d, False, f"{d} (b1, of {den})"))
+            columns.append((d, True, f"{d} (all, of {doc['benign']['all']}, not a rate)"))
+        else:
+            columns.append((d, False, f"{d} (of {den})"))
     add("A single number means nulling the field left the count unchanged. Measured for every field and "
-        "every detector, including the classes where detection cannot move.")
+        "every detector, including the classes where detection cannot move. The `d-a04` figure over all "
+        "the benign sessions is the task-set mismatch M3 recorded, shown beside the b1 rate as ruled.")
     add("")
-    add("| Field | " + " | ".join(fp_headers) + " |")
-    add("|---|" + "---|" * len(detectors))
+    add("| Field | " + " | ".join(label for _, _, label in columns) + " |")
+    add("|---|" + "---|" * len(columns))
     for name in doc["field_order"]:
         row = doc["single"][name]
-        add(f"| `{name}` | " + " | ".join(_fp_text(row["false_positives"][d]) for d in detectors) + " |")
+        add(f"| `{name}` | " + " | ".join(
+            _fp_text(row["false_positives"][d], over_all) for d, over_all, _ in columns) + " |")
     add("")
 
     add("## Pairs within a group")
@@ -649,7 +656,12 @@ def render_markdown(doc: dict[str, Any]) -> str:
         "payload-alone rule.")
     a8 = doc["circular"]["A8"]
     counts_a8 = a8["tool_pre_events_per_successful_trial"]
-    spread = f"{min(counts_a8)} to {max(counts_a8)}" if counts_a8 else "none, as no A8 trial succeeded"
+    if not counts_a8:
+        spread = "none, as no A8 trial succeeded"
+    elif min(counts_a8) == max(counts_a8):
+        spread = f"{counts_a8[0]} in each of the {len(counts_a8)}"
+    else:
+        spread = f"{min(counts_a8)} to {max(counts_a8)}"
     add(f"- `turn.tokens_in` against A8. `{a8['detector']}` uses the A8 oracle's thresholds and fires first "
         f"on {a8['tool_call_threshold']} or more tool calls, a count of events that reads no field. Tool "
         f"calls per successful A8 trial: {spread}.")
