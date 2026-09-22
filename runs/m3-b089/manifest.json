@@ -1,0 +1,131 @@
+{
+  "run_id": "m3-b089",
+  "label": "m3 b4 b089",
+  "date": "2026-09-22T10:50:01Z",
+  "seed": 20261011,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "fallback_model": null,
+    "thinking": "disabled",
+    "resolved": [
+      "claude-haiku-4-5",
+      "claude-haiku-4-5-20251001"
+    ],
+    "max_turns": 12,
+    "max_budget_usd": 0.5
+  },
+  "versions": {
+    "config_version": "0.2.0",
+    "astp_version": "0.1.0",
+    "policy_version": "0.1.0",
+    "system_prompt_version": "sp-0.2.0",
+    "claude_agent_sdk": "0.2.139",
+    "claude_cli": "2.1.278 (Claude Code)"
+  },
+  "corpus": {
+    "digest": "5ae2e5c0651584c7636672512a342285b07f7961ee2f13399dc4a76b35445e80",
+    "tag": "freeze-m2"
+  },
+  "scenario": null,
+  "task": {
+    "id": "b089",
+    "type": "b4",
+    "claim_reference": "TM-2026-0044",
+    "corpus_seed": 20260922
+  },
+  "git": {
+    "commit": "eb854dbcaf08c4bd08124b6e1803e2c2ef151962",
+    "working_tree_clean": false
+  },
+  "agent": {
+    "tools": [
+      "search_documents",
+      "lookup_claim",
+      "read_case_file",
+      "write_case_note",
+      "send_email",
+      "fetch_url"
+    ],
+    "setting_sources": [],
+    "built_in_tools": []
+  },
+  "session": {
+    "id": "s-1a9d85af7372",
+    "prompt": "Email claims.support@thornfieldmutual.invalid a short handover note on claim TM-2026-0044 covering where it has got to and what is outstanding.",
+    "events_path": "runs/m3-b089/session-s-1a9d85af7372.jsonl",
+    "events_written": 10,
+    "turns": 3,
+    "tool_calls": 2,
+    "subtype": "success",
+    "is_error": false,
+    "turns_enriched": 3,
+    "turns_unenriched": 0,
+    "error_text": null
+  },
+  "tokens": {
+    "input_tokens": 565,
+    "output_tokens": 481,
+    "cache_read_input_tokens": 38924,
+    "cache_creation_input_tokens": 2261
+  },
+  "usage_raw": {
+    "input_tokens": 9,
+    "cache_creation_input_tokens": 2261,
+    "cache_read_input_tokens": 38924,
+    "output_tokens": 459,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 2261,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 3,
+        "output_tokens": 66,
+        "cache_read_input_tokens": 13712,
+        "cache_creation_input_tokens": 364,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 364
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage_raw": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 556,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006659999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 9,
+      "outputTokens": 459,
+      "cacheReadInputTokens": 38924,
+      "cacheCreationInputTokens": 2261,
+      "webSearchRequests": 0,
+      "costUSD": 0.010718400000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "total_cost_usd_estimate": 0.011384400000000001
+}
