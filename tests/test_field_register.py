@@ -1,10 +1,23 @@
 """The field register is the M0 deliverable, so it is tested like code.
 
 These tests guard the properties the methodology depends on. In particular they
-guard the pre-commitment: no tier may be assigned before the ablation runs.
+guard the pre-commitment. Until M5 that meant no tier could be set at all. From
+M5 it means every tier is exactly what the tiering rule computes from the
+recorded sweep, and the pre-registered prediction is unchanged since it was
+registered. The guard got stronger, not removed.
 """
 
+import hashlib
+import json
+
 from conftest import GROUPS, TIERS
+
+from ablation import rulings
+from ablation.matrix import tier_for
+
+# SHA-256 over the sorted "name:predicted_tier" lines of the register as it was
+# added at b533d6a, on 12 August 2026, before any capture existed.
+PREDICTED_AT_REGISTRATION = "a585f6354b8e681191838f93c9faf8d13a575357ec9383674903a97b6678ccb1"
 
 REQUIRED_KEYS = {
     "name",
@@ -117,16 +130,48 @@ def test_predicted_tier_is_a_valid_tier(fields):
         assert field["predicted_tier"] in TIERS, field["name"]
 
 
-def test_no_tier_is_assigned_before_the_ablation(fields):
-    """The pre-commitment. Tiers are assigned at M5 from the necessity matrix.
+def test_every_tier_is_what_the_rule_computes_from_the_recorded_sweep(repo_root, fields):
+    """Replaces the M0 guard that no tier was set before the ablation.
 
-    If this test fails, a tier has been set by hand somewhere it should not have
-    been, and the tiering is no longer traceable to a matrix cell.
+    Each tier is recomputed here from the cells in results/necessity.json and
+    the ruled justification list, by the same rule, and must match what the
+    register carries. A tier set by hand, or edited after the sweep, fails.
     """
+    necessity = json.loads((repo_root / "results" / "necessity.json").read_text(encoding="utf-8"))
     for field in fields:
-        assert field["tier"] is None, (
-            f"{field['name']} has tier {field['tier']!r} set before M5"
-        )
+        name = field["name"]
+        cells = [c["cell"] for c in necessity["single"][name]["cells"].values()]
+        computed = tier_for(cells, name in rulings.STATED_JUSTIFICATION)
+        assert field["tier"] == computed, f"{name} carries {field['tier']!r}, the rule gives {computed!r}"
+        assert field["tier"] == necessity["tiers"][name]["tier"], name
+
+
+def test_every_tier_names_the_cells_that_decided_it(repo_root, fields):
+    necessity = json.loads((repo_root / "results" / "necessity.json").read_text(encoding="utf-8"))
+    for field in fields:
+        assert field["tier_cells"] == necessity["tiers"][field["name"]]["cells"], field["name"]
+        if field["tier"] in ("required", "recommended"):
+            assert field["tier_cells"], f"{field['name']} is {field['tier']} with no deciding cell"
+
+
+def test_the_tiers_record_the_sweep_they_came_from(register, repo_root):
+    necessity = json.loads((repo_root / "results" / "necessity.json").read_text(encoding="utf-8"))
+    assert register["tiered_at"] == "M5"
+    assert register["tier_sweep"]["artefact"] == "results/necessity.json"
+    assert register["tier_sweep"]["commit"] == necessity["commit"]
+    assert necessity["tree_clean"] is True
+
+
+def test_every_tier_is_a_valid_tier(fields):
+    for field in fields:
+        assert field["tier"] in TIERS, field["name"]
+
+
+def test_predicted_tiers_are_unchanged_since_registration(fields):
+    """The pre-registered expectation is kept beside the result, never moved to
+    fit it."""
+    body = "\n".join(sorted(f"{f['name']}:{f['predicted_tier']}" for f in fields))
+    assert hashlib.sha256(body.encode("utf-8")).hexdigest() == PREDICTED_AT_REGISTRATION
 
 
 def test_the_prediction_includes_expected_failures(fields):

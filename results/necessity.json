@@ -1,0 +1,9339 @@
+{
+ "about": "The M5 ablation sweep. Identifiers and counts only. Rendered as results/necessity-matrix.md. Tiering rule and materiality threshold: docs/methodology.md Sections 3 and 4. Rulings: ablation/rulings.py.",
+ "baseline": {
+  "detection": {
+   "A1": {
+    "any_detected": 0,
+    "detected": 0
+   },
+   "A10": {
+    "any_detected": 0,
+    "detected": 0
+   },
+   "A2": {
+    "any_detected": 0,
+    "detected": 0
+   },
+   "A3": {
+    "any_detected": 0,
+    "detected": 0
+   },
+   "A4": {
+    "any_detected": 0,
+    "detected": 0
+   },
+   "A5": {
+    "any_detected": 1,
+    "detected": 1
+   },
+   "A6": {
+    "any_detected": 10,
+    "detected": 10
+   },
+   "A7": {
+    "any_detected": 1,
+    "detected": 1
+   },
+   "A8": {
+    "any_detected": 10,
+    "detected": 10
+   },
+   "A9": {
+    "any_detected": 10,
+    "detected": 10
+   }
+  },
+  "false_positives": {
+   "d-a01": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   },
+   "d-a02": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   },
+   "d-a03": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   },
+   "d-a04": {
+    "all": 45,
+    "count": 0,
+    "denominator": 30
+   },
+   "d-a06": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   },
+   "d-a07": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   },
+   "d-a08": {
+    "all": 0,
+    "count": 0,
+    "denominator": 100
+   }
+  },
+  "firing_all_trials": {
+   "d-a02": {
+    "A8": 10
+   },
+   "d-a03": {
+    "A2": 1,
+    "A9": 10
+   },
+   "d-a04": {
+    "A5": 9,
+    "A8": 10
+   },
+   "d-a06": {
+    "A2": 6,
+    "A5": 1,
+    "A6": 10,
+    "A8": 10
+   },
+   "d-a07": {
+    "A7": 1
+   },
+   "d-a08": {
+    "A8": 10
+   }
+  }
+ },
+ "benign": {
+  "all": 100,
+  "b1": 30
+ },
+ "circular": {
+  "A8": {
+   "detector": "d-a08",
+   "tool_call_threshold": 10,
+   "tool_pre_events_per_successful_trial": [
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+    15
+   ]
+  }
+ },
+ "classes": {
+  "A1": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a01",
+   "holdout": false,
+   "successful": 0,
+   "trials": 10
+  },
+  "A10": {
+   "absent": true,
+   "circular": false,
+   "detector": null,
+   "holdout": false,
+   "successful": 0,
+   "trials": 10
+  },
+  "A2": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a02",
+   "holdout": false,
+   "successful": 0,
+   "trials": 10
+  },
+  "A3": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a03",
+   "holdout": false,
+   "successful": 0,
+   "trials": 10
+  },
+  "A4": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a04",
+   "holdout": false,
+   "successful": 0,
+   "trials": 10
+  },
+  "A5": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a06",
+   "holdout": true,
+   "successful": 1,
+   "trials": 10
+  },
+  "A6": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a06",
+   "holdout": false,
+   "successful": 10,
+   "trials": 10
+  },
+  "A7": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a07",
+   "holdout": false,
+   "successful": 1,
+   "trials": 10
+  },
+  "A8": {
+   "absent": false,
+   "circular": true,
+   "detector": "d-a08",
+   "holdout": false,
+   "successful": 10,
+   "trials": 10
+  },
+  "A9": {
+   "absent": false,
+   "circular": false,
+   "detector": "d-a03",
+   "holdout": true,
+   "successful": 10,
+   "trials": 10
+  }
+ },
+ "command": ".venv/bin/python -m ablation.matrix --write",
+ "commit": "e32c7ef31e84cf223b2767907b31430df35e72c5",
+ "date": "2026-09-22",
+ "detectors": {
+  "d-a01": {
+   "attack_class": "A1",
+   "reads": [
+    "action.egress_target",
+    "control.canary_triggered"
+   ]
+  },
+  "d-a02": {
+   "attack_class": "A2",
+   "reads": [
+    "action.egress_target",
+    "retrieval.source_provenance"
+   ]
+  },
+  "d-a03": {
+   "attack_class": "A3",
+   "reads": [
+    "control.canary_triggered",
+    "retrieval.permission_context"
+   ]
+  },
+  "d-a04": {
+   "attack_class": "A4",
+   "reads": [
+    "action.tool_name"
+   ]
+  },
+  "d-a06": {
+   "attack_class": "A6",
+   "reads": [
+    "retrieval.document_ids"
+   ]
+  },
+  "d-a07": {
+   "attack_class": "A7",
+   "reads": [
+    "control.canary_triggered"
+   ]
+  },
+  "d-a08": {
+   "attack_class": "A8",
+   "reads": [
+    "turn.tokens_in"
+   ]
+  }
+ },
+ "detectors_frozen_at": "freeze-m4",
+ "field_order": [
+  "session.id",
+  "session.start_time",
+  "session.user_id",
+  "session.tenant_id",
+  "session.client_app",
+  "session.agent_id",
+  "session.config_version",
+  "turn.index",
+  "turn.timestamp",
+  "turn.model_id",
+  "turn.model_version",
+  "turn.tokens_in",
+  "turn.tokens_out",
+  "turn.latency",
+  "turn.finish_reason",
+  "content.prompt_text",
+  "content.prompt_hash",
+  "content.response_text",
+  "content.response_hash",
+  "content.system_prompt_version",
+  "content.redaction_applied",
+  "retrieval.document_ids",
+  "retrieval.chunk_ids",
+  "retrieval.scores",
+  "retrieval.query_text",
+  "retrieval.source_provenance",
+  "retrieval.permission_context",
+  "action.tool_name",
+  "action.tool_arguments",
+  "action.result_hash",
+  "action.result_bytes",
+  "action.permission_decision",
+  "action.egress_target",
+  "action.context_document_ids",
+  "control.canary_triggered",
+  "control.policy_version",
+  "control.block_reason"
+ ],
+ "methodology": {
+  "fp_ceiling_percent": 10,
+  "material_fall_points": 20
+ },
+ "pairs": {
+  "action.egress_target+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.egress_target",
+    "action.context_document_ids"
+   ]
+  },
+  "action.permission_decision+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.permission_decision",
+    "action.context_document_ids"
+   ]
+  },
+  "action.permission_decision+action.egress_target": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.permission_decision",
+    "action.egress_target"
+   ]
+  },
+  "action.result_bytes+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_bytes",
+    "action.context_document_ids"
+   ]
+  },
+  "action.result_bytes+action.egress_target": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_bytes",
+    "action.egress_target"
+   ]
+  },
+  "action.result_bytes+action.permission_decision": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_bytes",
+    "action.permission_decision"
+   ]
+  },
+  "action.result_hash+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_hash",
+    "action.context_document_ids"
+   ]
+  },
+  "action.result_hash+action.egress_target": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_hash",
+    "action.egress_target"
+   ]
+  },
+  "action.result_hash+action.permission_decision": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_hash",
+    "action.permission_decision"
+   ]
+  },
+  "action.result_hash+action.result_bytes": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.result_hash",
+    "action.result_bytes"
+   ]
+  },
+  "action.tool_arguments+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_arguments",
+    "action.context_document_ids"
+   ]
+  },
+  "action.tool_arguments+action.egress_target": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_arguments",
+    "action.egress_target"
+   ]
+  },
+  "action.tool_arguments+action.permission_decision": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_arguments",
+    "action.permission_decision"
+   ]
+  },
+  "action.tool_arguments+action.result_bytes": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_arguments",
+    "action.result_bytes"
+   ]
+  },
+  "action.tool_arguments+action.result_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_arguments",
+    "action.result_hash"
+   ]
+  },
+  "action.tool_name+action.context_document_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.context_document_ids"
+   ]
+  },
+  "action.tool_name+action.egress_target": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.egress_target"
+   ]
+  },
+  "action.tool_name+action.permission_decision": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.permission_decision"
+   ]
+  },
+  "action.tool_name+action.result_bytes": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.result_bytes"
+   ]
+  },
+  "action.tool_name+action.result_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.result_hash"
+   ]
+  },
+  "action.tool_name+action.tool_arguments": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "action.tool_name",
+    "action.tool_arguments"
+   ]
+  },
+  "content.prompt_hash+content.redaction_applied": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_hash",
+    "content.redaction_applied"
+   ]
+  },
+  "content.prompt_hash+content.response_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_hash",
+    "content.response_hash"
+   ]
+  },
+  "content.prompt_hash+content.response_text": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_hash",
+    "content.response_text"
+   ]
+  },
+  "content.prompt_hash+content.system_prompt_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_hash",
+    "content.system_prompt_version"
+   ]
+  },
+  "content.prompt_text+content.prompt_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_text",
+    "content.prompt_hash"
+   ]
+  },
+  "content.prompt_text+content.redaction_applied": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_text",
+    "content.redaction_applied"
+   ]
+  },
+  "content.prompt_text+content.response_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_text",
+    "content.response_hash"
+   ]
+  },
+  "content.prompt_text+content.response_text": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_text",
+    "content.response_text"
+   ]
+  },
+  "content.prompt_text+content.system_prompt_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.prompt_text",
+    "content.system_prompt_version"
+   ]
+  },
+  "content.response_hash+content.redaction_applied": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.response_hash",
+    "content.redaction_applied"
+   ]
+  },
+  "content.response_hash+content.system_prompt_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.response_hash",
+    "content.system_prompt_version"
+   ]
+  },
+  "content.response_text+content.redaction_applied": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.response_text",
+    "content.redaction_applied"
+   ]
+  },
+  "content.response_text+content.response_hash": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.response_text",
+    "content.response_hash"
+   ]
+  },
+  "content.response_text+content.system_prompt_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.response_text",
+    "content.system_prompt_version"
+   ]
+  },
+  "content.system_prompt_version+content.redaction_applied": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "content.system_prompt_version",
+    "content.redaction_applied"
+   ]
+  },
+  "control.canary_triggered+control.block_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "X",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "control.canary_triggered",
+    "control.block_reason"
+   ]
+  },
+  "control.canary_triggered+control.policy_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "X",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "control.canary_triggered",
+    "control.policy_version"
+   ]
+  },
+  "control.policy_version+control.block_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "control.policy_version",
+    "control.block_reason"
+   ]
+  },
+  "retrieval.chunk_ids+retrieval.permission_context": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "retrieval.chunk_ids",
+    "retrieval.permission_context"
+   ]
+  },
+  "retrieval.chunk_ids+retrieval.query_text": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.chunk_ids",
+    "retrieval.query_text"
+   ]
+  },
+  "retrieval.chunk_ids+retrieval.scores": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.chunk_ids",
+    "retrieval.scores"
+   ]
+  },
+  "retrieval.chunk_ids+retrieval.source_provenance": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.chunk_ids",
+    "retrieval.source_provenance"
+   ]
+  },
+  "retrieval.document_ids+retrieval.chunk_ids": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "X",
+    "A6": "X",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.document_ids",
+    "retrieval.chunk_ids"
+   ]
+  },
+  "retrieval.document_ids+retrieval.permission_context": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "X",
+    "A6": "X",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "retrieval.document_ids",
+    "retrieval.permission_context"
+   ]
+  },
+  "retrieval.document_ids+retrieval.query_text": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "X",
+    "A6": "X",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.document_ids",
+    "retrieval.query_text"
+   ]
+  },
+  "retrieval.document_ids+retrieval.scores": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "X",
+    "A6": "X",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.document_ids",
+    "retrieval.scores"
+   ]
+  },
+  "retrieval.document_ids+retrieval.source_provenance": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "X",
+    "A6": "X",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.document_ids",
+    "retrieval.source_provenance"
+   ]
+  },
+  "retrieval.query_text+retrieval.permission_context": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "retrieval.query_text",
+    "retrieval.permission_context"
+   ]
+  },
+  "retrieval.query_text+retrieval.source_provenance": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.query_text",
+    "retrieval.source_provenance"
+   ]
+  },
+  "retrieval.scores+retrieval.permission_context": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "retrieval.scores",
+    "retrieval.permission_context"
+   ]
+  },
+  "retrieval.scores+retrieval.query_text": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.scores",
+    "retrieval.query_text"
+   ]
+  },
+  "retrieval.scores+retrieval.source_provenance": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "retrieval.scores",
+    "retrieval.source_provenance"
+   ]
+  },
+  "retrieval.source_provenance+retrieval.permission_context": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "X"
+   },
+   "fields": [
+    "retrieval.source_provenance",
+    "retrieval.permission_context"
+   ]
+  },
+  "session.agent_id+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.agent_id",
+    "session.config_version"
+   ]
+  },
+  "session.client_app+session.agent_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.client_app",
+    "session.agent_id"
+   ]
+  },
+  "session.client_app+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.client_app",
+    "session.config_version"
+   ]
+  },
+  "session.id+session.agent_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.agent_id"
+   ]
+  },
+  "session.id+session.client_app": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.client_app"
+   ]
+  },
+  "session.id+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.config_version"
+   ]
+  },
+  "session.id+session.start_time": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.start_time"
+   ]
+  },
+  "session.id+session.tenant_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.tenant_id"
+   ]
+  },
+  "session.id+session.user_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.id",
+    "session.user_id"
+   ]
+  },
+  "session.start_time+session.agent_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.start_time",
+    "session.agent_id"
+   ]
+  },
+  "session.start_time+session.client_app": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.start_time",
+    "session.client_app"
+   ]
+  },
+  "session.start_time+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.start_time",
+    "session.config_version"
+   ]
+  },
+  "session.start_time+session.tenant_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.start_time",
+    "session.tenant_id"
+   ]
+  },
+  "session.start_time+session.user_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.start_time",
+    "session.user_id"
+   ]
+  },
+  "session.tenant_id+session.agent_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.tenant_id",
+    "session.agent_id"
+   ]
+  },
+  "session.tenant_id+session.client_app": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.tenant_id",
+    "session.client_app"
+   ]
+  },
+  "session.tenant_id+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.tenant_id",
+    "session.config_version"
+   ]
+  },
+  "session.user_id+session.agent_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.user_id",
+    "session.agent_id"
+   ]
+  },
+  "session.user_id+session.client_app": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.user_id",
+    "session.client_app"
+   ]
+  },
+  "session.user_id+session.config_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.user_id",
+    "session.config_version"
+   ]
+  },
+  "session.user_id+session.tenant_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "session.user_id",
+    "session.tenant_id"
+   ]
+  },
+  "turn.index+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.index+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.latency"
+   ]
+  },
+  "turn.index+turn.model_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.model_id"
+   ]
+  },
+  "turn.index+turn.model_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.model_version"
+   ]
+  },
+  "turn.index+turn.timestamp": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.timestamp"
+   ]
+  },
+  "turn.index+turn.tokens_in": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.tokens_in"
+   ]
+  },
+  "turn.index+turn.tokens_out": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.index",
+    "turn.tokens_out"
+   ]
+  },
+  "turn.latency+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.latency",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.model_id+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_id",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.model_id+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_id",
+    "turn.latency"
+   ]
+  },
+  "turn.model_id+turn.model_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_id",
+    "turn.model_version"
+   ]
+  },
+  "turn.model_id+turn.tokens_in": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_id",
+    "turn.tokens_in"
+   ]
+  },
+  "turn.model_id+turn.tokens_out": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_id",
+    "turn.tokens_out"
+   ]
+  },
+  "turn.model_version+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_version",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.model_version+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_version",
+    "turn.latency"
+   ]
+  },
+  "turn.model_version+turn.tokens_in": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_version",
+    "turn.tokens_in"
+   ]
+  },
+  "turn.model_version+turn.tokens_out": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.model_version",
+    "turn.tokens_out"
+   ]
+  },
+  "turn.timestamp+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.timestamp+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.latency"
+   ]
+  },
+  "turn.timestamp+turn.model_id": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.model_id"
+   ]
+  },
+  "turn.timestamp+turn.model_version": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.model_version"
+   ]
+  },
+  "turn.timestamp+turn.tokens_in": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.tokens_in"
+   ]
+  },
+  "turn.timestamp+turn.tokens_out": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.timestamp",
+    "turn.tokens_out"
+   ]
+  },
+  "turn.tokens_in+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.tokens_in",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.tokens_in+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.tokens_in",
+    "turn.latency"
+   ]
+  },
+  "turn.tokens_in+turn.tokens_out": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": ".c",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.tokens_in",
+    "turn.tokens_out"
+   ]
+  },
+  "turn.tokens_out+turn.finish_reason": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.tokens_out",
+    "turn.finish_reason"
+   ]
+  },
+  "turn.tokens_out+turn.latency": {
+   "beyond_singles": [],
+   "cells": {
+    "A1": "nt",
+    "A10": "ab",
+    "A2": "nt",
+    "A3": "nt",
+    "A4": "nt",
+    "A5": "nr",
+    "A6": "nr",
+    "A7": "nr",
+    "A8": "nr",
+    "A9": "nr"
+   },
+   "fields": [
+    "turn.tokens_out",
+    "turn.latency"
+   ]
+  }
+ },
+ "pairs_beyond_singles": [],
+ "passes": {
+  "pairs": 103,
+  "single": 37
+ },
+ "rulings": {
+  "cell_codes": {
+   ".": "tested: the class's detector reads this field, and nulling it had no measurable effect",
+   "X": "the class becomes undetectable: detection falls to 0/n",
+   "ab": "absent: no detector and no delivered attack",
+   "nr": "not read: the class's detector does not read this field, so nulling it could not move the result",
+   "nt": "not testable: the class has no successful trials, so there is no detection rate to move",
+   "x": "detection degrades materially, with nothing going dark"
+  },
+  "class_detector": {
+   "A1": "d-a01",
+   "A10": null,
+   "A2": "d-a02",
+   "A3": "d-a03",
+   "A4": "d-a04",
+   "A5": "d-a06",
+   "A6": "d-a06",
+   "A7": "d-a07",
+   "A8": "d-a08",
+   "A9": "d-a03"
+  },
+  "covered_mapping": "full",
+  "fp_denominator": {
+   "d-a01": "all",
+   "d-a02": "all",
+   "d-a03": "all",
+   "d-a04": "b1",
+   "d-a06": "all",
+   "d-a07": "all",
+   "d-a08": "all"
+  },
+  "pairs_feed_tiers": false,
+  "ruled_date": "2026-09-22",
+  "several": 3,
+  "stated_justification": [
+   "action.result_hash",
+   "action.tool_name",
+   "content.prompt_hash",
+   "content.redaction_applied",
+   "content.response_hash",
+   "control.policy_version",
+   "session.client_app",
+   "session.config_version",
+   "session.start_time",
+   "session.user_id"
+  ],
+  "tested_majority": 4
+ },
+ "single": {
+  "action.context_document_ids": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.egress_target": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": ".",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.permission_decision": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.result_bytes": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.result_hash": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.tool_arguments": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "action.tool_name": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": ".",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": ".",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.prompt_hash": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.prompt_text": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.redaction_applied": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.response_hash": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.response_text": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "content.system_prompt_version": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "control.block_reason": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "control.canary_triggered": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 1,
+     "any_cell": "X",
+     "before": 1,
+     "cell": "X",
+     "n": 1,
+     "reason": "dark"
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 10,
+     "any_cell": "X",
+     "before": 10,
+     "cell": "X",
+     "n": 10,
+     "reason": "dark"
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "control.policy_version": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.chunk_ids": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.document_ids": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 0,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": ".",
+     "before": 1,
+     "cell": "X",
+     "n": 1,
+     "reason": "dark"
+    },
+    "A6": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 10,
+     "any_cell": "X",
+     "before": 10,
+     "cell": "X",
+     "n": 10,
+     "reason": "dark"
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": ".",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.permission_context": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 10,
+     "any_cell": "X",
+     "before": 10,
+     "cell": "X",
+     "n": 10,
+     "reason": "dark"
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.query_text": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.scores": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "retrieval.source_provenance": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": ".",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.agent_id": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.client_app": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.config_version": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.id": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.start_time": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.tenant_id": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "session.user_id": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.finish_reason": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.index": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.latency": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.model_id": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.model_version": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.timestamp": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.tokens_in": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": ".",
+     "before": 10,
+     "cell": ".c",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  },
+  "turn.tokens_out": {
+   "cells": {
+    "A1": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A10": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "ab",
+     "before": 0,
+     "cell": "ab",
+     "n": 0,
+     "reason": null
+    },
+    "A2": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A3": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A4": {
+     "after": 0,
+     "any_after": 0,
+     "any_before": 0,
+     "any_cell": "nt",
+     "before": 0,
+     "cell": "nt",
+     "n": 0,
+     "reason": null
+    },
+    "A5": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A6": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A7": {
+     "after": 1,
+     "any_after": 1,
+     "any_before": 1,
+     "any_cell": "nr",
+     "before": 1,
+     "cell": "nr",
+     "n": 1,
+     "reason": null
+    },
+    "A8": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    },
+    "A9": {
+     "after": 10,
+     "any_after": 10,
+     "any_before": 10,
+     "any_cell": "nr",
+     "before": 10,
+     "cell": "nr",
+     "n": 10,
+     "reason": null
+    }
+   },
+   "false_positives": {
+    "d-a01": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a02": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a03": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a04": {
+     "after": 0,
+     "all_after": 45,
+     "all_before": 45,
+     "before": 0,
+     "denominator": 30
+    },
+    "d-a06": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a07": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    },
+    "d-a08": {
+     "after": 0,
+     "all_after": 0,
+     "all_before": 0,
+     "before": 0,
+     "denominator": 100
+    }
+   },
+   "firing_all_trials": {
+    "d-a02": {
+     "A8": 10
+    },
+    "d-a03": {
+     "A2": 1,
+     "A9": 10
+    },
+    "d-a04": {
+     "A5": 9,
+     "A8": 10
+    },
+    "d-a06": {
+     "A2": 6,
+     "A5": 1,
+     "A6": 10,
+     "A8": 10
+    },
+    "d-a07": {
+     "A7": 1
+    },
+    "d-a08": {
+     "A8": 10
+    }
+   }
+  }
+ },
+ "tiers": {
+  "action.context_document_ids": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "not_required"
+  },
+  "action.egress_target": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "not_required"
+  },
+  "action.permission_decision": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "not_required"
+  },
+  "action.result_bytes": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "action.result_hash": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "partial",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "action.tool_arguments": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "action.tool_name": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "content.prompt_hash": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "content.prompt_text": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "content.redaction_applied": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "content.response_hash": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "content.response_text": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "content.system_prompt_version": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "partial",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "control.block_reason": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "recommended",
+   "security_only": true,
+   "tier": "not_required"
+  },
+  "control.canary_triggered": {
+   "basis": "the field's removal makes at least one class undetectable",
+   "cells": [
+    "A7 X 1/1 to 0/1",
+    "A9 X 10/10 to 0/10"
+   ],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "required"
+  },
+  "control.policy_version": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "not_required",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "retrieval.chunk_ids": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "retrieval.document_ids": {
+   "basis": "the field's removal makes at least one class undetectable",
+   "cells": [
+    "A5 X 1/1 to 0/1",
+    "A6 X 10/10 to 0/10"
+   ],
+   "match": false,
+   "otel": "partial",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "required"
+  },
+  "retrieval.permission_context": {
+   "basis": "the field's removal makes at least one class undetectable",
+   "cells": [
+    "A9 X 10/10 to 0/10"
+   ],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "required"
+  },
+  "retrieval.query_text": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "retrieval.scores": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "retrieval.source_provenance": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": true,
+   "tier": "not_required"
+  },
+  "session.agent_id": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "session.client_app": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "session.config_version": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "not_required",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "session.id": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "session.start_time": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": true,
+   "otel": "partial",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "session.tenant_id": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "required",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "session.user_id": {
+   "basis": "no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "optional"
+  },
+  "turn.finish_reason": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.index": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "none",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.latency": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "partial",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.model_id": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "optional",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.model_version": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": true,
+   "otel": "full",
+   "predicted_tier": "not_required",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.timestamp": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "partial",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.tokens_in": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  },
+  "turn.tokens_out": {
+   "basis": "no measurable detection effect and no stated justification",
+   "cells": [],
+   "match": false,
+   "otel": "full",
+   "predicted_tier": "recommended",
+   "security_only": false,
+   "tier": "not_required"
+  }
+ },
+ "tree_clean": true,
+ "verdict": {
+  "headline": "undertested",
+  "refuted_limb": {
+   "covered": [],
+   "holds": false,
+   "required": 3
+  },
+  "required_by_mapping": {
+   "full": [],
+   "none, other": [],
+   "none, security only": [
+    "retrieval.permission_context",
+    "control.canary_triggered"
+   ],
+   "partial": [
+    "retrieval.document_ids"
+   ]
+  },
+  "section_9_as_written": "weakened",
+  "security_only_tested": [
+   "control.canary_triggered",
+   "retrieval.permission_context"
+  ],
+  "security_only_untested": {
+   "action.context_document_ids": "read by no detector",
+   "action.egress_target": "read only by d-a01, d-a02, whose classes have no successful trial",
+   "action.permission_decision": "read by no detector",
+   "control.block_reason": "read by no detector",
+   "retrieval.source_provenance": "read only by d-a02, whose classes have no successful trial"
+  },
+  "weakened_limb": {
+   "holds": true,
+   "security_only_optional_or_not_required": [
+    "action.context_document_ids",
+    "action.egress_target",
+    "action.permission_decision",
+    "control.block_reason",
+    "retrieval.source_provenance"
+   ]
+  }
+ }
+}
