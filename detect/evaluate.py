@@ -150,7 +150,37 @@ def evaluate(include_holdouts: bool) -> dict:
             "cross_class": cross,
             "reads": sorted(detector.reads),
         }
-    return {"per_class": per_class, "per_detector": per_detector, "benign_total": len(benign)}
+    holdout_generalisation = {}
+    if include_holdouts:
+        for scenario_id in HOLDOUTS:
+            upper = scenario_id.upper().replace("A0", "A")
+            scenario = load_scenario(scenario_id)
+            sessions = attack_sessions(scenario_id)
+            successes = [s for s in sessions if score_run(scenario, s.run_dir)]
+            rows = {}
+            for detector in DETECTORS:
+                on_success = sum(1 for s in successes if fires(detector, s, config))
+                on_all = sum(1 for s in sessions if fires(detector, s, config))
+                if on_all or on_success:
+                    rows[detector.id] = {
+                        "authored_for": detector.attack_class,
+                        "on_successful": on_success,
+                        "successful_total": len(successes),
+                        "on_all": on_all,
+                        "trials": len(sessions),
+                    }
+            holdout_generalisation[upper] = {
+                "successes": len(successes),
+                "trials": len(sessions),
+                "fired": rows,
+            }
+
+    return {
+        "per_class": per_class,
+        "per_detector": per_detector,
+        "benign_total": len(benign),
+        "holdout_generalisation": holdout_generalisation,
+    }
 
 
 def main() -> int:
@@ -189,6 +219,20 @@ def main() -> int:
             f"    {detector_id}  {rate(row['false_positives'], row['benign_total']):>12}"
             f"  {', '.join(row['examples'])}{cross}"
         )
+
+    if report["holdout_generalisation"]:
+        print()
+        print("  holdouts: the frozen detector set, unchanged, against A5 and A9")
+        for name, row in report["holdout_generalisation"].items():
+            print(f"    {name}  {rate(row['successes'], row['trials'])} successful")
+            if not row["fired"]:
+                print("      no detector fired")
+            for detector_id, hit in row["fired"].items():
+                print(
+                    f"      {detector_id} (authored for {hit['authored_for']})"
+                    f"  on successful {rate(hit['on_successful'], hit['successful_total'])}"
+                    f"   on all trials {rate(hit['on_all'], hit['trials'])}"
+                )
 
     if args.write:
         out = REPO_ROOT / "results" / "baseline.json"
