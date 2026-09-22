@@ -201,6 +201,13 @@ CANARY_SCAN_GLOBS = (
     "attacks/**/*.yaml",
     "attacks/**/*.py",
     "docs/**/*.md",
+    # The detector package and its Sigma rules, added at M4. A detector that
+    # matched a canary value would be keying on the attack design rather than
+    # on behaviour, and a Sigma rule carrying one would publish the value.
+    "detect/**/*.py",
+    "detect/**/*.yml",
+    "detect/**/*.yaml",
+    "benign/**/*.py",
 )
 
 
