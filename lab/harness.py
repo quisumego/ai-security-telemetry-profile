@@ -128,6 +128,7 @@ def build_manifest(
     seed: int,
     result: SessionResult,
     scenario: dict[str, Any] | None = None,
+    task: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The manifest for one run.
 
@@ -135,6 +136,13 @@ def build_manifest(
     attack trial passes a block carrying `id`, `trial`, `holdout` and
     `overlay_digest`, so a capture can be tied to the scenario file and the
     overlay material that produced it without parsing the run label.
+
+    `task` is the benign equivalent and is null for everything else. It carries
+    the M3 task type, so the false positive denominator can be broken down per
+    type at M4 without parsing run labels either. The two blocks are kept
+    separate rather than reusing one: a benign session has no scenario, and
+    recording it under `scenario` would make an attack corpus and a benign
+    corpus indistinguishable to anything reading manifests.
     """
     config = load_config()
     return {
@@ -164,6 +172,7 @@ def build_manifest(
             "tag": freeze_tag(),
         },
         "scenario": scenario,
+        "task": task,
         "git": git_state(),
         "agent": {
             "tools": list(TOOL_NAMES),
