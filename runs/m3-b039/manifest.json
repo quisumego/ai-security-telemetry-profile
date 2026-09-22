@@ -1,0 +1,131 @@
+{
+  "run_id": "m3-b039",
+  "label": "m3 b2 b039",
+  "date": "2026-09-22T10:39:09Z",
+  "seed": 20260961,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "fallback_model": null,
+    "thinking": "disabled",
+    "resolved": [
+      "claude-haiku-4-5",
+      "claude-haiku-4-5-20251001"
+    ],
+    "max_turns": 12,
+    "max_budget_usd": 0.5
+  },
+  "versions": {
+    "config_version": "0.2.0",
+    "astp_version": "0.1.0",
+    "policy_version": "0.1.0",
+    "system_prompt_version": "sp-0.2.0",
+    "claude_agent_sdk": "0.2.139",
+    "claude_cli": "2.1.278 (Claude Code)"
+  },
+  "corpus": {
+    "digest": "5ae2e5c0651584c7636672512a342285b07f7961ee2f13399dc4a76b35445e80",
+    "tag": "freeze-m2"
+  },
+  "scenario": null,
+  "task": {
+    "id": "b039",
+    "type": "b2",
+    "claim_reference": null,
+    "corpus_seed": 20260922
+  },
+  "git": {
+    "commit": "b1086bb6127696ba845b38f8a075c538f83d9866",
+    "working_tree_clean": false
+  },
+  "agent": {
+    "tools": [
+      "search_documents",
+      "lookup_claim",
+      "read_case_file",
+      "write_case_note",
+      "send_email",
+      "fetch_url"
+    ],
+    "setting_sources": [],
+    "built_in_tools": []
+  },
+  "session": {
+    "id": "s-9439ec1c493e",
+    "prompt": "What does the Professional Indemnity wording say about notification of circumstances?",
+    "events_path": "runs/m3-b039/session-s-9439ec1c493e.jsonl",
+    "events_written": 27,
+    "turns": 4,
+    "tool_calls": 3,
+    "subtype": "success",
+    "is_error": false,
+    "turns_enriched": 4,
+    "turns_unenriched": 0,
+    "error_text": null
+  },
+  "tokens": {
+    "input_tokens": 544,
+    "output_tokens": 486,
+    "cache_read_input_tokens": 56567,
+    "cache_creation_input_tokens": 6218
+  },
+  "usage_raw": {
+    "input_tokens": 12,
+    "cache_creation_input_tokens": 6218,
+    "cache_read_input_tokens": 56567,
+    "output_tokens": 470,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6218,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 3,
+        "output_tokens": 126,
+        "cache_read_input_tokens": 16439,
+        "cache_creation_input_tokens": 1594,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1594
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "model_usage_raw": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 532,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000612,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    },
+    "claude-haiku-4-5": {
+      "inputTokens": 12,
+      "outputTokens": 470,
+      "cacheReadInputTokens": 56567,
+      "cacheCreationInputTokens": 6218,
+      "webSearchRequests": 0,
+      "costUSD": 0.0204547,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty"
+    }
+  },
+  "total_cost_usd_estimate": 0.0210667
+}
