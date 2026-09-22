@@ -1957,6 +1957,13 @@ in `results/necessity-matrix.md` and neither is suppressed.
    owner made it after the M4 results and after the design proposal had stated
    the expected outcome. The text itself predates every capture and was not
    edited.
+7. **`session.id` tiers Not required because of how the sweep reads a
+   session.** The harness takes one capture file as one session, so nulling
+   `session.id` cannot change what any detector sees. A real pipeline receives
+   events from many sessions interleaved and needs `session.id` to put a session
+   back together. The tier is what the rule gives for this harness, not evidence
+   that a deployment could drop the field. Found at the close-out, after the
+   tiers were written, and recorded rather than acted on.
 
 ### Still open
 
