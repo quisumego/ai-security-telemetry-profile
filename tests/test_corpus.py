@@ -208,6 +208,12 @@ CANARY_SCAN_GLOBS = (
     "detect/**/*.yml",
     "detect/**/*.yaml",
     "benign/**/*.py",
+    # The ablation package and the generated results, added at M5 by the
+    # owner's ruling of 22 September 2026. Results are meant to hold
+    # identifiers and counts only, and this is what holds them to it.
+    "ablation/**/*.py",
+    "results/**/*.json",
+    "results/**/*.md",
 )
 
 
