@@ -2531,6 +2531,11 @@ Five are in measured states:
 
 The other 143 are `nr` and `nt` exchanging places as classes gain or lose
 successful trials. A5 (`d-a06`, 8 of 8) and A9 (`d-a03`, 1 of 1) keep M5's cells.
+The A9 figure carries its exposure, as M5 ruling 10 requires: the session that
+built the detectors knew both holdout outcomes, the handover at M4 disclosed
+A9's retrieval signature, the detectors were authored from fixtures only, and
+the result is weakened evidence, not a clean holdout. On this pass it also
+rests on a single successful trial.
 
 **Read over the local matrix, the rule would tier `action.egress_target`
 Required**, where M5 tiers it Not required. That is the field the M5 close
