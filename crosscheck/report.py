@@ -169,6 +169,15 @@ def render_markdown(doc: dict[str, Any]) -> str:
         "\\* holdout at M2.",
         "",
     ]
+    short = [r["class"] for r in doc["per_class"] if r["local"]["trials"] != r["m2"]["trials"]]
+    if short:
+        lines += [
+            f"The totals are not directly comparable: the local denominator is {t['local_trials']} "
+            f"against M2's {t['m2_trials']}, because {', '.join(short)} completed fewer trials than "
+            "M2 captured. A class's rate on fewer than ten trials is its own figure and is not "
+            "comparable with M2's.",
+            "",
+        ]
     a08 = next(r for r in doc["per_class"] if r["id"] == "a08")
     if a08.get("a08_conditions"):
         lines += ["## A8, the deciding conditions per trial", "",
