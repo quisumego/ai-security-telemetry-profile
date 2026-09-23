@@ -1,0 +1,3387 @@
+{
+  "about": "The M7 vendor gap analysis: verdicts from vendor_gap/evidence.yaml, class answers from vendor passes over the captures. Identifiers, codes and counts only.",
+  "additions": {
+    "aws": {
+      "column": "aws-model",
+      "measured": [
+        {
+          "classes": [
+            "A5",
+            "A6"
+          ],
+          "field": "retrieval.document_ids",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A7",
+            "A9"
+          ],
+          "field": "control.canary_triggered",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A8",
+            "A9"
+          ],
+          "field": "session.id",
+          "tier": "not_required"
+        },
+        {
+          "classes": [
+            "A9"
+          ],
+          "field": "retrieval.permission_context",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A8"
+          ],
+          "field": "turn.tokens_in",
+          "tier": "not_required"
+        }
+      ],
+      "others": [
+        {
+          "field": "session.start_time",
+          "tier": "optional"
+        },
+        {
+          "field": "session.user_id",
+          "tier": "optional"
+        },
+        {
+          "field": "session.client_app",
+          "tier": "optional"
+        },
+        {
+          "field": "session.config_version",
+          "tier": "optional"
+        },
+        {
+          "field": "content.prompt_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "content.response_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "content.redaction_applied",
+          "tier": "optional"
+        },
+        {
+          "field": "action.tool_name",
+          "tier": "optional"
+        },
+        {
+          "field": "action.result_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "control.policy_version",
+          "tier": "optional"
+        },
+        {
+          "field": "session.tenant_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "session.agent_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.index",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.model_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.model_version",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.latency",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.finish_reason",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.prompt_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.response_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.system_prompt_version",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.chunk_ids",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.scores",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.query_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.source_provenance",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.tool_arguments",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.result_bytes",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.permission_decision",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.egress_target",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.context_document_ids",
+          "tier": "not_required"
+        },
+        {
+          "field": "control.block_reason",
+          "tier": "not_required"
+        }
+      ],
+      "restoring_sets": {
+        "A5": [
+          [
+            "event:retrieval",
+            "field:retrieval.document_ids"
+          ]
+        ],
+        "A6": [
+          [
+            "event:retrieval",
+            "field:retrieval.document_ids"
+          ]
+        ],
+        "A7": [
+          [
+            "field:control.canary_triggered"
+          ]
+        ],
+        "A8": [
+          [
+            "field:turn.tokens_in"
+          ],
+          [
+            "event:tool_pre",
+            "group:session.id"
+          ]
+        ],
+        "A9": [
+          [
+            "event:retrieval",
+            "field:control.canary_triggered",
+            "field:retrieval.permission_context",
+            "group:session.id"
+          ]
+        ]
+      }
+    },
+    "azure": {
+      "column": "azure-model",
+      "measured": [
+        {
+          "classes": [
+            "A5",
+            "A6"
+          ],
+          "field": "retrieval.document_ids",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A7",
+            "A9"
+          ],
+          "field": "control.canary_triggered",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A8",
+            "A9"
+          ],
+          "field": "session.id",
+          "tier": "not_required"
+        },
+        {
+          "classes": [
+            "A9"
+          ],
+          "field": "retrieval.permission_context",
+          "tier": "required"
+        },
+        {
+          "classes": [
+            "A8"
+          ],
+          "field": "turn.tokens_in",
+          "tier": "not_required"
+        }
+      ],
+      "others": [
+        {
+          "field": "session.start_time",
+          "tier": "optional"
+        },
+        {
+          "field": "session.user_id",
+          "tier": "optional"
+        },
+        {
+          "field": "session.client_app",
+          "tier": "optional"
+        },
+        {
+          "field": "session.config_version",
+          "tier": "optional"
+        },
+        {
+          "field": "content.prompt_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "content.response_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "content.redaction_applied",
+          "tier": "optional"
+        },
+        {
+          "field": "action.tool_name",
+          "tier": "optional"
+        },
+        {
+          "field": "action.result_hash",
+          "tier": "optional"
+        },
+        {
+          "field": "control.policy_version",
+          "tier": "optional"
+        },
+        {
+          "field": "session.tenant_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "session.agent_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.index",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.model_id",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.model_version",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.tokens_out",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.latency",
+          "tier": "not_required"
+        },
+        {
+          "field": "turn.finish_reason",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.prompt_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.response_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "content.system_prompt_version",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.chunk_ids",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.scores",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.query_text",
+          "tier": "not_required"
+        },
+        {
+          "field": "retrieval.source_provenance",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.tool_arguments",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.result_bytes",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.permission_decision",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.egress_target",
+          "tier": "not_required"
+        },
+        {
+          "field": "action.context_document_ids",
+          "tier": "not_required"
+        },
+        {
+          "field": "control.block_reason",
+          "tier": "not_required"
+        }
+      ],
+      "restoring_sets": {
+        "A5": [
+          [
+            "event:retrieval",
+            "field:retrieval.document_ids"
+          ]
+        ],
+        "A6": [
+          [
+            "event:retrieval",
+            "field:retrieval.document_ids"
+          ]
+        ],
+        "A7": [
+          [
+            "event:turn",
+            "field:control.canary_triggered"
+          ]
+        ],
+        "A8": [
+          [
+            "event:turn",
+            "field:turn.tokens_in"
+          ],
+          [
+            "event:tool_pre",
+            "group:session.id"
+          ]
+        ],
+        "A9": [
+          [
+            "event:retrieval",
+            "event:turn",
+            "field:control.canary_triggered",
+            "field:retrieval.permission_context",
+            "group:session.id"
+          ]
+        ]
+      }
+    }
+  },
+  "answers": {
+    "aws-agent": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "yes"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "yes"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "yes"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "Xc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "no",
+          "field:turn.tokens_in": "no",
+          "group:session.id": "yes"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "yes"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "aws-agent-parsed": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "yes"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "yes"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "yes"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "Xc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "no",
+          "field:turn.tokens_in": "no",
+          "group:session.id": "yes"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "yes"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "aws-as-shipped": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "yes",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "aws-combined": {
+      "A1": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A3": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A4": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A5": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A6": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A7": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A8": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A9": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      }
+    },
+    "aws-model": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "yes",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "aws-model-parsed": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "maybe",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:tool_pre"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "maybe",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:tool_pre"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "maybe",
+          "field:action.tool_name": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:tool_pre",
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:tool_pre"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "maybe",
+          "event:turn": "yes",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:tool_pre",
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:tool_pre",
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "yes",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "azure-agent": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "Xc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "no",
+          "field:turn.tokens_in": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "azure-agent-parsed": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "Xc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "no",
+          "field:turn.tokens_in": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "no",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "azure-as-shipped": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "maybe",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:turn.tokens_in"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "azure-combined": {
+      "A1": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A3": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A4": {
+        "code": "nt",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A5": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A6": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A7": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A8": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      },
+      "A9": {
+        "code": "uc",
+        "reason": "no documented key links the two layers' records"
+      }
+    },
+    "azure-model": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "maybe",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in",
+              "group:session.id"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:turn.tokens_in",
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:turn.tokens_in"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    },
+    "azure-model-parsed": {
+      "A1": {
+        "code": "nt",
+        "detector": "d-a01",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:control.canary_triggered": "no"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A10": {
+        "code": "ab"
+      },
+      "A2": {
+        "code": "nt",
+        "detector": "d-a02",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:tool_pre": "no",
+          "field:action.egress_target": "no",
+          "field:retrieval.source_provenance": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A3": {
+        "code": "nt",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A4": {
+        "code": "nt",
+        "detector": "d-a04",
+        "inputs": {
+          "event:tool_pre": "no",
+          "field:action.tool_name": "maybe"
+        },
+        "n": 0,
+        "passes": [
+          {
+            "available": [
+              "field:action.tool_name"
+            ],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "nt",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A5": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A6": {
+        "code": "X",
+        "detector": "d-a06",
+        "inputs": {
+          "event:retrieval": "no",
+          "field:retrieval.document_ids": "no"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A7": {
+        "code": "X",
+        "detector": "d-a07",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 1,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A8": {
+        "code": "uc",
+        "detector": "d-a08",
+        "inputs": {
+          "event:tool_pre": "no",
+          "event:turn": "maybe",
+          "field:turn.tokens_in": "maybe",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in",
+              "group:session.id"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn",
+              "field:turn.tokens_in"
+            ],
+            "code": ".c",
+            "detected": 10,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:turn.tokens_in",
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "field:turn.tokens_in"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "Xc",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      },
+      "A9": {
+        "code": "X",
+        "detector": "d-a03",
+        "inputs": {
+          "event:retrieval": "no",
+          "event:turn": "maybe",
+          "field:control.canary_triggered": "no",
+          "field:retrieval.permission_context": "no",
+          "group:session.id": "maybe"
+        },
+        "n": 10,
+        "passes": [
+          {
+            "available": [
+              "event:turn",
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "event:turn"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [
+              "group:session.id"
+            ],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          },
+          {
+            "available": [],
+            "code": "X",
+            "detected": 0,
+            "false_positives": 0
+          }
+        ]
+      }
+    }
+  },
+  "any_detector": {
+    "aws-agent": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "aws-agent-parsed": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "aws-as-shipped": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "aws-model": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "aws-model-parsed": {
+      "A5": {
+        "n": 1,
+        "optimistic": 1,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "azure-agent": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "azure-agent-parsed": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "azure-as-shipped": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "azure-model": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    },
+    "azure-model-parsed": {
+      "A5": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A6": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A7": {
+        "n": 1,
+        "optimistic": 0,
+        "pessimistic": 0
+      },
+      "A8": {
+        "n": 10,
+        "optimistic": 10,
+        "pessimistic": 0
+      },
+      "A9": {
+        "n": 10,
+        "optimistic": 0,
+        "pessimistic": 0
+      }
+    }
+  },
+  "baseline": {
+    "A1": {
+      "detected": 0,
+      "detector": "d-a01",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 0
+    },
+    "A10": {
+      "detector": null,
+      "n": 0
+    },
+    "A2": {
+      "detected": 0,
+      "detector": "d-a02",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 0
+    },
+    "A3": {
+      "detected": 0,
+      "detector": "d-a03",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 0
+    },
+    "A4": {
+      "detected": 0,
+      "detector": "d-a04",
+      "false_positives": 0,
+      "fp_denominator": 30,
+      "n": 0
+    },
+    "A5": {
+      "detected": 1,
+      "detector": "d-a06",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 1
+    },
+    "A6": {
+      "detected": 10,
+      "detector": "d-a06",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 10
+    },
+    "A7": {
+      "detected": 1,
+      "detector": "d-a07",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 1
+    },
+    "A8": {
+      "detected": 10,
+      "detector": "d-a08",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 10
+    },
+    "A9": {
+      "detected": 10,
+      "detector": "d-a03",
+      "false_positives": 0,
+      "fp_denominator": 100,
+      "n": 10
+    }
+  },
+  "cloud_resources": false,
+  "columns": {
+    "aws-agent": {
+      "label": "agent layer on",
+      "parsed": false,
+      "surfaces": [
+        "aws-agent"
+      ],
+      "vendor": "aws"
+    },
+    "aws-agent-parsed": {
+      "label": "agent layer on, body parsed",
+      "parsed": true,
+      "surfaces": [
+        "aws-agent"
+      ],
+      "vendor": "aws"
+    },
+    "aws-as-shipped": {
+      "label": "as shipped",
+      "parsed": false,
+      "surfaces": [
+        "aws-as-shipped"
+      ],
+      "vendor": "aws"
+    },
+    "aws-combined": {
+      "label": "model and agent layers together",
+      "parsed": false,
+      "surfaces": [
+        "aws-model",
+        "aws-agent"
+      ],
+      "vendor": "aws"
+    },
+    "aws-model": {
+      "label": "model layer on",
+      "parsed": false,
+      "surfaces": [
+        "aws-model"
+      ],
+      "vendor": "aws"
+    },
+    "aws-model-parsed": {
+      "label": "model layer on, body parsed",
+      "parsed": true,
+      "surfaces": [
+        "aws-model"
+      ],
+      "vendor": "aws"
+    },
+    "azure-agent": {
+      "label": "agent layer on",
+      "parsed": false,
+      "surfaces": [
+        "azure-agent"
+      ],
+      "vendor": "azure"
+    },
+    "azure-agent-parsed": {
+      "label": "agent layer on, body parsed",
+      "parsed": true,
+      "surfaces": [
+        "azure-agent"
+      ],
+      "vendor": "azure"
+    },
+    "azure-as-shipped": {
+      "label": "as shipped",
+      "parsed": false,
+      "surfaces": [
+        "azure-as-shipped"
+      ],
+      "vendor": "azure"
+    },
+    "azure-combined": {
+      "label": "model and agent layers together",
+      "parsed": false,
+      "surfaces": [
+        "azure-model",
+        "azure-agent"
+      ],
+      "vendor": "azure"
+    },
+    "azure-model": {
+      "label": "model layer on",
+      "parsed": false,
+      "surfaces": [
+        "azure-model"
+      ],
+      "vendor": "azure"
+    },
+    "azure-model-parsed": {
+      "label": "model layer on, body parsed",
+      "parsed": true,
+      "surfaces": [
+        "azure-model"
+      ],
+      "vendor": "azure"
+    }
+  },
+  "command": ".venv/bin/python -m vendor_gap.analysis --write",
+  "detectors_frozen_at": "freeze-m4",
+  "model_calls": false,
+  "retrieved": "23 September 2026",
+  "surfaces": {
+    "aws-agent": {
+      "events": {
+        "retrieval": "absent",
+        "session_end": "available_by_default",
+        "session_start": "available_by_default",
+        "tool_post": "absent",
+        "tool_pre": "absent",
+        "turn": "absent"
+      },
+      "fields": {
+        "absent": 33,
+        "available_by_default": 4
+      },
+      "forms": {
+        "caller_supplied": 23,
+        "content_only": 2,
+        "derivable": 10,
+        "own_field": 2
+      },
+      "security_only": {
+        "absent": 7
+      }
+    },
+    "aws-as-shipped": {
+      "events": {
+        "retrieval": "absent",
+        "session_end": "absent",
+        "session_start": "absent",
+        "tool_post": "absent",
+        "tool_pre": "absent",
+        "turn": "available_by_default"
+      },
+      "fields": {
+        "absent": 22,
+        "available_by_default": 3,
+        "unconfirmed": 12
+      },
+      "forms": {
+        "caller_supplied": 11,
+        "content_only": 2,
+        "derivable": 11,
+        "own_field": 13
+      },
+      "security_only": {
+        "absent": 7
+      }
+    },
+    "aws-model": {
+      "events": {
+        "retrieval": "available_by_default",
+        "session_end": "absent",
+        "session_start": "absent",
+        "tool_post": "available_by_default",
+        "tool_pre": "available_by_default",
+        "turn": "available_by_default"
+      },
+      "fields": {
+        "absent": 22,
+        "available_by_default": 12,
+        "unconfirmed": 3
+      },
+      "forms": {
+        "body_documented": 5,
+        "caller_supplied": 11,
+        "content_only": 2,
+        "derivable": 11,
+        "own_field": 8
+      },
+      "security_only": {
+        "absent": 7
+      }
+    },
+    "azure-agent": {
+      "events": {
+        "retrieval": "absent",
+        "session_end": "available_by_default",
+        "session_start": "available_by_default",
+        "tool_post": "absent",
+        "tool_pre": "absent",
+        "turn": "absent"
+      },
+      "fields": {
+        "absent": 31,
+        "unconfirmed": 6
+      },
+      "forms": {
+        "caller_supplied": 22,
+        "derivable": 9,
+        "own_field": 6
+      },
+      "security_only": {
+        "absent": 7
+      }
+    },
+    "azure-as-shipped": {
+      "events": {
+        "retrieval": "absent",
+        "session_end": "absent",
+        "session_start": "absent",
+        "tool_post": "absent",
+        "tool_pre": "absent",
+        "turn": "unconfirmed"
+      },
+      "fields": {
+        "absent": 22,
+        "unconfirmed": 15
+      },
+      "forms": {
+        "caller_supplied": 11,
+        "content_only": 2,
+        "derivable": 11,
+        "own_field": 13
+      },
+      "security_only": {
+        "absent": 7
+      }
+    },
+    "azure-model": {
+      "events": {
+        "retrieval": "absent",
+        "session_end": "absent",
+        "session_start": "absent",
+        "tool_post": "absent",
+        "tool_pre": "absent",
+        "turn": "available_by_default"
+      },
+      "fields": {
+        "absent": 21,
+        "available_by_default": 1,
+        "unconfirmed": 15
+      },
+      "forms": {
+        "caller_supplied": 10,
+        "content_only": 2,
+        "derivable": 11,
+        "own_field": 14
+      },
+      "security_only": {
+        "absent": 7
+      }
+    }
+  }
+}
