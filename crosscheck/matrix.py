@@ -135,7 +135,8 @@ def render_markdown(doc: dict[str, Any]) -> str:
         "| Class | Detector | Local successful | M5 successful |",
         "|---|---|---|---|",
     ]
-    for cls, c in doc["classes"].items():
+    for cls in CLASS_ORDER:
+        c = doc["classes"][cls]
         lines.append(f"| {cls} | {c['detector'] or 'none'} | {c['local_successful']}/{c['local_trials']} | "
                      f"{c['m5_successful']}/{c['m5_trials']} |")
     lines += ["", f"## Cells that differ from M5: {len(doc['differences'])}", ""]
