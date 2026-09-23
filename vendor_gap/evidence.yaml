@@ -1,0 +1,764 @@
+# The vendor gap evidence: every source, every quotation, every verdict.
+#
+# This file is the source of truth for docs/vendor-gap-analysis.md and
+# results/vendor-gap.json, ruled at M7 on 23 September 2026 (ruling 14). Every
+# page below was read in the M7 session on its retrieval date, from the page's
+# own text. Nothing here is from memory, and no vendor's behaviour is inferred
+# from the other's. tests/test_vendor_gap.py holds every verdict to a listed
+# source.
+#
+# How the lab is placed on a vendor. The lab agent runs on the Claude Agent SDK
+# against Anthropic's API, not on either vendor. The question is hypothetical:
+# had the same agent's model calls gone through the vendor's model layer, or had
+# the same agent been hosted on the vendor's agent layer, what would the
+# vendor's own records carry. In the lab, tools and retrieval run in the
+# application (lab/tools/__init__.py), so a vendor sees them only as far as they
+# pass through a model request or response, or through a record the deployment
+# itself supplies.
+#
+# Row keys, one row per field and per event type, on every surface:
+#   v:       verdict. D available by default, C available with configuration,
+#            A absent, U unconfirmed (vendor_gap/rulings.py, ruling 3).
+#   form:    own (own field, the default), body (inside a request or response
+#            body), content (in free content only, because the application
+#            wrote it there), caller (caller-supplied, or held only by the
+#            deployment), derived (the deployment derives it). Rulings 6 and 7.
+#   path:    for form body only. "undocumented" where the pages place the value
+#            in a body but document no path to it inside the logged body.
+#   partial: the documented difference in meaning from the register (ruling 9).
+#   setting: for v C, the setting that makes it available (ruling 4).
+#   src:     source numbers. For v U, the pages attempted.
+#   note:    why, in one or two lines.
+#
+# A row with v A and a form of caller or derived is absent under vendor
+# defaults because the vendor does not produce the value itself (ruling 7).
+# Any other v A needs a full field list, or for an event type a full list of
+# record kinds, declared on its surface (ruling 3).
+
+retrieved: 23 September 2026
+
+sources:
+  - n: 1
+    title: Enable diagnostic logging for Microsoft Foundry
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/how-to/diagnostic-logging
+    updated: 26 June 2026
+  - n: 2
+    title: Monitoring data reference for Azure OpenAI
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/openai/monitor-openai-reference
+    updated: 19 May 2026
+  - n: 3
+    title: Diagnostic Settings in Azure Monitor
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/azure-monitor/data-collection/diagnostic-settings
+    requested: https://learn.microsoft.com/en-us/azure/azure-monitor/platform/diagnostic-settings
+    updated: 22 September 2026
+  - n: 4
+    title: Azure resource logs supported services and schemas
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema
+    requested: https://learn.microsoft.com/en-us/azure/azure-monitor/platform/resource-logs-schema
+    updated: 22 September 2026
+  - n: 5
+    title: Monitor Azure OpenAI in Microsoft Foundry Models (classic)
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/monitor-openai
+    updated: 12 May 2026
+    note: a classic page, used because source 2 links to it, as ruling 18 allows
+  - n: 6
+    title: Activity Log in Azure Monitor
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/activity-log
+    requested: https://learn.microsoft.com/en-us/azure/azure-monitor/platform/activity-log
+    updated: 22 September 2026
+  - n: 7
+    title: Azure Activity Log event schema
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/activity-log-schema
+    requested: https://learn.microsoft.com/en-us/azure/azure-monitor/platform/activity-log-schema
+    updated: 22 September 2026
+  - n: 8
+    title: Agent tracing overview
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept
+    updated: 28 August 2026
+  - n: 9
+    title: Microsoft Foundry Tracing and Data Handling
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-data
+    updated: 26 June 2026
+  - n: 10
+    title: Set Up Tracing for AI Agents in Microsoft Foundry
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-setup
+    updated: 7 September 2026
+  - n: 11
+    title: Export hosted agent telemetry by using OpenTelemetry
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/configure-hosted-agent-telemetry
+    updated: 13 August 2026
+  - n: 12
+    title: "Quickstart: Trace your hosted agent"
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry/observability/quickstarts/quickstart-tracing-hosted-agent
+    updated: 5 August 2026
+  - n: 13
+    title: Monitoring data reference for Foundry Agent Service (classic)
+    publisher: Microsoft Learn
+    url: https://learn.microsoft.com/en-us/azure/foundry-classic/agents/reference/monitor-service
+    requested: https://learn.microsoft.com/en-us/azure/ai-foundry/agents/reference/monitor-service
+    updated: 14 April 2026
+    note: a classic page, used because the current address redirects to it, as ruling 18 allows
+  - n: 14
+    title: Enable diagnostic logging
+    publisher: Microsoft Learn, Foundry Tools
+    url: https://learn.microsoft.com/en-us/azure/ai-services/diagnostic-logging
+    updated: 5 June 2026
+    note: the page source 4 links as the schema for Foundry Tools; it carries no schema
+  - n: 15
+    title: Monitor model invocation using CloudWatch Logs and Amazon S3
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html
+    updated: no date on the page
+  - n: 16
+    title: Per-request metadata tagging
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-request-metadata.html
+    updated: no date on the page
+  - n: 17
+    title: Converse
+    publisher: Amazon Bedrock API Reference
+    url: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
+    updated: no date on the page
+  - n: 18
+    title: Monitor the bedrock-runtime endpoint
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/monitoring.html
+    updated: no date on the page
+  - n: 19
+    title: Monitor the bedrock-mantle endpoint
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/monitoring-mantle.html
+    updated: no date on the page
+  - n: 20
+    title: Monitor Amazon Bedrock features
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/monitoring-features.html
+    updated: no date on the page
+  - n: 21
+    title: Monitor Amazon Bedrock API calls using CloudTrail
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/logging-using-cloudtrail.html
+    updated: no date on the page
+  - n: 22
+    title: CloudTrail record contents for management, data, and network activity events
+    publisher: AWS CloudTrail User Guide
+    url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html
+    updated: no date on the page
+  - n: 23
+    title: Monitor bedrock-runtime inference using CloudWatch metrics
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/monitoring-runtime-metrics.html
+    updated: no date on the page
+  - n: 24
+    title: Monitor knowledge bases using CloudWatch Logs
+    publisher: Amazon Bedrock User Guide
+    url: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-bases-logging.html
+    updated: no date on the page
+  - n: 25
+    title: Observe your agent applications on Amazon Bedrock AgentCore Observability
+    publisher: Amazon Bedrock AgentCore Developer Guide
+    url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html
+    updated: no date on the page
+  - n: 26
+    title: Amazon Bedrock AgentCore generated observability data
+    publisher: Amazon Bedrock AgentCore Developer Guide
+    url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-service-provided.html
+    updated: no date on the page
+  - n: 27
+    title: AgentCore generated runtime observability data
+    publisher: Amazon Bedrock AgentCore Developer Guide
+    url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-runtime-metrics.html
+    updated: no date on the page
+  - n: 28
+    title: Add observability to your Amazon Bedrock AgentCore resources
+    publisher: Amazon Bedrock AgentCore Developer Guide
+    url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-configure.html
+    updated: no date on the page
+
+# Short quotations, each exactly as the page reads, where a constraint is
+# ambiguous or decides a verdict (ruling 15).
+quotes:
+  az-resource-default:
+    source: 3
+    text: Aren't collected by default. Create a diagnostic setting to collect resource logs.
+  az-auto-collected:
+    source: 3
+    text: Automatically collected without configuration.
+  az-categories:
+    source: 1
+    text: Select Audit Logs, Request and Response Logs, Azure OpenAI Request Usage, and AllMetrics.
+  az-trace-cqa:
+    source: 1
+    text: The "Trace" option in diagnostic logging is only available for Custom question answering.
+  az-request-latency:
+    source: 1
+    text: Run this query to measure request latency by response code
+  az-header-fields:
+    source: 5
+    text: All resource logs in Azure Monitor have the same header fields, followed by service-specific fields.
+  az-properties:
+    source: 4
+    text: Any extended properties related to this category of events.
+  az-correlation:
+    source: 4
+    text: A GUID that's used to group together a set of related events.
+  az-activity-scope:
+    source: 6
+    text: Azure Monitor records management operations for your Azure resources through the activity log feature.
+  az-activity-admin:
+    source: 7
+    text: Contains the record of all create, update, delete, and action operations performed through Resource Manager.
+  az-activity-properties:
+    source: 7
+    text: Set of <Key, Value> pairs (that is, a Dictionary) describing the details of the event.
+  az-conventions-table:
+    source: 8
+    text: The following table describes common OpenTelemetry GenAI conventions for multi-agent observability.
+  az-tracing-off:
+    source: 9
+    text: Tracing is off by default.
+  az-server-side:
+    source: 10
+    text: Foundry automatically logs server-side traces for Prompt agents, Host agents, and workflows in the Foundry portal.
+  az-hosted-sources:
+    source: 11
+    text: Hosted agents generate telemetry from the protocol runtime (the Responses or Invocations server) and from your agent code.
+  az-out-of-the-box:
+    source: 12
+    text: out-of-the-box instrumentation for Microsoft Agent Framework and LangChain
+  az-invocation-trace:
+    source: 12
+    text: Each invocation generates a complete trace.
+  az-content-recording:
+    source: 12
+    text: Enable content recording by setting the environment variable OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true in your agent configuration.
+  aws-disabled:
+    source: 15
+    text: Model invocation logging is disabled by default.
+  aws-full-request:
+    source: 15
+    text: you can collect the full request data, response data, and metadata associated with supported calls
+  aws-structure:
+    source: 15
+    text: Each invocation log entry is a JSON object with the following structure.
+  aws-populated:
+    source: 15
+    text: "Every field in the record is populated by Amazon Bedrock automatically, with one exception: requestMetadata is the only field supplied by the caller."
+  aws-record-type:
+    source: 15
+    text: The type of log record. Always ModelInvocationLog.
+  aws-request-body:
+    source: 15
+    text: The request body sent to the model (up to 100 KB).
+  aws-modalities:
+    source: 15
+    text: Select the modalities of the data requests and responses that you want to publish to the logs.
+  aws-runtime-only:
+    source: 15
+    text: Model invocation logging is only supported for calls made through the bedrock-runtime endpoint.
+  aws-input-tokens:
+    source: 15
+    text: The number of input tokens in the request.
+  aws-identity:
+    source: 15
+    text: The AWS STS or IAM ARN of the principal that made the request, including the role name and the session or user name.
+  aws-session-metadata:
+    source: 16
+    text: Use higher-cardinality values such as session or trace identifiers only when you need to trace individual calls.
+  aws-metadata-not-enforced:
+    source: 16
+    text: Request metadata is supplied per call and is not enforced by Amazon Bedrock.
+  aws-ct-enabled:
+    source: 21
+    text: CloudTrail is enabled on your AWS account when you create the account.
+  aws-ct-management:
+    source: 21
+    text: CloudTrail logs management event API operations by default.
+  aws-ct-data-events:
+    source: 21
+    text: Data events are often high-volume activities that CloudTrail doesn’t log by default.
+  aws-ct-request-parameters:
+    source: 22
+    text: The parameters, if any, that were sent with the request.
+  aws-ct-response-elements:
+    source: 22
+    text: The response elements, if any, for actions that make changes (create, update, or delete actions).
+  aws-kb-ingestion:
+    source: 24
+    text: Amazon Bedrock supports a monitoring system to help you understand the execution of any data ingestion jobs for your knowledge bases.
+  aws-ac-instrument:
+    source: 25
+    text: You can also instrument your agent code to provide additional span and trace data and custom metrics and logs.
+  aws-ac-explicit:
+    source: 26
+    text: Signals marked with an asterisk require explicit enablement.
+  aws-ac-spans:
+    source: 27
+    text: The following table defines the operation for which spans are created and the attributes for each captured span.
+  aws-ac-enable:
+    source: 27
+    text: To enable this span data, you need to enable observability on your agent resource.
+  aws-ac-payload:
+    source: 27
+    text: request_payload - the request payload of the agent invocation
+  aws-ac-log-group:
+    source: 28
+    text: When you create an AgentCore runtime resource (agent), by default, AgentCore runtime creates a CloudWatch log group for the service-provided logs.
+  aws-ac-transaction-search:
+    source: 28
+    text: you first need to complete a one-time setup to turn on Amazon CloudWatch Transaction Search
+
+surfaces:
+
+  # ================================================================= Azure ==
+  - id: azure-as-shipped
+    vendor: azure
+    layer: as_shipped
+    name: Activity log and platform metrics
+    switch: none; both are collected with no action
+    switch_src: [3]
+    switch_quotes: [az-auto-collected]
+    records: >-
+      Activity log entries for management operations performed through
+      Resource Manager, and platform metrics as numeric series split by
+      dimensions such as the model deployment and model name. Agent metrics,
+      including tool calls split by tool name, are series too.
+    records_src: [6, 7, 2, 13]
+    full_field_list: null
+    full_field_list_note: >-
+      The activity log's properties member is an open dictionary, so no page
+      gives an entry's full field list.
+    full_record_kinds:
+      src: [7]
+      quotes: [az-activity-scope, az-activity-admin]
+    fields:
+      session.id:                    {v: A, form: caller, src: [7], note: "The lab's session identifier exists only in the lab; no page names a way to send it."}
+      session.start_time:            {v: A, form: derived, src: [7], note: "Derivable from a session's first record, which needs a session key the surface lacks."}
+      session.user_id:               {v: U, src: [6, 7], partial: "the caller of a management operation, not the end user of a session", note: "An entry's caller would identify the principal if model calls were recorded, which the pages do not settle."}
+      session.tenant_id:             {v: A, form: caller, src: [7], note: "The deployment's own tenancy model; the vendor cannot know it."}
+      session.client_app:            {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      session.agent_id:              {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      session.config_version:        {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      turn.index:                    {v: A, form: derived, src: [7], note: "Derivable from record order within a session, which needs a session key."}
+      turn.timestamp:                {v: U, src: [6, 7], note: "An entry carries eventTimestamp, but whether a model call is recorded at all is not settled."}
+      turn.model_id:                 {v: U, src: [6, 7, 2], note: "Metrics split by model name, but a metric is a series, not a per-call value; no entry field names the model."}
+      turn.model_version:            {v: U, src: [6, 7, 2], note: "As turn.model_id."}
+      turn.tokens_in:                {v: U, src: [2, 7], note: "Token metrics are series split by deployment and model, not per-call values; an entry's open properties could carry one, which no page settles."}
+      turn.tokens_out:               {v: U, src: [2, 7], note: "As turn.tokens_in."}
+      turn.latency:                  {v: U, src: [2, 7], note: "Latency metrics are series, not per-call values."}
+      turn.finish_reason:            {v: U, src: [7], note: "Not a named entry field; the open properties member is not documented for these operations."}
+      content.prompt_text:           {v: U, src: [7], note: "httpRequest names the client request identifier, IP address and method; no page says a body is recorded."}
+      content.prompt_hash:           {v: A, form: derived, src: [7], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: U, src: [7], note: "Not a named entry field."}
+      content.response_hash:         {v: A, form: derived, src: [7], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      content.redaction_applied:     {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: U, form: content, src: [7], note: "Identifiers reach the vendor only inside tool results the application writes, and whether a model call is recorded at all is not settled."}
+      retrieval.chunk_ids:           {v: U, form: content, src: [7], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [7], note: "The lab's search tool does not return scores to the model; they stay in the application."}
+      retrieval.query_text:          {v: U, src: [7], note: "Would sit in the model's tool call, which no named entry field carries."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [7], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [7], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: U, src: [7], note: "Would sit in the model's response, which no named entry field carries."}
+      action.tool_arguments:         {v: U, src: [7], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [7], note: "Derivable from a tool result, which the application produces."}
+      action.result_bytes:           {v: A, form: derived, src: [7], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [7], note: "The lab's own authorisation decision, made in its hook."}
+      action.egress_target:          {v: A, form: derived, src: [7], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [7], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [7], note: "Needs the deployment's canary register and the text or arguments the value would appear in."}
+      control.policy_version:        {v: A, form: caller, src: [7], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [7], note: "The lab's own guardrail; a vendor control is a different thing."}
+    events:
+      session_start:                 {v: A, src: [6, 7], note: "A session boundary in the application is not an operation performed through Resource Manager."}
+      turn:                          {v: U, src: [6, 7], note: "The pages do not say whether a model call is recorded as an action operation."}
+      retrieval:                     {v: A, src: [6, 7], note: "Retrieval runs in the application and calls no Azure API."}
+      tool_pre:                      {v: A, src: [6, 7], note: "The lab's tools run in the application and call no Azure API."}
+      tool_post:                     {v: A, src: [6, 7], note: "As tool_pre."}
+      session_end:                   {v: A, src: [6, 7], note: "As session_start."}
+
+  - id: azure-model
+    vendor: azure
+    layer: model
+    name: Foundry resource logs through a diagnostic setting
+    switch: >-
+      create a diagnostic setting on the Foundry resource with the categories
+      the how-to lists: Audit Logs, Request and Response Logs and Azure OpenAI
+      Request Usage
+    switch_src: [1, 3]
+    switch_quotes: [az-resource-default, az-categories]
+    records: >-
+      Records in the AzureDiagnostics table by category: Audit,
+      AzureOpenAIRequestUsage, ManagedNetworkEvent, RequestResponse and Trace.
+      Each carries the header fields common to all resource logs; anything
+      specific to the service sits in properties, which no page read documents
+      for these categories.
+    records_src: [2, 4, 5, 14]
+    full_field_list: null
+    full_field_list_note: >-
+      The header fields are documented; the properties member is not, for any
+      of these categories. Source 5 sends the reader to source 2 for the
+      schemas, and source 2 lists categories only. Source 4 links Foundry Tools
+      to source 14, which carries no schema.
+    full_record_kinds:
+      src: [2, 1]
+      quotes: [az-trace-cqa]
+    fields:
+      session.id:                    {v: U, src: [4], partial: "correlationId groups a set of related events, typically one operation's start and finish, not a session", note: "correlationId is an optional header field; nothing else could group a session."}
+      session.start_time:            {v: A, form: derived, src: [4], note: "Derivable from a session's first record, given a session key."}
+      session.user_id:               {v: U, src: [4], partial: "the identity that performed the operation, which is the calling application unless each user calls with their own identity", note: "identity is an optional header field."}
+      session.tenant_id:             {v: A, form: caller, src: [4], note: "The deployment's own tenancy model; the header tenantId is the directory tenant, used for tenant-level logs only."}
+      session.client_app:            {v: A, form: caller, src: [4], note: "Held only by the deployment; no page names a way to send it."}
+      session.agent_id:              {v: A, form: caller, src: [4], note: "Held only by the deployment."}
+      session.config_version:        {v: A, form: caller, src: [4], note: "Held only by the deployment."}
+      turn.index:                    {v: A, form: derived, src: [4], note: "Derivable from record order within a session, given a session key."}
+      turn.timestamp:                {v: D, src: [4], note: "time is a required header field: the timestamp of the event being logged."}
+      turn.model_id:                 {v: U, src: [4, 2], note: "Would sit in properties, which is not documented."}
+      turn.model_version:            {v: U, src: [4, 2], note: "As turn.model_id."}
+      turn.tokens_in:                {v: U, src: [4, 2], note: "Neither RequestResponse nor AzureOpenAIRequestUsage has a documented field list."}
+      turn.tokens_out:               {v: U, src: [4, 2], note: "As turn.tokens_in."}
+      turn.latency:                  {v: U, src: [4, 1], partial: "the duration of the operation", note: "durationMs is an optional header field; the how-to's sample query reads it as request latency."}
+      turn.finish_reason:            {v: U, src: [4, 2], note: "Would sit in properties, which is not documented."}
+      content.prompt_text:           {v: U, src: [4, 2, 5], note: "Whether RequestResponse records carry a request body is not documented."}
+      content.prompt_hash:           {v: A, form: derived, src: [4], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: U, src: [4, 2, 5], note: "As content.prompt_text."}
+      content.response_hash:         {v: A, form: derived, src: [4], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [4], note: "Held only by the deployment."}
+      content.redaction_applied:     {v: A, form: caller, src: [4], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: U, form: content, src: [4, 2], note: "Chunk identifiers, whose prefix is the document identifier, reach the model only inside tool results the lab writes; whether a body is logged is not settled."}
+      retrieval.chunk_ids:           {v: U, form: content, src: [4, 2], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [4], note: "The lab's search tool does not return scores to the model."}
+      retrieval.query_text:          {v: U, src: [4, 2], note: "Would sit in the model's tool call inside a response body, which is not documented."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [4], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [4], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: U, src: [4, 2], note: "Would sit in the model's tool call inside a response body, which is not documented."}
+      action.tool_arguments:         {v: U, src: [4, 2], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [4], note: "Derivable from a tool result, which the application produces."}
+      action.result_bytes:           {v: A, form: derived, src: [4], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [4], note: "The lab's own authorisation decision."}
+      action.egress_target:          {v: A, form: derived, src: [4], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [4], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [4], note: "Needs the deployment's canary register and the text or arguments the value would appear in."}
+      control.policy_version:        {v: A, form: caller, src: [4], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [4], note: "The lab's own guardrail; a vendor content filter is a different control."}
+    events:
+      session_start:                 {v: A, src: [2, 1], note: "No category records a session boundary; the five categories are the record kinds."}
+      turn:                          {v: D, src: [1, 2], partial: "one record per request to the resource; that each model call is one request is not stated", note: "The how-to counts requests from RequestResponse records."}
+      retrieval:                     {v: A, src: [2, 1], note: "Retrieval runs in the application; no category records it, and Trace is for Custom question answering only."}
+      tool_pre:                      {v: A, src: [2, 1], note: "The lab's tools run in the application; no category records a tool call."}
+      tool_post:                     {v: A, src: [2, 1], note: "As tool_pre."}
+      session_end:                   {v: A, src: [2, 1], note: "As session_start."}
+
+  - id: azure-agent
+    vendor: azure
+    layer: agent
+    name: Foundry agent tracing for a hosted agent, in Application Insights
+    switch: connect an Application Insights resource to the Foundry project
+    switch_src: [10, 9]
+    switch_quotes: [az-tracing-off, az-server-side]
+    records: >-
+      A server-side trace for each agent invocation, from the hosting protocol
+      runtime. Spans for model calls, tool calls and retrieval come from the
+      agent's own code, instrumented out of the box only for Microsoft Agent
+      Framework and LangChain. The lab uses the Claude Agent SDK, which is
+      neither.
+    records_src: [11, 12, 10]
+    full_field_list: null
+    full_field_list_note: >-
+      No page read lists the attributes of a hosted agent's server-side trace.
+      Source 8's attribute table describes the OpenTelemetry conventions, not
+      what Foundry emits, and ruling 3 does not let it stand in for a field
+      list.
+    full_record_kinds:
+      src: [11, 12]
+      quotes: [az-hosted-sources, az-out-of-the-box, az-invocation-trace]
+    fields:
+      session.id:                    {v: U, src: [11, 12, 8], note: "The server-side trace's attributes are not documented."}
+      session.start_time:            {v: U, src: [11, 12], note: "A trace has a start time, but its attributes are not documented."}
+      session.user_id:               {v: U, src: [11, 12], note: "Not documented."}
+      session.tenant_id:             {v: A, form: caller, src: [11], note: "The deployment's own tenancy model."}
+      session.client_app:            {v: A, form: caller, src: [11], note: "Held only by the deployment."}
+      session.agent_id:              {v: U, src: [11], note: "The service name is fixed to the agent's name, but that is a resource attribute whose presence on the invocation trace is not documented."}
+      session.config_version:        {v: A, form: caller, src: [11], note: "Held only by the deployment."}
+      turn.index:                    {v: A, form: caller, src: [11, 12], note: "Model calls run in agent code; their spans come only from instrumentation."}
+      turn.timestamp:                {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.model_id:                 {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.model_version:            {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.tokens_in:                {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.tokens_out:               {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.latency:                  {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      turn.finish_reason:            {v: A, form: caller, src: [11, 12], note: "As turn.index."}
+      content.prompt_text:           {v: U, src: [12, 11], note: "Content recording needs OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT set; which spans of a hosted agent then carry input is not documented."}
+      content.prompt_hash:           {v: A, form: derived, src: [11], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: U, src: [12, 11], note: "As content.prompt_text."}
+      content.response_hash:         {v: A, form: derived, src: [11], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [11], note: "Held only by the deployment."}
+      content.redaction_applied:     {v: A, form: caller, src: [11], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: A, form: caller, src: [11, 12], note: "Retrieval runs in agent code; its spans come only from instrumentation."}
+      retrieval.chunk_ids:           {v: A, form: caller, src: [11, 12], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [11, 12], note: "As retrieval.document_ids."}
+      retrieval.query_text:          {v: A, form: caller, src: [11, 12], note: "As retrieval.document_ids."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [11], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [11], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: A, form: caller, src: [11, 12], note: "Tool calls run in agent code; their spans come only from instrumentation."}
+      action.tool_arguments:         {v: A, form: caller, src: [11, 12], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [11], note: "Derivable from a tool result, which the application produces."}
+      action.result_bytes:           {v: A, form: derived, src: [11], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [11], note: "The lab's own authorisation decision."}
+      action.egress_target:          {v: A, form: derived, src: [11], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [11], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [11], note: "Needs the deployment's canary register."}
+      control.policy_version:        {v: A, form: caller, src: [11], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [11], note: "The lab's own guardrail."}
+    events:
+      session_start:                 {v: D, src: [12, 10], partial: "one trace per agent invocation, not a session boundary", note: "Each invocation generates a complete trace, logged server side once tracing is connected."}
+      turn:                          {v: A, form: caller, src: [11, 12], note: "Model calls run in agent code; the out-of-the-box instrumentation covers Microsoft Agent Framework and LangChain only."}
+      retrieval:                     {v: A, form: caller, src: [11, 12], note: "As turn."}
+      tool_pre:                      {v: A, form: caller, src: [11, 12], note: "As turn."}
+      tool_post:                     {v: A, form: caller, src: [11, 12], note: "As turn."}
+      session_end:                   {v: D, src: [12, 10], partial: "the same per-invocation trace as session_start", note: "One trace covers the invocation from request to response."}
+
+  # =================================================================== AWS ==
+  - id: aws-as-shipped
+    vendor: aws
+    layer: as_shipped
+    name: CloudTrail management events and CloudWatch runtime metrics
+    switch: none; CloudTrail is on when the account is created and logs management events by default
+    switch_src: [21, 23]
+    switch_quotes: [aws-ct-enabled, aws-ct-management]
+    records: >-
+      One CloudTrail management event per InvokeModel, InvokeModelWithResponseStream,
+      Converse or ConverseStream call, and runtime metrics published under the
+      AWS/Bedrock namespace, split by model identifier.
+    records_src: [21, 22, 23]
+    full_field_list: null
+    full_field_list_note: >-
+      Source 22 lists every top-level field of a record, but requestParameters
+      and responseElements hold whatever the API sends, and no page read says
+      which members of a Converse request they carry. The InvokeModel example
+      in source 21 shows requestParameters with the model identifier only and
+      responseElements null.
+    full_record_kinds:
+      src: [21, 22]
+      quotes: [aws-ct-data-events]
+    fields:
+      session.id:                    {v: A, form: caller, src: [21, 16], note: "A session identifier reaches Bedrock only as caller-supplied request metadata."}
+      session.start_time:            {v: A, form: derived, src: [22], note: "Derivable from a session's first record, given a session key."}
+      session.user_id:               {v: D, src: [21, 22], partial: "the principal that made the API call, which is the calling application unless each user calls with their own identity", note: "Every event carries userIdentity."}
+      session.tenant_id:             {v: A, form: caller, src: [22], note: "The deployment's own tenancy model; recipientAccountId is the AWS account."}
+      session.client_app:            {v: A, form: caller, src: [22], note: "Held only by the deployment; userAgent names the SDK, not the application."}
+      session.agent_id:              {v: A, form: caller, src: [22], note: "Held only by the deployment."}
+      session.config_version:        {v: A, form: caller, src: [22], note: "Held only by the deployment."}
+      turn.index:                    {v: A, form: derived, src: [22], note: "Derivable from record order within a session, given a session key; source 21 says log entries are in no particular order."}
+      turn.timestamp:                {v: D, src: [22, 21], note: "eventTime is carried on every event."}
+      turn.model_id:                 {v: D, src: [21, 17], note: "The page's InvokeModel example carries modelId in requestParameters; modelId is a request parameter of the API."}
+      turn.model_version:            {v: U, src: [21, 22], note: "Would sit in responseElements, which the example shows as null."}
+      turn.tokens_in:                {v: U, src: [21, 22, 23], note: "Would sit in responseElements, null in the example; the metrics are series by model identifier, not per-call values."}
+      turn.tokens_out:               {v: U, src: [21, 22, 23], note: "As turn.tokens_in."}
+      turn.latency:                  {v: U, src: [22, 23], note: "No top-level field; the latency metric is a series, not a per-call value."}
+      turn.finish_reason:            {v: U, src: [21, 22], note: "Would sit in responseElements, null in the example."}
+      content.prompt_text:           {v: U, src: [22, 21], note: "requestParameters holds the parameters sent with the request; no page says whether a Converse request's messages are included, and the example shows only modelId."}
+      content.prompt_hash:           {v: A, form: derived, src: [22], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: U, src: [22, 21], note: "Would sit in responseElements, null in the example."}
+      content.response_hash:         {v: A, form: derived, src: [22], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [22], note: "Held only by the deployment."}
+      content.redaction_applied:     {v: A, form: caller, src: [22], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: U, form: content, src: [22, 21], note: "Would reach Bedrock only inside tool results in a request, whose logging here is not settled."}
+      retrieval.chunk_ids:           {v: U, form: content, src: [22, 21], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [22], note: "The lab's search tool does not return scores to the model."}
+      retrieval.query_text:          {v: U, src: [22, 21], note: "Would sit in the model's tool call, in a response the example does not record."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [22], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [22], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: U, src: [22, 21], note: "Would sit in the model's response, which responseElements does not record in the example."}
+      action.tool_arguments:         {v: U, src: [22, 21], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [22], note: "Derivable from a tool result, which the application produces."}
+      action.result_bytes:           {v: A, form: derived, src: [22], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [22], note: "The lab's own authorisation decision."}
+      action.egress_target:          {v: A, form: derived, src: [22], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [22], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [22], note: "Needs the deployment's canary register."}
+      control.policy_version:        {v: A, form: caller, src: [22], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [22], note: "The lab's own guardrail; ApplyGuardrail evaluations are data events, not logged by default."}
+    events:
+      session_start:                 {v: A, src: [21, 22], note: "A session boundary in the application is not an AWS API call."}
+      turn:                          {v: D, src: [21], note: "The four runtime calls are logged as management events, which CloudTrail logs by default."}
+      retrieval:                     {v: A, src: [21, 22], note: "Retrieval runs in the application and calls no AWS API."}
+      tool_pre:                      {v: A, src: [21, 22], note: "The lab's tools run in the application and call no AWS API."}
+      tool_post:                     {v: A, src: [21, 22], note: "As tool_pre."}
+      session_end:                   {v: A, src: [21, 22], note: "As session_start."}
+
+  - id: aws-model
+    vendor: aws
+    layer: model
+    name: Model invocation logging to CloudWatch Logs or Amazon S3
+    switch: >-
+      enable model invocation logging with a destination, selecting the Text
+      modality, which is the lab's only modality
+    switch_src: [15]
+    switch_quotes: [aws-disabled, aws-modalities, aws-runtime-only]
+    records: >-
+      One ModelInvocationLog record per Converse, ConverseStream, InvokeModel or
+      InvokeModelWithResponseStream call on the bedrock-runtime endpoint, with
+      the request and response bodies inline up to 100 KB. Calls through the
+      bedrock-mantle endpoint are not captured. Knowledge bases, Guardrails
+      and Agents are monitored as features apart from the endpoint, and
+      knowledge base logs cover ingestion jobs; none is assessed here.
+    records_src: [15, 18, 19, 20, 24]
+    full_field_list:
+      src: [15]
+      quotes: [aws-structure, aws-populated]
+      note: >-
+        The record's fields are listed in full. input.inputBodyJson and
+        output.outputBodyJson hold the bodies, and no page read documents the
+        shape of a logged body: source 15's example shows both empty, and
+        source 16's shows them abbreviated.
+    full_record_kinds:
+      src: [15]
+      quotes: [aws-record-type]
+    fields:
+      session.id:                    {v: A, form: caller, src: [15, 16], note: "Only as caller-supplied request metadata, which source 16 suggests for session identifiers and Bedrock does not enforce."}
+      session.start_time:            {v: A, form: derived, src: [15], note: "Derivable from a session's first record, given a session key."}
+      session.user_id:               {v: D, src: [15], partial: "the principal that made the request, which is the calling application unless each user calls with their own identity", note: "identity.arn is captured automatically."}
+      session.tenant_id:             {v: A, form: caller, src: [15, 16], note: "The deployment's own tenancy model; accountId is the AWS account."}
+      session.client_app:            {v: A, form: caller, src: [16], note: "Only as caller-supplied request metadata; source 16 names the application as a use."}
+      session.agent_id:              {v: A, form: caller, src: [15, 16], note: "Only as caller-supplied request metadata."}
+      session.config_version:        {v: A, form: caller, src: [15, 16], note: "Only as caller-supplied request metadata."}
+      turn.index:                    {v: A, form: derived, src: [15], note: "Derivable from record order within a session, given a session key."}
+      turn.timestamp:                {v: D, src: [15], note: "timestamp is the time the invocation was made."}
+      turn.model_id:                 {v: D, src: [15], partial: "the model identifier or an inference profile identifier", note: "modelId is a field of every record."}
+      turn.model_version:            {v: U, src: [15], note: "Not a field of the record; whether the logged response body carries it is not documented."}
+      turn.tokens_in:                {v: D, src: [15], partial: "the input tokens in the request; whether cached tokens are counted is not stated, and the register counts them", note: "input.inputTokenCount is a field of every record."}
+      turn.tokens_out:               {v: D, src: [15], note: "output.outputTokenCount is a field of every record."}
+      turn.latency:                  {v: U, src: [15, 17], note: "Not a field of the record; the Converse response carries latency metrics, but no page says the logged body is that response."}
+      turn.finish_reason:            {v: U, src: [15, 17], note: "Not a field of the record; the Converse response carries stopReason, but no page says the logged body is that response."}
+      content.prompt_text:           {v: D, form: body, path: undocumented, src: [15], note: "The request body sent to the model is logged; its path inside the logged body is not documented."}
+      content.prompt_hash:           {v: A, form: derived, src: [15], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: D, form: body, path: undocumented, src: [15], note: "The response body from the model is logged; its path is not documented."}
+      content.response_hash:         {v: A, form: derived, src: [15], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [15, 16], note: "Held only by the deployment; the system prompt's text, not its version, is in the request."}
+      content.redaction_applied:     {v: A, form: caller, src: [15, 16], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: D, form: content, src: [15], note: "The lab's search tool writes each chunk identifier, whose prefix is the document identifier, into its result, which the next request body carries."}
+      retrieval.chunk_ids:           {v: D, form: content, src: [15], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [15], note: "The lab's search tool does not return scores to the model."}
+      retrieval.query_text:          {v: D, form: body, path: undocumented, src: [15, 17], note: "The query is an argument of the model's tool call, in the response body; Converse defines tool-use blocks, but the logged body's shape is not documented."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [15], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [15], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: D, form: body, path: undocumented, src: [15, 17], note: "In the model's tool call, in the response body."}
+      action.tool_arguments:         {v: D, form: body, path: undocumented, src: [15, 17], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [15], note: "Derivable from a tool result, which the next request body carries."}
+      action.result_bytes:           {v: A, form: derived, src: [15], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [15, 16], note: "The lab's own authorisation decision."}
+      action.egress_target:          {v: A, form: derived, src: [15], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [15], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [15], note: "Needs the deployment's canary register."}
+      control.policy_version:        {v: A, form: caller, src: [15, 16], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [15, 17], note: "The lab's own guardrail; Converse's guardrail stop reasons belong to a different control."}
+    events:
+      session_start:                 {v: A, src: [15], note: "Every record is a ModelInvocationLog; none marks a session boundary."}
+      turn:                          {v: D, src: [15], note: "One record per model invocation."}
+      retrieval:                     {v: D, form: content, src: [15], note: "A retrieval's results enter the next request body as tool-result text the application wrote."}
+      tool_pre:                      {v: D, form: body, path: undocumented, src: [15, 17], note: "The model's tool call is in the response body; its path in the logged body is not documented."}
+      tool_post:                     {v: D, form: body, path: undocumented, src: [15, 17], note: "The tool's result is in the next request body."}
+      session_end:                   {v: A, src: [15], note: "As session_start."}
+
+  - id: aws-agent
+    vendor: aws
+    layer: agent
+    name: AgentCore Observability for an agent hosted in AgentCore Runtime
+    switch: >-
+      enable observability on the agent resource, after the one-time CloudWatch
+      Transaction Search setup for the account
+    switch_src: [27, 28, 26]
+    switch_quotes: [aws-ac-enable, aws-ac-transaction-search, aws-ac-explicit, aws-ac-log-group]
+    records: >-
+      For each agent invocation, one InvokeAgentRuntime span and one
+      APPLICATION_LOGS record, plus USAGE_LOGS records of resource consumption.
+      Spans for the model calls, tool calls and retrieval inside the agent come
+      only from instrumentation the deployment adds to its own code. Source 26
+      marks agent spans and logs as needing explicit enablement, while source 28
+      says the runtime creates a log group by default; both are recorded.
+    records_src: [27, 26, 25, 28]
+    full_field_list:
+      src: [27]
+      quotes: [aws-ac-spans]
+      note: >-
+        Source 27 lists the span's attributes and each log type's fields in
+        full. request_payload and response_payload are the invocation's own
+        payloads, whose shape the deployment defines.
+    full_record_kinds:
+      src: [27, 26]
+      quotes: [aws-ac-instrument]
+    fields:
+      session.id:                    {v: D, src: [27], note: "session.id on the span and session_id on the application log."}
+      session.start_time:            {v: A, form: derived, src: [27], note: "Derivable from a session's first invocation record."}
+      session.user_id:               {v: A, form: caller, src: [27], note: "No listed attribute or field identifies a user."}
+      session.tenant_id:             {v: A, form: caller, src: [27], note: "The deployment's own tenancy model; aws.account.id is the AWS account."}
+      session.client_app:            {v: A, form: caller, src: [27], note: "Held only by the deployment."}
+      session.agent_id:              {v: D, src: [27], note: "aws.agent.id, the unique identifier for the agent runtime."}
+      session.config_version:        {v: A, form: caller, src: [27], note: "Held only by the deployment."}
+      turn.index:                    {v: A, form: caller, src: [27, 25], note: "Model calls run in agent code; their spans come only from instrumentation."}
+      turn.timestamp:                {v: A, form: caller, src: [27, 25], note: "As turn.index."}
+      turn.model_id:                 {v: A, form: caller, src: [27, 25], note: "As turn.index."}
+      turn.model_version:            {v: A, form: caller, src: [27, 25], note: "As turn.index."}
+      turn.tokens_in:                {v: A, form: caller, src: [27, 25], note: "Source 25 lists token usage among dashboard metrics, but no runtime record in source 27 carries it."}
+      turn.tokens_out:               {v: A, form: caller, src: [27, 25], note: "As turn.tokens_in."}
+      turn.latency:                  {v: A, form: caller, src: [27], note: "latency_ms is the whole invocation's latency, not a model call's."}
+      turn.finish_reason:            {v: A, form: caller, src: [27, 25], note: "As turn.index."}
+      content.prompt_text:           {v: D, form: content, src: [27], partial: "the whole invocation's request payload, which carries the user's instruction", note: "request_payload is the invocation's payload; its shape is the deployment's."}
+      content.prompt_hash:           {v: A, form: derived, src: [27], note: "A hash the deployment computes from text."}
+      content.response_text:         {v: D, form: content, src: [27], partial: "the agent's reply to the invocation, not each model call's response", note: "response_payload is the invocation's response."}
+      content.response_hash:         {v: A, form: derived, src: [27], note: "A hash the deployment computes from text."}
+      content.system_prompt_version: {v: A, form: caller, src: [27], note: "Held only by the deployment."}
+      content.redaction_applied:     {v: A, form: caller, src: [27], note: "Held only by the deployment."}
+      retrieval.document_ids:        {v: A, form: caller, src: [27, 25], note: "Retrieval runs in agent code; its spans come only from instrumentation."}
+      retrieval.chunk_ids:           {v: A, form: caller, src: [27, 25], note: "As retrieval.document_ids."}
+      retrieval.scores:              {v: A, form: caller, src: [27, 25], note: "As retrieval.document_ids."}
+      retrieval.query_text:          {v: A, form: caller, src: [27, 25], note: "As retrieval.document_ids."}
+      retrieval.source_provenance:   {v: A, form: derived, src: [27], note: "Derivable from document identifiers and the deployment's own provenance labels."}
+      retrieval.permission_context:  {v: A, form: derived, src: [27], note: "Needs the caller's scope and each document's scope, which only the deployment holds."}
+      action.tool_name:              {v: A, form: caller, src: [27, 25, 26], note: "The lab's tools run in the agent's own process; Gateway and built-in tool observability apply only to tools served by those resources."}
+      action.tool_arguments:         {v: A, form: caller, src: [27, 25, 26], note: "As action.tool_name."}
+      action.result_hash:            {v: A, form: derived, src: [27], note: "Derivable from a tool result, which the application produces."}
+      action.result_bytes:           {v: A, form: derived, src: [27], note: "As action.result_hash."}
+      action.permission_decision:    {v: A, form: caller, src: [27], note: "The lab's own authorisation decision."}
+      action.egress_target:          {v: A, form: derived, src: [27], note: "Derivable by normalising tool arguments."}
+      action.context_document_ids:   {v: A, form: derived, src: [27], note: "Derivable from the documents retrieved earlier in a session."}
+      control.canary_triggered:      {v: A, form: derived, src: [27], note: "Needs the deployment's canary register."}
+      control.policy_version:        {v: A, form: caller, src: [27], note: "Held only by the deployment."}
+      control.block_reason:          {v: A, form: caller, src: [27], note: "The lab's own guardrail."}
+    events:
+      session_start:                 {v: D, src: [27], partial: "one span and one application log record per agent invocation, not a session boundary", note: "InvokeAgentRuntime is the only operation for which the runtime creates spans."}
+      turn:                          {v: A, form: caller, src: [27, 25, 28], note: "Model calls run in agent code; their spans come only from instrumentation."}
+      retrieval:                     {v: A, form: caller, src: [27, 25, 28], note: "As turn."}
+      tool_pre:                      {v: A, form: caller, src: [27, 25, 28], note: "As turn."}
+      tool_post:                     {v: A, form: caller, src: [27, 25, 28], note: "As turn."}
+      session_end:                   {v: D, src: [27], partial: "the same per-invocation records as session_start", note: "The invocation's span and log record cover it from request to response."}
+
+# Ruling 1: a combined answer only where a documented key links the model
+# layer's records to the agent layer's. None was found on the pages read.
+combined:
+  azure:
+    linked: false
+    src: [2, 4, 11, 12]
+    note: >-
+      No page read names a key shared by a RequestResponse record and a hosted
+      agent's server-side trace.
+  aws:
+    linked: false
+    src: [15, 27]
+    note: >-
+      The invocation log's requestId identifies one model call and AgentCore's
+      aws.request_id one agent invocation; no page read links them. A session
+      identifier could join them only as caller-supplied request metadata.

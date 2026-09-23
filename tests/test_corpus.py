@@ -222,6 +222,11 @@ CANARY_SCAN_GLOBS = (
     "siem/**/*.py",
     "siem/**/*.json",
     "siem/**/*.kql",
+    # The vendor gap package, added at M7 by the owner's ruling of 23 September
+    # 2026. Its passes read every captured event, and its evidence file is
+    # published beside the doc.
+    "vendor_gap/**/*.py",
+    "vendor_gap/**/*.yaml",
 )
 
 
