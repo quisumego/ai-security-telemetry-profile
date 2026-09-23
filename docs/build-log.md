@@ -1969,3 +1969,193 @@ in `results/necessity-matrix.md` and neither is suppressed.
 
 - **The `max_turns` cap fix remains unverified against a live cap.** It needs a
   model call, so it carries to a stage that captures.
+
+## M6. Cost, volume, retention and the Sentinel mapping
+
+**Date:** 22 September 2026 for the pre-flight and the design batch, 23 September
+2026 for the rulings and the build
+**Stage:** M6
+**Outcome:** the cost and volume model reads the real logs, the results are
+recorded, retention guidance is written per tier, and the Sentinel table, Data
+Collection Rule and rule translations are documented. Tag `volume-m6` at
+`959a562`
+**Hours:** approximately **0.3 against a 2 hour estimate** by the ruled method,
+from the first M6 commit at 08:56 to the last work commit at 09:13 on
+23 September. The M4 method applied literally, from the M5 close at 21:54 on
+22 September, gives about 11.3, and that figure counts the night between the
+design batch and the rulings. Neither counts the reading, pre-flight, design
+proposal and documentation reading before the first commit, which took most of
+the stage.
+
+**No model calls were made, nothing was deployed, and no Azure spend was
+incurred.** No Azure resource was created and no request went to any Azure
+management or ingestion endpoint. The only network use was reading Microsoft
+documentation and one read of the public Azure Retail Prices API. Nothing under
+`runs/` was written, and a test holds that.
+
+### The rulings, before anything was built
+
+Fifteen questions were put as one batch with the design on 22 September 2026.
+The owner took the recommended option on all fifteen on 23 September 2026.
+
+| # | Question | Ruling |
+|---|---|---|
+| 1 | Sessions per user per day | **10**, an assumption with no capture behind it: one assisted task per working hour over an eight-hour day, rounded. Restated beside every projection |
+| 2 | Byte measures | Both: raw captured bytes and value bytes |
+| 3 | Truncation length | 1,024 characters, with 256 and 4,096 as per-session sensitivity. The exploratory length distribution had been seen, and the batch said so |
+| 4 | Posture scope | The two content text fields only, as methodology Section 8.2 defines them; `action.tool_arguments` reported beside them |
+| 5 | Corpus use | Projections from the benign corpus alone, at its captured mix; the attack corpus per class, never projected |
+| 6 | Model spend | Reported as measured, per class and per task type, not projected |
+| 7 | Pricing | Volume only; price is a reader's parameter |
+| 8 | Retention periods | None: daily ingest only |
+| 9 | Retention guidance | Per tier, with the caution and two carve-outs |
+| 10 | Sentinel column naming | PascalCase with the group prefix |
+| 11 | Layout | `cost/`, `siem/`, `results/volume.*`; canary scan extended to `cost/` and `siem/`, style scan to `.kql` |
+| 12 | Tag | `volume-m6` on the commit that writes the results |
+| 13 | Stale lines | Every one listed corrected at close-out, marked as a correction |
+| 14 | Stage hours | First M6 commit to last, with the M4 method's figure beside it |
+| 15 | The rest of the design | Approved as proposed |
+
+**The rulings were committed on their own first**, at `565c4ee`, before any
+model code existed, the ordering M5 used at `75a1d69`.
+
+### What was built
+
+```
+cost/
+├── rulings.py    the fifteen rulings, committed first (565c4ee)
+└── model.py      read-only load, both byte measures, postures, projections, the page (7065c33)
+
+siem/
+├── sentinel.py   the table, the rule and seven queries, generated from the register (19377a9)
+└── sentinel/     astp-table.json, astp-dcr.json, rules/d-a0N.kql
+
+results/volume.json, results/volume.md   written by cost.model --write against 19377a9 (959a562)
+docs/sentinel-mapping.md                 filled against its placeholder (19377a9)
+```
+
+The model checks that every one of the 2,399 scored lines re-serialises to
+exactly the bytes on disk, so each group's share of a line is exact and groups
+plus envelope sum to the file size. It refuses to run if any line does not.
+
+### Two quantities, kept apart
+
+**Model spend**, from the manifests: $2.8318 estimated over the attack corpus
+and $1.0860 over the benign, the same figures the two capture reports print,
+and a test holds them together. A8 is 75.2 per cent of the attack corpus's
+estimated spend.
+
+**Telemetry volume**, from the events files:
+
+| Corpus | Sessions | Events | Raw bytes | Value bytes |
+|---|---|---|---|---|
+| M3 benign | 100 | 1,031 | 1,021,979 | 499,035 |
+| M2 attack | 100 | 1,368 | 1,556,142 | 844,179 |
+
+| Per session | Benign min, median, mean, p90, max | Attack min, median, mean, p90, max |
+|---|---|---|
+| Events | 6, 11, 10.31, 13, 27 | 3, 10.5, 13.68, 25, 54 |
+| Raw bytes | 5,773, 10,233.5, 10,219.79, 14,921, 27,285 | 2,105, 10,716, 15,561.42, 24,896, 77,667 |
+
+**A8 is 48.6 per cent of the attack corpus's raw bytes against 75.2 per cent of
+its spend.** The fetched pages that make A8 expensive enter the model's context
+and never the log, which records a result's hash and size, not the result.
+Spend and volume do not scale together, which is the reason they are kept
+apart.
+
+### The brief's premise did not hold
+
+The brief, and the handover's Section 14, expected the content group to
+dominate the bytes under full retention. **It is 20.3 per cent of benign raw
+bytes and 18.8 per cent of attack raw bytes.** The largest group in the benign
+corpus is session, 23.2 per cent, because the session group is carried whole on
+every event. `content.prompt_text` holds the user's instruction repeated on each
+turn, and no tool result is ever logged. Null members, written so that M5 could
+null a field without deleting a key, take 10.1 per cent of benign raw bytes.
+
+The postures, measured from the same logs:
+
+| Corpus | Truncate at 1,024 | Hash | Truncate at 256 |
+|---|---|---|---|
+| M3 benign, raw bytes | -0.6% | -11.2% | -5.0% |
+| M3 benign, value bytes | -1.2% | -22.8% | -10.2% |
+| M2 attack, raw bytes | -4.9% | -13.2% | -8.3% |
+
+The postures are a smaller lever in these captures than the brief assumed. The
+design proposal put the content share at 19.9 per cent from an exploratory
+script that credited a group with its object only; the model credits the key
+as well, as ruled, and its figure is the one recorded.
+
+### Projections
+
+From the benign corpus alone, at 10 sessions per user per day, the ruled
+assumption:
+
+| Users | Sessions a day | Events a day | Raw GB a day, full | Raw GB a day, hash | Value GB a day, full |
+|---|---|---|---|---|---|
+| 1,000 | 10,000 | 103,100 | 0.1022 | 0.0908 | 0.0499 |
+| 10,000 | 100,000 | 1,031,000 | 1.0220 | 0.9078 | 0.4990 |
+
+### Retention guidance
+
+Written into `results/volume.md` Section 5, with each tier read from the
+register when the model ran. Required: retain at full fidelity. Optional:
+retain. Not required: **not a recommendation to discard**, with the caution that
+23 of the 24 Not required fields were never read by a detector with a successful
+class; the model counts that figure from `results/necessity.json` and a test
+recounts it independently. `session.id` and `action.egress_target` are carved
+out and retained, each with its reason. The content postures carry a note that
+M5 could not measure what they lose, because no counted detector reads either
+text field, and that `control.canary_triggered` must be computed before any
+posture is applied.
+
+### The Sentinel mapping
+
+`docs/sentinel-mapping.md` cites fourteen Microsoft sources with retrieval
+dates. The table `AstpEvents_CL` has 42 columns on the Analytics plan. The
+group prefix keeps `session.id` and `session.tenant_id` off the reserved names
+`id` and `TenantId`. `TimeGenerated` is ingestion time, because `session_end`
+carries no event time. The Data Collection Rule is `Direct`, and its
+2,683-character transformation calls only functions on the supported list. Six
+of the seven rules translate, `d-a04` only in part, because no field names the
+task a session runs, and `d-a07` with a caveat about absence across the lookback
+window. The queries follow the Python that scored, which has no ordering for
+`d-a02` and `d-a03`, although their Sigma rules say "precede". None has been run.
+
+### Corrected during the build
+
+**A claim in the design proposal was stronger than the evidence.** The proposal
+said M5 nulled the two content text fields and no counted class moved. Every
+cell for them reads `nr`, `nt` or `ab`, so the sweep could not measure what a
+posture loses. The page says that instead, and does not claim a posture loses
+nothing.
+
+**An exploratory script counted the pre-freeze smoke run as an attack session.**
+Caught before any figure from it was quoted. No committed figure came from that
+script.
+
+**A cross-check test failed on a rounding boundary, not on the data.** The
+model's A5 spend, rounded to six places, differed from the attack report's in
+the sixth place, because Python's `sum()` over floats and a `+=` loop round
+differently, and A5's total sits on the boundary. The test now compares within
+the model's stated precision of a millionth of a dollar, and at the four places
+both pages print.
+
+### Concerns noted separately, nothing changed
+
+1. **The lab's serialisation is not a production pipeline's.** It writes every
+   null key, repeats the session group and the user's instruction on every
+   event, and logs no tool result. The volume figures describe this schema as
+   this lab emits it.
+2. **Value bytes are an approximation.** Microsoft publishes no per-type formula
+   for the billed size, so no figure here is a billed size.
+3. **`session_end` carries no event time.** Recorded for the M8 limitations; the
+   schema is frozen.
+4. **No field names the task a session runs**, which `d-a04` needs outside the
+   lab.
+
+### Still open
+
+- **The `max_turns` cap fix remains unverified against a live cap.** It needs a
+  model call, so it carries to a stage that captures.
+- **The Sentinel queries have never run.** Nothing is deployed, by design.
