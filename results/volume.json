@@ -1,0 +1,1962 @@
+{
+ "class_names": {
+  "A1": "Direct prompt injection",
+  "A10": "Staged exfiltration chain",
+  "A2": "Indirect prompt injection via a retrieved document",
+  "A3": "Sensitive information disclosure",
+  "A4": "Excessive agency, tool misuse",
+  "A5": "Improper output handling",
+  "A6": "Retrieval corpus poisoning",
+  "A7": "System prompt leakage",
+  "A8": "Unbounded consumption",
+  "A9": "Cross-tenant retrieval"
+ },
+ "command": ".venv/bin/python -m cost.model --write",
+ "commit": "19377a9fb6ed15c61bcb305405e3f5eb9a2537f3",
+ "date": "2026-09-23",
+ "model_spend": {
+  "attack": {
+   "a8_share_of_cost_percent": 75.23,
+   "per_class": {
+    "A1": {
+     "cost_usd": 0.053675,
+     "cost_usd_per_session": 0.005367,
+     "sessions": 10,
+     "tokens": 136289
+    },
+    "A10": {
+     "cost_usd": 0.096248,
+     "cost_usd_per_session": 0.009625,
+     "sessions": 10,
+     "tokens": 361320
+    },
+    "A2": {
+     "cost_usd": 0.116862,
+     "cost_usd_per_session": 0.011686,
+     "sessions": 10,
+     "tokens": 402063
+    },
+    "A3": {
+     "cost_usd": 0.03288,
+     "cost_usd_per_session": 0.003288,
+     "sessions": 10,
+     "tokens": 140662
+    },
+    "A4": {
+     "cost_usd": 0.072747,
+     "cost_usd_per_session": 0.007275,
+     "sessions": 10,
+     "tokens": 324118
+    },
+    "A5": {
+     "cost_usd": 0.102927,
+     "cost_usd_per_session": 0.010293,
+     "sessions": 10,
+     "tokens": 446883
+    },
+    "A6": {
+     "cost_usd": 0.087805,
+     "cost_usd_per_session": 0.00878,
+     "sessions": 10,
+     "tokens": 291291
+    },
+    "A7": {
+     "cost_usd": 0.028828,
+     "cost_usd_per_session": 0.002883,
+     "sessions": 10,
+     "tokens": 140025
+    },
+    "A8": {
+     "cost_usd": 2.130247,
+     "cost_usd_per_session": 0.213025,
+     "sessions": 10,
+     "tokens": 2595779
+    },
+    "A9": {
+     "cost_usd": 0.109573,
+     "cost_usd_per_session": 0.010957,
+     "sessions": 10,
+     "tokens": 262239
+    }
+   },
+   "total": {
+    "cost_usd": 2.83179,
+    "cost_usd_per_session": 0.028318,
+    "sessions": 100,
+    "tokens": 5100669
+   },
+   "without_a8": {
+    "cost_usd": 0.701543,
+    "cost_usd_per_session": 0.007795,
+    "sessions": 90,
+    "tokens": 2504890
+   }
+  },
+  "benign": {
+   "per_type": {
+    "b1": {
+     "cost_usd": 0.305004,
+     "cost_usd_per_session": 0.010167,
+     "sessions": 30,
+     "tokens": 841374
+    },
+    "b2": {
+     "cost_usd": 0.26451,
+     "cost_usd_per_session": 0.01058,
+     "sessions": 25,
+     "tokens": 741798
+    },
+    "b3": {
+     "cost_usd": 0.266614,
+     "cost_usd_per_session": 0.013331,
+     "sessions": 20,
+     "tokens": 1040201
+    },
+    "b4": {
+     "cost_usd": 0.249887,
+     "cost_usd_per_session": 0.009995,
+     "sessions": 25,
+     "tokens": 942806
+    }
+   },
+   "total": {
+    "cost_usd": 1.086015,
+    "cost_usd_per_session": 0.01086,
+    "sessions": 100,
+    "tokens": 3566179
+   }
+  }
+ },
+ "postures": {
+  "attack": {
+   "change_vs_full_percent": {
+    "full": {
+     "raw": 0.0,
+     "value": 0.0
+    },
+    "hash": {
+     "raw": -13.18,
+     "value": -24.25
+    },
+    "truncate": {
+     "raw": -4.92,
+     "value": -9.05
+    }
+   },
+   "per_session_mean": {
+    "full": {
+     "raw": 15561.42,
+     "value": 8441.79
+    },
+    "hash": {
+     "raw": 13510.93,
+     "value": 6395.07
+    },
+    "truncate": {
+     "raw": 14796.14,
+     "value": 7678.2
+    }
+   },
+   "sensitivity": {
+    "256": {
+     "raw_change_vs_full_percent": -8.29,
+     "raw_per_session": 14271.04,
+     "value_change_vs_full_percent": -15.19,
+     "value_per_session": 7159.89
+    },
+    "4096": {
+     "raw_change_vs_full_percent": -2.68,
+     "raw_per_session": 15144.48,
+     "value_change_vs_full_percent": -4.93,
+     "value_per_session": 8025.81
+    }
+   },
+   "texts": 468,
+   "texts_longer_than": {
+    "1024": 34,
+    "256": 111,
+    "4096": 10
+   },
+   "totals": {
+    "full": {
+     "raw": 1556142,
+     "value": 844179
+    },
+    "hash": {
+     "raw": 1351093,
+     "value": 639507
+    },
+    "truncate": {
+     "raw": 1479614,
+     "value": 767820
+    }
+   }
+  },
+  "benign": {
+   "change_vs_full_percent": {
+    "full": {
+     "raw": 0.0,
+     "value": 0.0
+    },
+    "hash": {
+     "raw": -11.17,
+     "value": -22.82
+    },
+    "truncate": {
+     "raw": -0.59,
+     "value": -1.19
+    }
+   },
+   "per_session_mean": {
+    "full": {
+     "raw": 10219.79,
+     "value": 4990.35
+    },
+    "hash": {
+     "raw": 9078.38,
+     "value": 3851.72
+    },
+    "truncate": {
+     "raw": 10159.67,
+     "value": 4930.93
+    }
+   },
+   "sensitivity": {
+    "256": {
+     "raw_change_vs_full_percent": -5.04,
+     "raw_per_session": 9704.66,
+     "value_change_vs_full_percent": -10.16,
+     "value_per_session": 4483.39
+    },
+    "4096": {
+     "raw_change_vs_full_percent": 0.0,
+     "raw_per_session": 10219.79,
+     "value_change_vs_full_percent": 0.0,
+     "value_per_session": 4990.35
+    }
+   },
+   "texts": 508,
+   "texts_longer_than": {
+    "1024": 15,
+    "256": 90,
+    "4096": 0
+   },
+   "totals": {
+    "full": {
+     "raw": 1021979,
+     "value": 499035
+    },
+    "hash": {
+     "raw": 907838,
+     "value": 385172
+    },
+    "truncate": {
+     "raw": 1015967,
+     "value": 493093
+    }
+   }
+  }
+ },
+ "projections": [
+  {
+   "events_per_day": 103100,
+   "postures": {
+    "full": {
+     "raw": {
+      "bytes_per_day": 102197900,
+      "gb_per_day": 0.1022
+     },
+     "value": {
+      "bytes_per_day": 49903500,
+      "gb_per_day": 0.0499
+     }
+    },
+    "hash": {
+     "raw": {
+      "bytes_per_day": 90783800,
+      "gb_per_day": 0.0908
+     },
+     "value": {
+      "bytes_per_day": 38517200,
+      "gb_per_day": 0.0385
+     }
+    },
+    "truncate": {
+     "raw": {
+      "bytes_per_day": 101596700,
+      "gb_per_day": 0.1016
+     },
+     "value": {
+      "bytes_per_day": 49309300,
+      "gb_per_day": 0.0493
+     }
+    }
+   },
+   "sessions_per_day": 10000,
+   "users": 1000
+  },
+  {
+   "events_per_day": 1031000,
+   "postures": {
+    "full": {
+     "raw": {
+      "bytes_per_day": 1021979000,
+      "gb_per_day": 1.022
+     },
+     "value": {
+      "bytes_per_day": 499035000,
+      "gb_per_day": 0.499
+     }
+    },
+    "hash": {
+     "raw": {
+      "bytes_per_day": 907838000,
+      "gb_per_day": 0.9078
+     },
+     "value": {
+      "bytes_per_day": 385172000,
+      "gb_per_day": 0.3852
+     }
+    },
+    "truncate": {
+     "raw": {
+      "bytes_per_day": 1015967000,
+      "gb_per_day": 1.016
+     },
+     "value": {
+      "bytes_per_day": 493093000,
+      "gb_per_day": 0.4931
+     }
+    }
+   },
+   "sessions_per_day": 100000,
+   "users": 10000
+  }
+ ],
+ "retention": {
+  "carve_outs": {
+   "action.egress_target": "it is what separates the A1 attack from benign session m3-b100, which carried the same tracked value to a permitted internal recipient; the tiering rule cannot credit a field for the false positives it prevents",
+   "session.id": "the sweep takes one capture file as one session, so nulling this field could not change what a detector saw; a real pipeline receives events from many sessions interleaved and needs it to put a session back together, and every session-scoped rule in the Sentinel mapping groups by it"
+  },
+  "not_required": 24,
+  "not_required_measured": {
+   "turn.tokens_in": [
+    "A8 `.c`"
+   ]
+  },
+  "not_required_unmeasured": 23,
+  "posture_fields_m5_cells": [
+   "ab",
+   "nr",
+   "nt"
+  ],
+  "posture_fields_pair_swept": true,
+  "rows": [
+   {
+    "field": "session.id",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 2.27,
+     "benign": 2.89
+    }
+   },
+   {
+    "field": "session.start_time",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 3.89,
+     "benign": 4.96
+    }
+   },
+   {
+    "field": "session.user_id",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 2.11,
+     "benign": 2.69
+    }
+   },
+   {
+    "field": "session.tenant_id",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 2.75,
+     "benign": 3.51
+    }
+   },
+   {
+    "field": "session.client_app",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 2.27,
+     "benign": 2.89
+    }
+   },
+   {
+    "field": "session.agent_id",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 2.59,
+     "benign": 3.31
+    }
+   },
+   {
+    "field": "session.config_version",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 0.81,
+     "benign": 1.03
+    }
+   },
+   {
+    "field": "turn.index",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.14,
+     "benign": 0.17
+    }
+   },
+   {
+    "field": "turn.timestamp",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 3.32,
+     "benign": 4.0
+    }
+   },
+   {
+    "field": "turn.model_id",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.44,
+     "benign": 0.81
+    }
+   },
+   {
+    "field": "turn.model_version",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.69,
+     "benign": 1.27
+    }
+   },
+   {
+    "field": "turn.tokens_in",
+    "measured_cells": [
+     "A8 `.c`"
+    ],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.14,
+     "benign": 0.25
+    }
+   },
+   {
+    "field": "turn.tokens_out",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.08,
+     "benign": 0.14
+    }
+   },
+   {
+    "field": "turn.latency",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.16,
+     "benign": 0.3
+    }
+   },
+   {
+    "field": "turn.finish_reason",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.22,
+     "benign": 0.41
+    }
+   },
+   {
+    "field": "content.prompt_text",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 4.67,
+     "benign": 5.37
+    }
+   },
+   {
+    "field": "content.prompt_hash",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 1.97,
+     "benign": 3.61
+    }
+   },
+   {
+    "field": "content.response_text",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 19.57,
+     "benign": 17.44
+    }
+   },
+   {
+    "field": "content.response_hash",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 1.97,
+     "benign": 3.61
+    }
+   },
+   {
+    "field": "content.system_prompt_version",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.32,
+     "benign": 0.57
+    }
+   },
+   {
+    "field": "content.redaction_applied",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 0.2,
+     "benign": 0.35
+    }
+   },
+   {
+    "field": "retrieval.document_ids",
+    "measured_cells": [
+     "A5 `X`",
+     "A6 `X`"
+    ],
+    "security_only": false,
+    "tier": "required",
+    "value_share_percent": {
+     "attack": 1.77,
+     "benign": 1.09
+    }
+   },
+   {
+    "field": "retrieval.chunk_ids",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 1.95,
+     "benign": 1.28
+    }
+   },
+   {
+    "field": "retrieval.scores",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.28,
+     "benign": 0.33
+    }
+   },
+   {
+    "field": "retrieval.query_text",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 2.16,
+     "benign": 1.98
+    }
+   },
+   {
+    "field": "retrieval.source_provenance",
+    "measured_cells": [],
+    "security_only": true,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.73,
+     "benign": 0.77
+    }
+   },
+   {
+    "field": "retrieval.permission_context",
+    "measured_cells": [
+     "A9 `X`"
+    ],
+    "security_only": true,
+    "tier": "required",
+    "value_share_percent": {
+     "attack": 5.44,
+     "benign": 5.81
+    }
+   },
+   {
+    "field": "action.tool_name",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 1.85,
+     "benign": 2.06
+    }
+   },
+   {
+    "field": "action.tool_arguments",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 5.12,
+     "benign": 16.43
+    }
+   },
+   {
+    "field": "action.result_hash",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 2.33,
+     "benign": 2.43
+    }
+   },
+   {
+    "field": "action.result_bytes",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.14,
+     "benign": 0.1
+    }
+   },
+   {
+    "field": "action.permission_decision",
+    "measured_cells": [],
+    "security_only": true,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 0.53,
+     "benign": 0.49
+    }
+   },
+   {
+    "field": "action.egress_target",
+    "measured_cells": [],
+    "security_only": true,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 1.97,
+     "benign": 0.55
+    }
+   },
+   {
+    "field": "action.context_document_ids",
+    "measured_cells": [],
+    "security_only": true,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 18.67,
+     "benign": 2.01
+    }
+   },
+   {
+    "field": "control.canary_triggered",
+    "measured_cells": [
+     "A7 `X`",
+     "A9 `X`"
+    ],
+    "security_only": true,
+    "tier": "required",
+    "value_share_percent": {
+     "attack": 0.8,
+     "benign": 1.02
+    }
+   },
+   {
+    "field": "control.policy_version",
+    "measured_cells": [],
+    "security_only": false,
+    "tier": "optional",
+    "value_share_percent": {
+     "attack": 0.81,
+     "benign": 1.03
+    }
+   },
+   {
+    "field": "control.block_reason",
+    "measured_cells": [],
+    "security_only": true,
+    "tier": "not_required",
+    "value_share_percent": {
+     "attack": 2.7,
+     "benign": 0.29
+    }
+   }
+  ],
+  "tiers": {
+   "not_required": {
+    "fields": 24,
+    "value_share_percent": {
+     "attack": 71.61,
+     "benign": 64.67
+    }
+   },
+   "optional": {
+    "fields": 10,
+    "value_share_percent": {
+     "attack": 18.21,
+     "benign": 24.66
+    }
+   },
+   "recommended": {
+    "fields": 0,
+    "value_share_percent": {
+     "attack": 0,
+     "benign": 0
+    }
+   },
+   "required": {
+    "fields": 3,
+    "value_share_percent": {
+     "attack": 8.01,
+     "benign": 7.92
+    }
+   }
+  }
+ },
+ "rulings": {
+  "bytes_per_gb": 1000000000,
+  "free_text_beside": [
+   "action.tool_arguments"
+  ],
+  "kept_hashes": [
+   "content.prompt_hash",
+   "content.response_hash"
+  ],
+  "posture_fields": [
+   "content.prompt_text",
+   "content.response_text"
+  ],
+  "postures": [
+   "full",
+   "truncate",
+   "hash"
+  ],
+  "price_per_gb": null,
+  "projection_corpus": "benign",
+  "retention_periods_days": [],
+  "ruled_date": "2026-09-23",
+  "sessions_per_user_per_day": 10,
+  "sessions_per_user_per_day_basis": "an assumption, not a measurement: one assisted task per working hour over an eight-hour day gives eight, rounded to ten; the projection is linear in it",
+  "truncate_chars": 1024,
+  "truncate_sensitivity": [
+   256,
+   4096
+  ],
+  "user_counts": [
+   1000,
+   10000
+  ]
+ },
+ "tree_clean": true,
+ "volume": {
+  "attack": {
+   "events": 1368,
+   "events_per_session": {
+    "max": 54,
+    "mean": 13.68,
+    "median": 10.5,
+    "min": 3,
+    "n": 100,
+    "p90": 25
+   },
+   "fields": {
+    "action.context_document_ids": {
+     "events_with_a_value": 554,
+     "value_bytes": 157607,
+     "value_share_percent": 18.67
+    },
+    "action.egress_target": {
+     "events_with_a_value": 300,
+     "value_bytes": 16620,
+     "value_share_percent": 1.97
+    },
+    "action.permission_decision": {
+     "events_with_a_value": 554,
+     "value_bytes": 4478,
+     "value_share_percent": 0.53
+    },
+    "action.result_bytes": {
+     "events_with_a_value": 277,
+     "value_bytes": 1161,
+     "value_share_percent": 0.14
+    },
+    "action.result_hash": {
+     "events_with_a_value": 277,
+     "value_bytes": 19667,
+     "value_share_percent": 2.33
+    },
+    "action.tool_arguments": {
+     "events_with_a_value": 554,
+     "value_bytes": 43216,
+     "value_share_percent": 5.12
+    },
+    "action.tool_name": {
+     "events_with_a_value": 554,
+     "value_bytes": 15596,
+     "value_share_percent": 1.85
+    },
+    "content.prompt_hash": {
+     "events_with_a_value": 234,
+     "value_bytes": 16614,
+     "value_share_percent": 1.97
+    },
+    "content.prompt_text": {
+     "events_with_a_value": 234,
+     "value_bytes": 39464,
+     "value_share_percent": 4.67
+    },
+    "content.redaction_applied": {
+     "events_with_a_value": 334,
+     "value_bytes": 1670,
+     "value_share_percent": 0.2
+    },
+    "content.response_hash": {
+     "events_with_a_value": 234,
+     "value_bytes": 16614,
+     "value_share_percent": 1.97
+    },
+    "content.response_text": {
+     "events_with_a_value": 234,
+     "value_bytes": 165208,
+     "value_share_percent": 19.57
+    },
+    "content.system_prompt_version": {
+     "events_with_a_value": 334,
+     "value_bytes": 2672,
+     "value_share_percent": 0.32
+    },
+    "control.block_reason": {
+     "events_with_a_value": 300,
+     "value_bytes": 22800,
+     "value_share_percent": 2.7
+    },
+    "control.canary_triggered": {
+     "events_with_a_value": 1368,
+     "value_bytes": 6718,
+     "value_share_percent": 0.8
+    },
+    "control.policy_version": {
+     "events_with_a_value": 1368,
+     "value_bytes": 6840,
+     "value_share_percent": 0.81
+    },
+    "retrieval.chunk_ids": {
+     "events_with_a_value": 380,
+     "value_bytes": 16501,
+     "value_share_percent": 1.95
+    },
+    "retrieval.document_ids": {
+     "events_with_a_value": 380,
+     "value_bytes": 14981,
+     "value_share_percent": 1.77
+    },
+    "retrieval.permission_context": {
+     "events_with_a_value": 380,
+     "value_bytes": 45887,
+     "value_share_percent": 5.44
+    },
+    "retrieval.query_text": {
+     "events_with_a_value": 380,
+     "value_bytes": 18245,
+     "value_share_percent": 2.16
+    },
+    "retrieval.scores": {
+     "events_with_a_value": 380,
+     "value_bytes": 2381,
+     "value_share_percent": 0.28
+    },
+    "retrieval.source_provenance": {
+     "events_with_a_value": 380,
+     "value_bytes": 6170,
+     "value_share_percent": 0.73
+    },
+    "session.agent_id": {
+     "events_with_a_value": 1368,
+     "value_bytes": 21888,
+     "value_share_percent": 2.59
+    },
+    "session.client_app": {
+     "events_with_a_value": 1368,
+     "value_bytes": 19152,
+     "value_share_percent": 2.27
+    },
+    "session.config_version": {
+     "events_with_a_value": 1368,
+     "value_bytes": 6840,
+     "value_share_percent": 0.81
+    },
+    "session.id": {
+     "events_with_a_value": 1368,
+     "value_bytes": 19152,
+     "value_share_percent": 2.27
+    },
+    "session.start_time": {
+     "events_with_a_value": 1368,
+     "value_bytes": 32832,
+     "value_share_percent": 3.89
+    },
+    "session.tenant_id": {
+     "events_with_a_value": 1368,
+     "value_bytes": 23256,
+     "value_share_percent": 2.75
+    },
+    "session.user_id": {
+     "events_with_a_value": 1368,
+     "value_bytes": 17784,
+     "value_share_percent": 2.11
+    },
+    "turn.finish_reason": {
+     "events_with_a_value": 234,
+     "value_bytes": 1872,
+     "value_share_percent": 0.22
+    },
+    "turn.index": {
+     "events_with_a_value": 1168,
+     "value_bytes": 1168,
+     "value_share_percent": 0.14
+    },
+    "turn.latency": {
+     "events_with_a_value": 234,
+     "value_bytes": 1386,
+     "value_share_percent": 0.16
+    },
+    "turn.model_id": {
+     "events_with_a_value": 234,
+     "value_bytes": 3744,
+     "value_share_percent": 0.44
+    },
+    "turn.model_version": {
+     "events_with_a_value": 234,
+     "value_bytes": 5850,
+     "value_share_percent": 0.69
+    },
+    "turn.timestamp": {
+     "events_with_a_value": 1168,
+     "value_bytes": 28032,
+     "value_share_percent": 3.32
+    },
+    "turn.tokens_in": {
+     "events_with_a_value": 234,
+     "value_bytes": 1160,
+     "value_share_percent": 0.14
+    },
+    "turn.tokens_out": {
+     "events_with_a_value": 234,
+     "value_bytes": 648,
+     "value_share_percent": 0.08
+    }
+   },
+   "groups": {
+    "action": {
+     "events_carrying": 554,
+     "raw_bytes": 350869,
+     "raw_per_carrying_event": 633.34,
+     "raw_per_event": 256.48,
+     "raw_share_percent": 22.55,
+     "value_bytes": 258345,
+     "value_share_percent": 30.6
+    },
+    "content": {
+     "events_carrying": 334,
+     "raw_bytes": 292117,
+     "raw_per_carrying_event": 874.6,
+     "raw_per_event": 213.54,
+     "raw_share_percent": 18.77,
+     "value_bytes": 242242,
+     "value_share_percent": 28.7
+    },
+    "control": {
+     "events_carrying": 1368,
+     "raw_bytes": 141094,
+     "raw_per_carrying_event": 103.14,
+     "raw_per_event": 103.14,
+     "raw_share_percent": 9.07,
+     "value_bytes": 36358,
+     "value_share_percent": 4.31
+    },
+    "envelope": {
+     "events_carrying": 1368,
+     "raw_bytes": 82001,
+     "raw_per_carrying_event": 59.94,
+     "raw_per_event": 59.94,
+     "raw_share_percent": 5.27,
+     "value_bytes": 18305,
+     "value_share_percent": 2.17
+    },
+    "retrieval": {
+     "events_carrying": 380,
+     "raw_bytes": 153565,
+     "raw_per_carrying_event": 404.12,
+     "raw_per_event": 112.26,
+     "raw_share_percent": 9.87,
+     "value_bytes": 104165,
+     "value_share_percent": 12.34
+    },
+    "session": {
+     "events_carrying": 1368,
+     "raw_bytes": 314640,
+     "raw_per_carrying_event": 230.0,
+     "raw_per_event": 230.0,
+     "raw_share_percent": 20.22,
+     "value_bytes": 140904,
+     "value_share_percent": 16.69
+    },
+    "turn": {
+     "events_carrying": 1168,
+     "raw_bytes": 221856,
+     "raw_per_carrying_event": 189.95,
+     "raw_per_event": 162.18,
+     "raw_share_percent": 14.26,
+     "value_bytes": 43860,
+     "value_share_percent": 5.2
+    }
+   },
+   "largest_event_raw_bytes": 10481,
+   "largest_value": {
+    "bytes": 9313,
+    "field": "content.response_text"
+   },
+   "nulls": {
+    "members": 7880,
+    "raw_bytes": 146369,
+    "raw_share_percent": 9.41
+   },
+   "per_event_type": {
+    "retrieval": {
+     "events": 380,
+     "per_session": 3.8,
+     "raw_bytes_per_event": {
+      "max": 1033,
+      "mean": 962.96,
+      "median": 930.0,
+      "min": 900,
+      "n": 380,
+      "p90": 1033
+     }
+    },
+    "session_end": {
+     "events": 100,
+     "per_session": 1.0,
+     "raw_bytes_per_event": {
+      "max": 376,
+      "mean": 376.0,
+      "median": 376.0,
+      "min": 376,
+      "n": 100,
+      "p90": 376
+     }
+    },
+    "session_start": {
+     "events": 100,
+     "per_session": 1.0,
+     "raw_bytes_per_event": {
+      "max": 544,
+      "mean": 544.0,
+      "median": 544.0,
+      "min": 544,
+      "n": 100,
+      "p90": 544
+     }
+    },
+    "tool_post": {
+     "events": 277,
+     "per_session": 2.77,
+     "raw_bytes_per_event": {
+      "max": 2036,
+      "mean": 1292.26,
+      "median": 1224,
+      "min": 876,
+      "n": 277,
+      "p90": 1900
+     }
+    },
+    "tool_pre": {
+     "events": 277,
+     "per_session": 2.77,
+     "raw_bytes_per_event": {
+      "max": 1897,
+      "mean": 1171.39,
+      "median": 1086,
+      "min": 797,
+      "n": 277,
+      "p90": 1761
+     }
+    },
+    "turn": {
+     "events": 234,
+     "per_session": 2.34,
+     "raw_bytes_per_event": {
+      "max": 10481,
+      "mean": 1776.85,
+      "median": 1223.0,
+      "min": 999,
+      "n": 234,
+      "p90": 2197
+     }
+    }
+   },
+   "per_label": {
+    "A1": {
+     "events": 30,
+     "events_per_session": {
+      "max": 3,
+      "mean": 3.0,
+      "median": 3.0,
+      "min": 3,
+      "n": 10,
+      "p90": 3
+     },
+     "raw_bytes": 26816,
+     "raw_bytes_per_session": {
+      "max": 2958,
+      "mean": 2681.6,
+      "median": 2633.0,
+      "min": 2482,
+      "n": 10,
+      "p90": 2861
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 1765,
+      "mean": 1493.8,
+      "median": 1448.0,
+      "min": 1299,
+      "n": 10,
+      "p90": 1671
+     }
+    },
+    "A10": {
+     "events": 110,
+     "events_per_session": {
+      "max": 16,
+      "mean": 11.0,
+      "median": 11.0,
+      "min": 9,
+      "n": 10,
+      "p90": 11
+     },
+     "raw_bytes": 104197,
+     "raw_bytes_per_session": {
+      "max": 15024,
+      "mean": 10419.7,
+      "median": 10560.0,
+      "min": 8039,
+      "n": 10,
+      "p90": 10749
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 6586,
+      "mean": 4787.1,
+      "median": 4941.5,
+      "min": 3493,
+      "n": 10,
+      "p90": 5130
+     }
+    },
+    "A2": {
+     "events": 168,
+     "events_per_session": {
+      "max": 23,
+      "mean": 16.8,
+      "median": 17.5,
+      "min": 9,
+      "n": 10,
+      "p90": 23
+     },
+     "raw_bytes": 158283,
+     "raw_bytes_per_session": {
+      "max": 22134,
+      "mean": 15828.3,
+      "median": 16781.0,
+      "min": 8049,
+      "n": 10,
+      "p90": 21713
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 9977,
+      "mean": 7036.9,
+      "median": 7596.0,
+      "min": 3513,
+      "n": 10,
+      "p90": 9580
+     }
+    },
+    "A3": {
+     "events": 30,
+     "events_per_session": {
+      "max": 3,
+      "mean": 3.0,
+      "median": 3.0,
+      "min": 3,
+      "n": 10,
+      "p90": 3
+     },
+     "raw_bytes": 24468,
+     "raw_bytes_per_session": {
+      "max": 2638,
+      "mean": 2446.8,
+      "median": 2432.0,
+      "min": 2274,
+      "n": 10,
+      "p90": 2614
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 1452,
+      "mean": 1265.3,
+      "median": 1251.0,
+      "min": 1095,
+      "n": 10,
+      "p90": 1431
+     }
+    },
+    "A4": {
+     "events": 82,
+     "events_per_session": {
+      "max": 11,
+      "mean": 8.2,
+      "median": 7.0,
+      "min": 7,
+      "n": 10,
+      "p90": 11
+     },
+     "raw_bytes": 79182,
+     "raw_bytes_per_session": {
+      "max": 11406,
+      "mean": 7918.2,
+      "median": 6477.5,
+      "min": 6279,
+      "n": 10,
+      "p90": 11345
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 5762,
+      "mean": 3837.9,
+      "median": 3067.5,
+      "min": 2870,
+      "n": 10,
+      "p90": 5706
+     }
+    },
+    "A5": {
+     "events": 118,
+     "events_per_session": {
+      "max": 25,
+      "mean": 11.8,
+      "median": 10.0,
+      "min": 10,
+      "n": 10,
+      "p90": 13
+     },
+     "raw_bytes": 124298,
+     "raw_bytes_per_session": {
+      "max": 24896,
+      "mean": 12429.8,
+      "median": 10950.0,
+      "min": 10438,
+      "n": 10,
+      "p90": 12585
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 11481,
+      "mean": 6352.7,
+      "median": 5863.0,
+      "min": 5362,
+      "n": 10,
+      "p90": 6133
+     }
+    },
+    "A6": {
+     "events": 137,
+     "events_per_session": {
+      "max": 14,
+      "mean": 13.7,
+      "median": 14.0,
+      "min": 11,
+      "n": 10,
+      "p90": 14
+     },
+     "raw_bytes": 128312,
+     "raw_bytes_per_session": {
+      "max": 13329,
+      "mean": 12831.2,
+      "median": 13086.5,
+      "min": 10338,
+      "n": 10,
+      "p90": 13211
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 6081,
+      "mean": 5758.2,
+      "median": 5845.0,
+      "min": 4778,
+      "n": 10,
+      "p90": 5960
+     }
+    },
+    "A7": {
+     "events": 30,
+     "events_per_session": {
+      "max": 3,
+      "mean": 3.0,
+      "median": 3.0,
+      "min": 3,
+      "n": 10,
+      "p90": 3
+     },
+     "raw_bytes": 22288,
+     "raw_bytes_per_session": {
+      "max": 2356,
+      "mean": 2228.8,
+      "median": 2217.0,
+      "min": 2105,
+      "n": 10,
+      "p90": 2313
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 1173,
+      "mean": 1046.2,
+      "median": 1035.0,
+      "min": 922,
+      "n": 10,
+      "p90": 1130
+     }
+    },
+    "A8": {
+     "events": 523,
+     "events_per_session": {
+      "max": 54,
+      "mean": 52.3,
+      "median": 52.0,
+      "min": 51,
+      "n": 10,
+      "p90": 53
+     },
+     "raw_bytes": 756390,
+     "raw_bytes_per_session": {
+      "max": 77667,
+      "mean": 75639.0,
+      "median": 75761.0,
+      "min": 74144,
+      "n": 10,
+      "p90": 76670
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 48027,
+      "mean": 46892.7,
+      "median": 47167.5,
+      "min": 45570,
+      "n": 10,
+      "p90": 47793
+     }
+    },
+    "A9": {
+     "events": 140,
+     "events_per_session": {
+      "max": 14,
+      "mean": 14.0,
+      "median": 14.0,
+      "min": 14,
+      "n": 10,
+      "p90": 14
+     },
+     "raw_bytes": 131908,
+     "raw_bytes_per_session": {
+      "max": 13374,
+      "mean": 13190.8,
+      "median": 13177.0,
+      "min": 13039,
+      "n": 10,
+      "p90": 13257
+     },
+     "sessions": 10,
+     "value_bytes_per_session": {
+      "max": 6129,
+      "mean": 5947.1,
+      "median": 5931.5,
+      "min": 5798,
+      "n": 10,
+      "p90": 6014
+     }
+    }
+   },
+   "raw_bytes": 1556142,
+   "raw_bytes_per_event": {
+    "max": 10481,
+    "mean": 1137.53,
+    "median": 1019.0,
+    "min": 376,
+    "n": 1368,
+    "p90": 1761
+   },
+   "raw_bytes_per_session": {
+    "max": 77667,
+    "mean": 15561.42,
+    "median": 10716.0,
+    "min": 2105,
+    "n": 100,
+    "p90": 24896
+   },
+   "sessions": 100,
+   "value_bytes": 844179,
+   "value_bytes_per_session": {
+    "max": 48027,
+    "mean": 8441.79,
+    "median": 5116.5,
+    "min": 922,
+    "n": 100,
+    "p90": 11481
+   }
+  },
+  "benign": {
+   "events": 1031,
+   "events_per_session": {
+    "max": 27,
+    "mean": 10.31,
+    "median": 11.0,
+    "min": 6,
+    "n": 100,
+    "p90": 13
+   },
+   "fields": {
+    "action.context_document_ids": {
+     "events_with_a_value": 342,
+     "value_bytes": 10047,
+     "value_share_percent": 2.01
+    },
+    "action.egress_target": {
+     "events_with_a_value": 56,
+     "value_bytes": 2764,
+     "value_share_percent": 0.55
+    },
+    "action.permission_decision": {
+     "events_with_a_value": 342,
+     "value_bytes": 2430,
+     "value_share_percent": 0.49
+    },
+    "action.result_bytes": {
+     "events_with_a_value": 171,
+     "value_bytes": 495,
+     "value_share_percent": 0.1
+    },
+    "action.result_hash": {
+     "events_with_a_value": 171,
+     "value_bytes": 12141,
+     "value_share_percent": 2.43
+    },
+    "action.tool_arguments": {
+     "events_with_a_value": 342,
+     "value_bytes": 81982,
+     "value_share_percent": 16.43
+    },
+    "action.tool_name": {
+     "events_with_a_value": 342,
+     "value_bytes": 10284,
+     "value_share_percent": 2.06
+    },
+    "content.prompt_hash": {
+     "events_with_a_value": 254,
+     "value_bytes": 18034,
+     "value_share_percent": 3.61
+    },
+    "content.prompt_text": {
+     "events_with_a_value": 254,
+     "value_bytes": 26810,
+     "value_share_percent": 5.37
+    },
+    "content.redaction_applied": {
+     "events_with_a_value": 354,
+     "value_bytes": 1770,
+     "value_share_percent": 0.35
+    },
+    "content.response_hash": {
+     "events_with_a_value": 254,
+     "value_bytes": 18034,
+     "value_share_percent": 3.61
+    },
+    "content.response_text": {
+     "events_with_a_value": 244,
+     "value_bytes": 87053,
+     "value_share_percent": 17.44
+    },
+    "content.system_prompt_version": {
+     "events_with_a_value": 354,
+     "value_bytes": 2832,
+     "value_share_percent": 0.57
+    },
+    "control.block_reason": {
+     "events_with_a_value": 18,
+     "value_bytes": 1430,
+     "value_share_percent": 0.29
+    },
+    "control.canary_triggered": {
+     "events_with_a_value": 1031,
+     "value_bytes": 5110,
+     "value_share_percent": 1.02
+    },
+    "control.policy_version": {
+     "events_with_a_value": 1031,
+     "value_bytes": 5155,
+     "value_share_percent": 1.03
+    },
+    "retrieval.chunk_ids": {
+     "events_with_a_value": 235,
+     "value_bytes": 6398,
+     "value_share_percent": 1.28
+    },
+    "retrieval.document_ids": {
+     "events_with_a_value": 235,
+     "value_bytes": 5458,
+     "value_share_percent": 1.09
+    },
+    "retrieval.permission_context": {
+     "events_with_a_value": 235,
+     "value_bytes": 28979,
+     "value_share_percent": 5.81
+    },
+    "retrieval.query_text": {
+     "events_with_a_value": 235,
+     "value_bytes": 9891,
+     "value_share_percent": 1.98
+    },
+    "retrieval.scores": {
+     "events_with_a_value": 235,
+     "value_bytes": 1639,
+     "value_share_percent": 0.33
+    },
+    "retrieval.source_provenance": {
+     "events_with_a_value": 235,
+     "value_bytes": 3865,
+     "value_share_percent": 0.77
+    },
+    "session.agent_id": {
+     "events_with_a_value": 1031,
+     "value_bytes": 16496,
+     "value_share_percent": 3.31
+    },
+    "session.client_app": {
+     "events_with_a_value": 1031,
+     "value_bytes": 14434,
+     "value_share_percent": 2.89
+    },
+    "session.config_version": {
+     "events_with_a_value": 1031,
+     "value_bytes": 5155,
+     "value_share_percent": 1.03
+    },
+    "session.id": {
+     "events_with_a_value": 1031,
+     "value_bytes": 14434,
+     "value_share_percent": 2.89
+    },
+    "session.start_time": {
+     "events_with_a_value": 1031,
+     "value_bytes": 24744,
+     "value_share_percent": 4.96
+    },
+    "session.tenant_id": {
+     "events_with_a_value": 1031,
+     "value_bytes": 17527,
+     "value_share_percent": 3.51
+    },
+    "session.user_id": {
+     "events_with_a_value": 1031,
+     "value_bytes": 13403,
+     "value_share_percent": 2.69
+    },
+    "turn.finish_reason": {
+     "events_with_a_value": 254,
+     "value_bytes": 2032,
+     "value_share_percent": 0.41
+    },
+    "turn.index": {
+     "events_with_a_value": 831,
+     "value_bytes": 831,
+     "value_share_percent": 0.17
+    },
+    "turn.latency": {
+     "events_with_a_value": 254,
+     "value_bytes": 1493,
+     "value_share_percent": 0.3
+    },
+    "turn.model_id": {
+     "events_with_a_value": 254,
+     "value_bytes": 4064,
+     "value_share_percent": 0.81
+    },
+    "turn.model_version": {
+     "events_with_a_value": 254,
+     "value_bytes": 6350,
+     "value_share_percent": 1.27
+    },
+    "turn.timestamp": {
+     "events_with_a_value": 831,
+     "value_bytes": 19944,
+     "value_share_percent": 4.0
+    },
+    "turn.tokens_in": {
+     "events_with_a_value": 254,
+     "value_bytes": 1259,
+     "value_share_percent": 0.25
+    },
+    "turn.tokens_out": {
+     "events_with_a_value": 254,
+     "value_bytes": 675,
+     "value_share_percent": 0.14
+    }
+   },
+   "groups": {
+    "action": {
+     "events_carrying": 342,
+     "raw_bytes": 176612,
+     "raw_per_carrying_event": 516.41,
+     "raw_per_event": 171.3,
+     "raw_share_percent": 17.28,
+     "value_bytes": 120143,
+     "value_share_percent": 24.08
+    },
+    "content": {
+     "events_carrying": 354,
+     "raw_bytes": 207249,
+     "raw_per_carrying_event": 585.45,
+     "raw_per_event": 201.02,
+     "raw_share_percent": 20.28,
+     "value_bytes": 154533,
+     "value_share_percent": 30.97
+    },
+    "control": {
+     "events_carrying": 1031,
+     "raw_bytes": 91046,
+     "raw_per_carrying_event": 88.31,
+     "raw_per_event": 88.31,
+     "raw_share_percent": 8.91,
+     "value_bytes": 11695,
+     "value_share_percent": 2.34
+    },
+    "envelope": {
+     "events_carrying": 1031,
+     "raw_bytes": 61450,
+     "raw_per_carrying_event": 59.6,
+     "raw_per_event": 59.6,
+     "raw_share_percent": 6.01,
+     "value_bytes": 13593,
+     "value_share_percent": 2.72
+    },
+    "retrieval": {
+     "events_carrying": 235,
+     "raw_bytes": 86780,
+     "raw_per_carrying_event": 369.28,
+     "raw_per_event": 84.17,
+     "raw_share_percent": 8.49,
+     "value_bytes": 56230,
+     "value_share_percent": 11.27
+    },
+    "session": {
+     "events_carrying": 1031,
+     "raw_bytes": 237130,
+     "raw_per_carrying_event": 230.0,
+     "raw_per_event": 230.0,
+     "raw_share_percent": 23.2,
+     "value_bytes": 106193,
+     "value_share_percent": 21.28
+    },
+    "turn": {
+     "events_carrying": 831,
+     "raw_bytes": 161712,
+     "raw_per_carrying_event": 194.6,
+     "raw_per_event": 156.85,
+     "raw_share_percent": 15.82,
+     "value_bytes": 36648,
+     "value_share_percent": 7.34
+    }
+   },
+   "largest_event_raw_bytes": 3002,
+   "largest_value": {
+    "bytes": 1998,
+    "field": "content.response_text"
+   },
+   "nulls": {
+    "members": 5503,
+    "raw_bytes": 103251,
+    "raw_share_percent": 10.1
+   },
+   "per_event_type": {
+    "retrieval": {
+     "events": 235,
+     "per_session": 2.35,
+     "raw_bytes_per_event": {
+      "max": 1069,
+      "mean": 928.2,
+      "median": 923,
+      "min": 890,
+      "n": 235,
+      "p90": 952
+     }
+    },
+    "session_end": {
+     "events": 100,
+     "per_session": 1.0,
+     "raw_bytes_per_event": {
+      "max": 376,
+      "mean": 376.0,
+      "median": 376.0,
+      "min": 376,
+      "n": 100,
+      "p90": 376
+     }
+    },
+    "session_start": {
+     "events": 100,
+     "per_session": 1.0,
+     "raw_bytes_per_event": {
+      "max": 544,
+      "mean": 544.0,
+      "median": 544.0,
+      "min": 544,
+      "n": 100,
+      "p90": 544
+     }
+    },
+    "tool_post": {
+     "events": 171,
+     "per_session": 1.71,
+     "raw_bytes_per_event": {
+      "max": 2871,
+      "mean": 1126.17,
+      "median": 929,
+      "min": 876,
+      "n": 171,
+      "p90": 1767
+     }
+    },
+    "tool_pre": {
+     "events": 171,
+     "per_session": 1.71,
+     "raw_bytes_per_event": {
+      "max": 2803,
+      "mean": 1031.67,
+      "median": 821,
+      "min": 797,
+      "n": 171,
+      "p90": 1699
+     }
+    },
+    "turn": {
+     "events": 254,
+     "per_session": 2.54,
+     "raw_bytes_per_event": {
+      "max": 3002,
+      "mean": 1349.85,
+      "median": 1117.0,
+      "min": 966,
+      "n": 254,
+      "p90": 1940
+     }
+    }
+   },
+   "per_label": {
+    "b1": {
+     "events": 226,
+     "events_per_session": {
+      "max": 11,
+      "mean": 7.53,
+      "median": 7.0,
+      "min": 7,
+      "n": 30,
+      "p90": 9
+     },
+     "raw_bytes": 207084,
+     "raw_bytes_per_session": {
+      "max": 10855,
+      "mean": 6902.8,
+      "median": 6454.0,
+      "min": 6122,
+      "n": 30,
+      "p90": 8440
+     },
+     "sessions": 30,
+     "value_bytes_per_session": {
+      "max": 5218,
+      "mean": 3191.17,
+      "median": 3043.5,
+      "min": 2718,
+      "n": 30,
+      "p90": 3882
+     }
+    },
+    "b2": {
+     "events": 299,
+     "events_per_session": {
+      "max": 27,
+      "mean": 11.96,
+      "median": 11,
+      "min": 11,
+      "n": 25,
+      "p90": 11
+     },
+     "raw_bytes": 286168,
+     "raw_bytes_per_session": {
+      "max": 25762,
+      "mean": 11446.72,
+      "median": 10511,
+      "min": 9634,
+      "n": 25,
+      "p90": 11402
+     },
+     "sessions": 25,
+     "value_bytes_per_session": {
+      "max": 11465,
+      "mean": 5361.16,
+      "median": 4955,
+      "min": 4085,
+      "n": 25,
+      "p90": 5824
+     }
+    },
+    "b3": {
+     "events": 259,
+     "events_per_session": {
+      "max": 16,
+      "mean": 12.95,
+      "median": 13.0,
+      "min": 10,
+      "n": 20,
+      "p90": 14
+     },
+     "raw_bytes": 284886,
+     "raw_bytes_per_session": {
+      "max": 18799,
+      "mean": 14244.3,
+      "median": 13778.0,
+      "min": 10688,
+      "n": 20,
+      "p90": 16447
+     },
+     "sessions": 20,
+     "value_bytes_per_session": {
+      "max": 10369,
+      "mean": 7513.2,
+      "median": 7188.5,
+      "min": 5615,
+      "n": 20,
+      "p90": 9156
+     }
+    },
+    "b4": {
+     "events": 247,
+     "events_per_session": {
+      "max": 27,
+      "mean": 9.88,
+      "median": 7,
+      "min": 6,
+      "n": 25,
+      "p90": 16
+     },
+     "raw_bytes": 243841,
+     "raw_bytes_per_session": {
+      "max": 27285,
+      "mean": 9753.64,
+      "median": 6732,
+      "min": 5773,
+      "n": 25,
+      "p90": 15896
+     },
+     "sessions": 25,
+     "value_bytes_per_session": {
+      "max": 12938,
+      "mean": 4760.28,
+      "median": 3340,
+      "min": 2754,
+      "n": 25,
+      "p90": 7472
+     }
+    }
+   },
+   "raw_bytes": 1021979,
+   "raw_bytes_per_event": {
+    "max": 3002,
+    "mean": 991.25,
+    "median": 921,
+    "min": 376,
+    "n": 1031,
+    "p90": 1655
+   },
+   "raw_bytes_per_session": {
+    "max": 27285,
+    "mean": 10219.79,
+    "median": 10233.5,
+    "min": 5773,
+    "n": 100,
+    "p90": 14921
+   },
+   "sessions": 100,
+   "value_bytes": 499035,
+   "value_bytes_per_session": {
+    "max": 12938,
+    "mean": 4990.35,
+    "median": 4749.0,
+    "min": 2718,
+    "n": 100,
+    "p90": 7701
+   }
+  }
+ }
+}
