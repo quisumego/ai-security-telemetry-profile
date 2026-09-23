@@ -31,6 +31,7 @@ from lab.config import (
     CLAIMS_PATH,
     CORPUS_DIR,
     REPO_ROOT,
+    LabConfig,
     load_config,
 )
 from lab.tools import TOOL_NAMES
@@ -129,8 +130,15 @@ def build_manifest(
     result: SessionResult,
     scenario: dict[str, Any] | None = None,
     task: dict[str, Any] | None = None,
+    config: LabConfig | None = None,
 ) -> dict[str, Any]:
     """The manifest for one run.
+
+    `config` is the configuration the session actually ran with. None, the
+    default for every M2 and M3 capture, reads `lab/config.yaml`, which is what
+    those sessions ran with. Added at M7b, whose pass runs with the model
+    replaced in memory, so that `model.requested` names the model that was
+    requested rather than the one in the file.
 
     `scenario` is null for an ad hoc run from the command line. A scored
     attack trial passes a block carrying `id`, `trial`, `holdout` and
@@ -144,7 +152,7 @@ def build_manifest(
     recording it under `scenario` would make an attack corpus and a benign
     corpus indistinguishable to anything reading manifests.
     """
-    config = load_config()
+    config = config or load_config()
     return {
         "run_id": run_id,
         "label": label,

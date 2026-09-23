@@ -60,8 +60,22 @@ def test_every_captured_line_validates_against_the_schema(validator):
     assert not failures, "\n".join(failures)
 
 
+# The M7b local model pass, ruled by the owner on 23 September 2026 (ruling 14).
+# Its captures sit in runs/ beside the frozen ones but ran on a local model by
+# design, so the two tests below that pin the Claude model and the Claude
+# transcript read-back leave them out by name. Every other manifest, including
+# both frozen corpora, is still held to both. tests/test_crosscheck.py holds the
+# M7b captures to their own pin.
+LOCAL_PASS_PREFIX = "m7b-"
+
+
+def _claude_manifests():
+    return [p for p in sorted(RUNS_DIR.glob("*/manifest.json"))
+            if not p.parent.name.startswith(LOCAL_PASS_PREFIX)]
+
+
 def test_every_manifest_records_the_pinned_model_and_no_fallback():
-    manifests = sorted(RUNS_DIR.glob("*/manifest.json"))
+    manifests = _claude_manifests()
     assert manifests, "no run manifest exists"
     for path in manifests:
         manifest = json.loads(path.read_text(encoding="utf-8"))
@@ -86,7 +100,7 @@ def test_every_manifest_records_token_counts_rather_than_only_a_cost_estimate():
 def test_every_turn_figure_came_from_the_completed_record():
     """turns_unenriched rising means the transcript lookup stopped working and
     the capture is carrying nulls where token counts should be."""
-    for path in sorted(RUNS_DIR.glob("*/manifest.json")):
+    for path in _claude_manifests():
         manifest = json.loads(path.read_text(encoding="utf-8"))
         assert manifest["session"]["turns_unenriched"] == 0, (
             f"{path} has turns whose token counts could not be read back"

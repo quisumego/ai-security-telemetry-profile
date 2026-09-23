@@ -165,6 +165,7 @@ def build_options(
     server: Any,
     stderr_sink: list[str],
     thinking: str | None = None,
+    env: dict[str, str] | None = None,
 ) -> ClaudeAgentOptions:
     """Build the SDK options for one session.
 
@@ -173,6 +174,12 @@ def build_options(
     conditions, which is the only honest way to decide it. A scored capture
     passes None and takes the configured value, and the manifest records which
     value was in force.
+
+    `env` is merged by the SDK over the inherited environment of the CLI it
+    spawns, for this session only. Added at M7b, where it points the CLI at a
+    local model server without exporting anything in the shell or writing any
+    settings file. None, the default for every M2 and M3 capture, leaves the
+    options exactly as they were.
     """
     if config.fallback_model is not None:
         raise ValueError(
@@ -200,6 +207,8 @@ def build_options(
     )
     if thinking_config is not None:
         options.thinking = thinking_config
+    if env:
+        options.env = dict(env)
     return options
 
 
@@ -312,12 +321,14 @@ async def run_session(
     overlay_dirs: tuple[Path, ...] = (),
     thinking: str | None = None,
     extra_pages: dict[str, str] | None = None,
+    env: dict[str, str] | None = None,
 ) -> SessionResult:
     """Run one session end to end and return what it produced.
 
     `overlay_dirs` and `extra_pages` are the two ways a scenario puts material
     in front of the agent without touching the frozen benign fixtures: extra
-    documents in the index, and extra pages behind `fetch_url`.
+    documents in the index, and extra pages behind `fetch_url`. `env` is
+    passed to `build_options` unchanged.
     """
     config = config or load_config()
     session_id = session_id or f"s-{uuid.uuid4().hex[:12]}"
@@ -326,7 +337,7 @@ async def run_session(
     session = build_session(config, run_dir, session_id, overlay_dirs=overlay_dirs)
     stderr_sink: list[str] = []
     server = build_tool_server(session, extra_pages=extra_pages)
-    options = build_options(config, session, server, stderr_sink, thinking=thinking)
+    options = build_options(config, session, server, stderr_sink, thinking=thinking, env=env)
 
     session.user_prompt = prompt
     session.emit_session_start()
