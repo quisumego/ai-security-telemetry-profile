@@ -227,6 +227,9 @@ CANARY_SCAN_GLOBS = (
     # published beside the doc.
     "vendor_gap/**/*.py",
     "vendor_gap/**/*.yaml",
+    # The local model cross-check, added at M7b by the owner's ruling of 23
+    # September 2026. Its runner and report read every captured event.
+    "crosscheck/**/*.py",
 )
 
 
