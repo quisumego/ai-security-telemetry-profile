@@ -6,8 +6,9 @@ false positive rate of every non-holdout attack oracle against this corpus.
 
 **The false positive column is the point of M3.** An oracle that fires on
 benign traffic has no precision, whatever its attack rate says, and that can
-only be seen by running it against a denominator. A5 and A9 are excluded:
-they are holdouts and are not opened until M4 scoring.
+only be seen by running it against a denominator. A5 and A9 are left out, as
+they were at M3, when they were the holdouts. Both were opened at M4 scoring,
+and detect.evaluate --include-holdouts reports them.
 
     .venv/bin/python -m benign.report
 """
@@ -98,7 +99,7 @@ def main() -> int:
         if scenario_id == "a04":
             note = "  (task-set mismatch, meaningful against b1 only)"
         print(f"    {scenario_id}  {rate:>7}  {', '.join(hits[:4])}{note}")
-    print(f"  holdouts {HOLDOUTS} not opened until M4 scoring")
+    print(f"  holdouts {HOLDOUTS} left out, as at M3; opened at M4, see detect.evaluate --include-holdouts")
     return 0
 
 
