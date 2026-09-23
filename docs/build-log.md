@@ -2159,3 +2159,192 @@ both pages print.
 - **The `max_turns` cap fix remains unverified against a live cap.** It needs a
   model call, so it carries to a stage that captures.
 - **The Sentinel queries have never run.** Nothing is deployed, by design.
+
+## M7. Vendor gap analysis, Azure and AWS
+
+**Date:** 23 September 2026, for the pre-flight, the design batch, the rulings
+and the build
+**Stage:** M7
+**Outcome:** every register field and event type is classified on six vendor
+surfaces from documentation read in the session, and the class answers are
+computed from the captures by vendor pass. `docs/vendor-gap-analysis.md`
+complete. Tag `gap-m7` at `8392341`
+**Hours:** approximately **0.6 against a 3 hour estimate** by the ruled method,
+from the first M7 commit at 11:56 to the last work commit at 12:31 on
+23 September. The M4 method, from the M6 close at 09:14 the same day, gives
+about 3.3, and that figure counts the design batch and the wait for the
+rulings. Neither counts the reading, pre-flight and documentation reading
+before the first commit, which took most of the stage.
+
+**No model calls were made and no cloud resource was created.** No Azure or AWS
+resource, no console sign-in, and no request to either vendor beyond reading
+public documentation pages. Nothing under `runs/` was written, and a test holds
+that the passes never change a capture.
+
+### The rulings, before anything was built
+
+Twenty-two questions were put as one batch with the design on 23 September
+2026. The owner's first reply ruled questions 1 to 17. Questions 18 to 22 came
+back without a ruling, so those five were asked again before anything was
+built, as the M5 batch did with its one unanswered point, and ruled the same
+day. The owner took the recommended option on all twenty-two.
+
+| # | Question | Ruling |
+|---|---|---|
+| 1 | Layers | The plan-named model layer as the headline, one agent layer per vendor in its own column; a combined answer only where a documented key links the layers |
+| 2 | "Vendor defaults" | A surface once its own switch is set; the literal as-shipped reading always printed beside it |
+| 3 | Absence | Only where a cited page gives the record's full field list; otherwise unconfirmed |
+| 4 | Configuration steps | Recorded with where they are set and their source |
+| 5 | Consequences of enabling | Only what the cited page states, in one line, no price |
+| 6 | Values inside a body | A documented path counts only in a labelled "body parsed" answer; free content never counts |
+| 7 | Values the vendor does not produce | Caller-supplied or derived values are absent under vendor defaults and listed among the fields a deployment adds |
+| 8 | Event types | Six rows per surface, kept apart from the 37 fields |
+| 9 | Meaning | A partial match is recorded with its difference and run both ways |
+| 10 | Which detector decides | The counted detector, M5 ruling 1; any detector shown beside, deciding nothing |
+| 11 | How answers are computed | By vendor pass over the captures, compared under methodology Section 4 |
+| 12 | Session grouping | Ungrouped records run as sessions of one |
+| 13 | Vocabulary | M5's codes plus `uc` |
+| 14 | Evidence | A data file as source of truth, a generator, `results/vendor-gap.json`, tests |
+| 15 | Citations | Numbered, both URLs where a page redirected, page and retrieval dates, short quotations, no page copies, a traps section |
+| 16 | Layout and tag | `vendor_gap/`, canary scan extended, style scan unchanged, tag `gap-m7` |
+| 17 | Order of fields to add | Measured first, then tier, then register order |
+| 18 | Naming | Live names; current documentation, classic only where linked or redirected |
+| 19 | Tidy-up, holdout wording | `benign/report.py` only |
+| 20 | Tidy-up, M2 hours | Recorded from commit timestamps, both figures, the checklist line ticked |
+| 21 | Stale lines | Corrected at close-out as corrections; `CLAUDE.md` and frozen or generated text listed only |
+| 22 | Stage hours | First M7 commit to last, with the M4 method's figure beside it |
+
+**The rulings were committed on their own first**, at `656557c`, before the
+evidence file or any code existed, the ordering M5 used at `75a1d69` and M6 at
+`565c4ee`. The evidence followed at `1be76ee`, and the code and the page at
+`8392341`.
+
+### What was built
+
+```
+vendor_gap/
+├── rulings.py      the twenty-two rulings, committed first (656557c)
+├── evidence.yaml   28 sources, 43 quotations, a verdict per field and event type on six surfaces (1be76ee)
+└── analysis.py     validation, the vendor passes, the page's generated blocks (8392341)
+
+results/vendor-gap.json        written by vendor_gap.analysis --write (8392341)
+docs/vendor-gap-analysis.md    filled against its placeholder (8392341)
+tests/test_vendor_gap.py       64 tests
+```
+
+### The evidence
+
+Twenty-eight pages were read on 23 September 2026, fourteen from Microsoft
+Learn and fourteen from the Amazon Bedrock, AgentCore and CloudTrail guides,
+each from its raw text rather than through a summarising fetch. Search results
+were used to find pages and never as evidence. Every one of the 43 quotations
+was checked against the text of the page it quotes before it was committed.
+
+| Surface | Default | With configuration | Absent | Unconfirmed |
+|---|---|---|---|---|
+| Azure activity log and platform metrics | 0 | 0 | 22 | 15 |
+| Foundry resource logs, diagnostic setting | 1 | 0 | 21 | 15 |
+| Foundry tracing, hosted agent | 0 | 0 | 31 | 6 |
+| CloudTrail and CloudWatch runtime metrics | 3 | 0 | 22 | 12 |
+| Bedrock model invocation logging | 12 | 0 | 22 | 3 |
+| AgentCore Observability | 4 | 0 | 33 | 0 |
+
+**None of the seven security-only fields is available on any surface**: each is
+held only by the deployment or derivable by it. Nothing is available with
+configuration anywhere, because every documented setting found is either a
+surface's own switch or a value the deployment would have to supply. The two
+model layers differ most in what they document: Bedrock lists its record's
+fields in full, and Azure documents the header common to all resource logs but
+nothing of the service-specific properties, so most Azure verdicts are
+unconfirmed rather than absent.
+
+### The answer
+
+With vendor defaults only, **no class stays detectable on any single surface of
+either vendor**. A5, A6, A7 and A9 read `X` on all ten single-surface columns. A8
+reads `uc` on the as-shipped and model layers and `Xc` on both agent layers. A1
+to A4 read `nt` and A10 `ab` everywhere. The combined model and agent columns
+read `uc`, because no page names a key linking the two layers' records.
+
+**The A8 result is the one worth keeping.** With tool-call records gone,
+`d-a08` still catches all ten A8 trials on a single turn's input token count,
+so the class survives on a vendor if its token count means what the register's
+does. Bedrock does not say whether its count includes cached tokens, and Azure
+documents no per-call token field at all. M5 tiered `turn.tokens_in` Not
+required because `d-a08` fired first on tool calls; here it is one of A8's two
+routes.
+
+The question can be answered for five classes only, and for two of them on a
+single session. The A9 answer rests on a baseline that carries its exposure:
+the session that built the detectors knew both holdout outcomes, the handover
+at M4 disclosed A9's retrieval signature, the detectors were authored from
+fixtures only, and the result is weakened evidence, not a clean holdout.
+
+**What returns each class**, by vendor pass on each headline column: A5 and A6
+need retrieval records and `retrieval.document_ids`; A7 needs
+`control.canary_triggered`, and on Azure turn records too; A8 needs
+`turn.tokens_in`, or tool-call records with `session.id`; A9 needs retrieval
+records, `control.canary_triggered`, `retrieval.permission_context` and
+`session.id`, and on Azure turn records too.
+
+### Corrected during the build
+
+- **Leave-one-out missed a redundant route.** The first version of the
+  additions list left each missing input out in turn, which found nothing for
+  A8, because either of its two routes restores it. It now finds the smallest
+  sets of inputs that restore each class, and a test re-runs every set. Changed
+  before anything was committed.
+- **Two absent verdicts had no basis.** The Azure as-shipped rows for document
+  and chunk identifiers read absent on a surface with no full field list. They
+  were changed to unconfirmed on review, before the code that checks exactly
+  that existed.
+- **Three sources were listed and never cited.** The evidence check caught
+  them. Each bears on a surface's record description and is cited there.
+- **Three quotations carried extraction artefacts**, a space before a comma or
+  full stop left by the text extraction. They were corrected to read as the
+  pages do and checked again.
+- **A trap claimed more than was read.** A draft said community threads on
+  Microsoft's site disagree with each other; that rested on a search summary,
+  not on reading them. It now says only that they are not documentation and
+  were not used.
+- **The first commit's test count needed its own run.** Setting files aside by
+  deleting them was refused by the harness, so the suite for `1be76ee` was run
+  in a temporary worktree holding exactly that tree, and the worktree was then
+  removed.
+
+### Concerns noted separately, nothing changed
+
+1. **The pass works at ASTP granularity.** A vendor record is modelled as the
+   ASTP event it corresponds to, with the fields the vendor lacks nulled.
+2. **What a detector needs beyond its declared reads is read from its source.**
+   `detect/detectors.py` is frozen and declares fields only, so the event types
+   and grouping each detector needs are recorded in `vendor_gap/analysis.py`
+   and a test checks them against the source and the corpus.
+3. **The switch was read to include the Text modality on Bedrock.** Read the
+   other way, seven fields and three event types move from available by
+   default to available with configuration, and no class answer changes; a test
+   repeats that check.
+4. **The A8 `uc` needs a vendor record to settle**, which is a cloud resource
+   and was not in scope.
+5. **Two more Not required fields turn out to matter.** `session.id` is needed
+   for A8 and A9 once records must be grouped, and `turn.tokens_in` is one of
+   A8's routes. This adds to the M5 concern that the rule cannot credit a field
+   whose value the harness never tested.
+
+### M2 hours, reconstructed at M7
+
+Ruled at M7 (ruling 20). The M2 hours were never recorded. From commit
+timestamps, every M2 commit falls on 21 September 2026: **about 22.6 hours**
+from the first, `1faf534` at 00:04, to the last, `1f29ded` at 22:42, and
+**about 2.3 hours** in the three clusters of commits, 00:04 to 00:42, `0a6c69c`
+alone at 09:55, and 21:01 to 22:42. Neither figure counts reading, design or
+any work done between commits. Recorded now so the M2 standing-rules line can
+be cleared.
+
+### Still open
+
+- **The `max_turns` cap fix remains unverified against a live cap.** It needs a
+  model call, so it carries to a stage that captures.
+- **The Sentinel queries have never run.** Nothing is deployed, by design.
+- **The A8 vendor answer is unconfirmed on both model layers**, pending a page,
+  or a record, that says what the vendor's input token count includes.
