@@ -1,0 +1,64 @@
+{
+  "location": "<Location>",
+  "kind": "Direct",
+  "properties": {
+    "streamDeclarations": {
+      "Custom-AstpEvents": {
+        "columns": [
+          {
+            "name": "astp_version",
+            "type": "string"
+          },
+          {
+            "name": "event_type",
+            "type": "string"
+          },
+          {
+            "name": "session",
+            "type": "dynamic"
+          },
+          {
+            "name": "turn",
+            "type": "dynamic"
+          },
+          {
+            "name": "content",
+            "type": "dynamic"
+          },
+          {
+            "name": "retrieval",
+            "type": "dynamic"
+          },
+          {
+            "name": "action",
+            "type": "dynamic"
+          },
+          {
+            "name": "control",
+            "type": "dynamic"
+          }
+        ]
+      }
+    },
+    "destinations": {
+      "logAnalytics": [
+        {
+          "workspaceResourceId": "<WorkspaceResourceId>",
+          "name": "AstpWorkspace"
+        }
+      ]
+    },
+    "dataFlows": [
+      {
+        "streams": [
+          "Custom-AstpEvents"
+        ],
+        "destinations": [
+          "AstpWorkspace"
+        ],
+        "transformKql": "source\n| extend session_ = parse_json(session), turn_ = parse_json(turn), content_ = parse_json(content), retrieval_ = parse_json(retrieval), action_ = parse_json(action), control_ = parse_json(control)\n| project\n    TimeGenerated = now(),\n    AstpVersion = tostring(astp_version),\n    EventType = tostring(event_type),\n    SessionId = tostring(session_['id']),\n    SessionStartTime = todatetime(session_['start_time']),\n    SessionUserId = tostring(session_['user_id']),\n    SessionTenantId = tostring(session_['tenant_id']),\n    SessionClientApp = tostring(session_['client_app']),\n    SessionAgentId = tostring(session_['agent_id']),\n    SessionConfigVersion = tostring(session_['config_version']),\n    TurnIndex = tolong(turn_['index']),\n    TurnTimestamp = todatetime(turn_['timestamp']),\n    TurnModelId = tostring(turn_['model_id']),\n    TurnModelVersion = tostring(turn_['model_version']),\n    TurnTokensIn = tolong(turn_['tokens_in']),\n    TurnTokensOut = tolong(turn_['tokens_out']),\n    TurnLatency = toreal(turn_['latency']),\n    TurnFinishReason = tostring(turn_['finish_reason']),\n    ContentPromptText = tostring(content_['prompt_text']),\n    ContentPromptHash = tostring(content_['prompt_hash']),\n    ContentResponseText = tostring(content_['response_text']),\n    ContentResponseHash = tostring(content_['response_hash']),\n    ContentSystemPromptVersion = tostring(content_['system_prompt_version']),\n    ContentRedactionApplied = tobool(content_['redaction_applied']),\n    RetrievalDocumentIds = retrieval_['document_ids'],\n    RetrievalChunkIds = retrieval_['chunk_ids'],\n    RetrievalScores = retrieval_['scores'],\n    RetrievalQueryText = tostring(retrieval_['query_text']),\n    RetrievalSourceProvenance = tostring(retrieval_['source_provenance']),\n    RetrievalPermissionContextCallerScope = tostring(retrieval_['permission_context']['caller_scope']),\n    RetrievalPermissionContextDocumentScopes = retrieval_['permission_context']['document_scopes'],\n    RetrievalPermissionContextScopeMatch = tobool(retrieval_['permission_context']['scope_match']),\n    ActionToolName = tostring(action_['tool_name']),\n    ActionToolArguments = action_['tool_arguments'],\n    ActionResultHash = tostring(action_['result_hash']),\n    ActionResultBytes = tolong(action_['result_bytes']),\n    ActionPermissionDecision = tostring(action_['permission_decision']),\n    ActionEgressTarget = tostring(action_['egress_target']),\n    ActionContextDocumentIds = action_['context_document_ids'],\n    ControlCanaryTriggered = tobool(control_['canary_triggered']),\n    ControlPolicyVersion = tostring(control_['policy_version']),\n    ControlBlockReason = tostring(control_['block_reason'])",
+        "outputStream": "Custom-AstpEvents_CL"
+      }
+    ]
+  }
+}

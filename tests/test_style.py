@@ -18,7 +18,9 @@ EM_DASH = "—"
 BANNED_WORDS = ("robust", "seamless", "proven", "flexible", "leverage", "various")
 BANNED_RE = re.compile(r"\b(" + "|".join(BANNED_WORDS) + r")\b", re.IGNORECASE)
 
-SCANNED_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".json", ".toml", ".txt"}
+# .kql added at M6 by the owner's ruling of 23 September 2026, for the
+# generated Sentinel rule queries.
+SCANNED_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".json", ".toml", ".txt", ".kql"}
 
 SKIP_DIRS = {".git", ".venv", "venv", "__pycache__", ".pytest_cache", "runs", "results"}
 SKIP_FILES = {"CLAUDE.md", "test_style.py"}

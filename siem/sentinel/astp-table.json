@@ -1,0 +1,220 @@
+{
+  "properties": {
+    "schema": {
+      "name": "AstpEvents_CL",
+      "columns": [
+        {
+          "name": "TimeGenerated",
+          "type": "dateTime",
+          "description": "ingestion time, on every row"
+        },
+        {
+          "name": "AstpVersion",
+          "type": "string",
+          "description": "ASTP astp_version"
+        },
+        {
+          "name": "EventType",
+          "type": "string",
+          "description": "ASTP event_type"
+        },
+        {
+          "name": "SessionId",
+          "type": "string",
+          "description": "ASTP session.id"
+        },
+        {
+          "name": "SessionStartTime",
+          "type": "dateTime",
+          "description": "ASTP session.start_time"
+        },
+        {
+          "name": "SessionUserId",
+          "type": "string",
+          "description": "ASTP session.user_id"
+        },
+        {
+          "name": "SessionTenantId",
+          "type": "string",
+          "description": "ASTP session.tenant_id"
+        },
+        {
+          "name": "SessionClientApp",
+          "type": "string",
+          "description": "ASTP session.client_app"
+        },
+        {
+          "name": "SessionAgentId",
+          "type": "string",
+          "description": "ASTP session.agent_id"
+        },
+        {
+          "name": "SessionConfigVersion",
+          "type": "string",
+          "description": "ASTP session.config_version"
+        },
+        {
+          "name": "TurnIndex",
+          "type": "long",
+          "description": "ASTP turn.index"
+        },
+        {
+          "name": "TurnTimestamp",
+          "type": "dateTime",
+          "description": "ASTP turn.timestamp"
+        },
+        {
+          "name": "TurnModelId",
+          "type": "string",
+          "description": "ASTP turn.model_id"
+        },
+        {
+          "name": "TurnModelVersion",
+          "type": "string",
+          "description": "ASTP turn.model_version"
+        },
+        {
+          "name": "TurnTokensIn",
+          "type": "long",
+          "description": "ASTP turn.tokens_in"
+        },
+        {
+          "name": "TurnTokensOut",
+          "type": "long",
+          "description": "ASTP turn.tokens_out"
+        },
+        {
+          "name": "TurnLatency",
+          "type": "real",
+          "description": "ASTP turn.latency"
+        },
+        {
+          "name": "TurnFinishReason",
+          "type": "string",
+          "description": "ASTP turn.finish_reason"
+        },
+        {
+          "name": "ContentPromptText",
+          "type": "string",
+          "description": "ASTP content.prompt_text"
+        },
+        {
+          "name": "ContentPromptHash",
+          "type": "string",
+          "description": "ASTP content.prompt_hash"
+        },
+        {
+          "name": "ContentResponseText",
+          "type": "string",
+          "description": "ASTP content.response_text"
+        },
+        {
+          "name": "ContentResponseHash",
+          "type": "string",
+          "description": "ASTP content.response_hash"
+        },
+        {
+          "name": "ContentSystemPromptVersion",
+          "type": "string",
+          "description": "ASTP content.system_prompt_version"
+        },
+        {
+          "name": "ContentRedactionApplied",
+          "type": "boolean",
+          "description": "ASTP content.redaction_applied"
+        },
+        {
+          "name": "RetrievalDocumentIds",
+          "type": "dynamic",
+          "description": "ASTP retrieval.document_ids"
+        },
+        {
+          "name": "RetrievalChunkIds",
+          "type": "dynamic",
+          "description": "ASTP retrieval.chunk_ids"
+        },
+        {
+          "name": "RetrievalScores",
+          "type": "dynamic",
+          "description": "ASTP retrieval.scores"
+        },
+        {
+          "name": "RetrievalQueryText",
+          "type": "string",
+          "description": "ASTP retrieval.query_text"
+        },
+        {
+          "name": "RetrievalSourceProvenance",
+          "type": "string",
+          "description": "ASTP retrieval.source_provenance"
+        },
+        {
+          "name": "RetrievalPermissionContextCallerScope",
+          "type": "string",
+          "description": "ASTP retrieval.permission_context.caller_scope"
+        },
+        {
+          "name": "RetrievalPermissionContextDocumentScopes",
+          "type": "dynamic",
+          "description": "ASTP retrieval.permission_context.document_scopes"
+        },
+        {
+          "name": "RetrievalPermissionContextScopeMatch",
+          "type": "boolean",
+          "description": "ASTP retrieval.permission_context.scope_match"
+        },
+        {
+          "name": "ActionToolName",
+          "type": "string",
+          "description": "ASTP action.tool_name"
+        },
+        {
+          "name": "ActionToolArguments",
+          "type": "dynamic",
+          "description": "ASTP action.tool_arguments"
+        },
+        {
+          "name": "ActionResultHash",
+          "type": "string",
+          "description": "ASTP action.result_hash"
+        },
+        {
+          "name": "ActionResultBytes",
+          "type": "long",
+          "description": "ASTP action.result_bytes"
+        },
+        {
+          "name": "ActionPermissionDecision",
+          "type": "string",
+          "description": "ASTP action.permission_decision"
+        },
+        {
+          "name": "ActionEgressTarget",
+          "type": "string",
+          "description": "ASTP action.egress_target"
+        },
+        {
+          "name": "ActionContextDocumentIds",
+          "type": "dynamic",
+          "description": "ASTP action.context_document_ids"
+        },
+        {
+          "name": "ControlCanaryTriggered",
+          "type": "boolean",
+          "description": "ASTP control.canary_triggered"
+        },
+        {
+          "name": "ControlPolicyVersion",
+          "type": "string",
+          "description": "ASTP control.policy_version"
+        },
+        {
+          "name": "ControlBlockReason",
+          "type": "string",
+          "description": "ASTP control.block_reason"
+        }
+      ]
+    },
+    "plan": "Analytics"
+  }
+}
