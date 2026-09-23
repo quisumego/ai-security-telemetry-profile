@@ -2348,3 +2348,13 @@ be cleared.
 - **The Sentinel queries have never run.** Nothing is deployed, by design.
 - **The A8 vendor answer is unconfirmed on both model layers**, pending a page,
   or a record, that says what the vendor's input token count includes.
+
+### After the close-out
+
+On 23 September 2026, after the push, the owner confirmed extra usage off and
+asked for the repository's `CLAUDE.md` holdout line to be updated. Ruling 21
+had left that line for the owner. It said detectors are authored against the
+eight non-holdout scenarios and the holdouts are not opened until scoring, both
+spent at M4. It now says the detectors were authored against fixtures only, the
+holdouts were opened after `freeze-m4` so the commitment is discharged, and the
+detector set stays frozen at `freeze-m4`.

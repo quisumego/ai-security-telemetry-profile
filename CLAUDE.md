@@ -35,7 +35,7 @@ Follow the plan. If a request conflicts with it, say so before building anything
 - Python 3.10 or later. Layout per the plan, Section 7.
 - **The agent behaves, the code decides.** Every detection outcome is computed by tested code from captured logs against oracles written before the runs. There is no manual adjudication step anywhere in the scoring path. If you find yourself proposing one, stop and say so.
 - **The ablation makes no model calls.** Fields are nulled in captured logs and the detectors re-run. If the ablation harness needs the API, the design is wrong.
-- **Development and evaluation stay separated.** Detectors are authored against the eight non-holdout scenarios only. The two holdout scenarios are not opened until scoring.
+- **Development and evaluation stayed separated.** Detectors were authored against throwaway fixtures only, never against the frozen corpus, as `docs/methodology.md` Section 5 requires. The two holdout scenarios, A5 and A9, stayed closed until M4 scoring and were opened after `freeze-m4`, so that commitment is discharged. The detector set stays frozen at `freeze-m4`.
 - **Freeze discipline.** Once tagged, `attacks/scenarios/`, `attacks/oracles.py`, `benign/` output, `lab/corpus/` and everything in `runs/` are read-only. Prompt and detector development happens against throwaway fixtures.
 - **Pre-committed rules are not tuned to results.** The tiering rule, the materiality threshold and the holdout choice are fixed in `docs/methodology.md` before the first scored run. If a result makes a rule look wrong, report the result and the rule as they stand, and note the concern separately.
 - Every scored run writes a manifest: model, config version, prompt version, seed, corpus tag, token counts, date.
