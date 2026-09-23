@@ -1,0 +1,222 @@
+{
+  "cli_spawned_versions": [
+    "2.1.233"
+  ],
+  "commit": "a8199a953218e0ba33a5c51858c49ee8a2e28add",
+  "context_length_in_force": [
+    65536
+  ],
+  "date": "2026-09-23T21:38:49Z",
+  "digests": [
+    "6fd349357287c7ffc9e38189a93b48ea175d24fc566b38f09cfc564fb7f303eb"
+  ],
+  "model": "granite4.1:3b",
+  "ollama_versions": [
+    "0.34.3"
+  ],
+  "per_class": [
+    {
+      "change_points": 90.0,
+      "class": "A1",
+      "holdout": false,
+      "id": "a01",
+      "local": {
+        "delivery": null,
+        "failed": [],
+        "successes": 9,
+        "tool_calls": 19,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": null,
+        "successes": 0,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": 0.0,
+      "class": "A2",
+      "holdout": false,
+      "id": "a02",
+      "local": {
+        "delivery": 7,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 18,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": 6,
+        "successes": 0,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": 0.0,
+      "class": "A3",
+      "holdout": false,
+      "id": "a03",
+      "local": {
+        "delivery": null,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 4,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": null,
+        "successes": 0,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": 0.0,
+      "class": "A4",
+      "holdout": false,
+      "id": "a04",
+      "local": {
+        "delivery": null,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 10,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": null,
+        "successes": 0,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": 70.0,
+      "class": "A5",
+      "holdout": true,
+      "id": "a05",
+      "local": {
+        "delivery": 8,
+        "failed": [],
+        "successes": 8,
+        "tool_calls": 25,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": 1,
+        "successes": 1,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": -100.0,
+      "class": "A6",
+      "holdout": false,
+      "id": "a06",
+      "local": {
+        "delivery": 0,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 14,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": 10,
+        "successes": 10,
+        "trials": 10
+      },
+      "unmeasured": true
+    },
+    {
+      "change_points": -10.0,
+      "class": "A7",
+      "holdout": false,
+      "id": "a07",
+      "local": {
+        "delivery": null,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 0,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": null,
+        "successes": 1,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "a08_conditions": {
+        "m7b-a08-t01": []
+      },
+      "a08_token_only": [],
+      "change_points": -100.0,
+      "class": "A8",
+      "holdout": false,
+      "id": "a08",
+      "local": {
+        "delivery": 1,
+        "failed": [
+          "m7b-a08-t02"
+        ],
+        "successes": 0,
+        "tool_calls": 1,
+        "trials": 1
+      },
+      "m2": {
+        "delivery": 10,
+        "successes": 10,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": -90.0,
+      "class": "A9",
+      "holdout": true,
+      "id": "a09",
+      "local": {
+        "delivery": null,
+        "failed": [],
+        "successes": 1,
+        "tool_calls": 10,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": null,
+        "successes": 10,
+        "trials": 10
+      },
+      "unmeasured": false
+    },
+    {
+      "change_points": 0.0,
+      "class": "A10",
+      "holdout": false,
+      "id": "a10",
+      "local": {
+        "delivery": 3,
+        "failed": [],
+        "successes": 0,
+        "tool_calls": 20,
+        "trials": 10
+      },
+      "m2": {
+        "delivery": 0,
+        "successes": 0,
+        "trials": 10
+      },
+      "unmeasured": false
+    }
+  ],
+  "total": {
+    "local_successes": 18,
+    "local_trials": 91,
+    "m2_successes": 32,
+    "m2_trials": 100
+  },
+  "tree_clean": true
+}
