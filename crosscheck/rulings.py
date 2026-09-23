@@ -7,7 +7,9 @@ to 22, each of which carried one. Question 1 asked the owner to confirm that
 extra usage was off on the day; it was a confirmation rather than a choice,
 carried no recommended option, and the reply did not state it, so it is
 recorded as unconfirmed below rather than taken as answered. The ruled design
-makes no Claude call, so nothing in the pass depends on it.
+makes no Claude call, so nothing in the pass depends on it. The owner confirmed
+it later the same day, while the pass was running, and the answer is recorded
+against question 1 below.
 
 This file is committed on its own, before the runner, the report or any
 capture, so `git log` shows the rulings came first. M5, M6 and M7 used the same
@@ -37,9 +39,11 @@ OWNER_REPLY = "I approve - Please proceed."
 CLAUDE_CALLS = False
 CLOUD_RESOURCES = False
 
-# Question 1. Extra usage off on the day. NOT CONFIRMED: the reply did not
-# state it. TODO(owner): confirm. Named at the stage close.
-EXTRA_USAGE_CONFIRMED_OFF_TODAY: bool | None = None
+# Question 1. Extra usage off on the day. Not stated in the reply to the batch.
+# Confirmed by the owner at about 19:22Z on 23 September 2026, after the clock
+# had started and the pass was running: "Extra usage is confirmed off today".
+EXTRA_USAGE_CONFIRMED_OFF_TODAY: bool | None = True
+EXTRA_USAGE_CONFIRMED_AT = "2026-09-23T19:22Z"
 
 # Ruling 2. The clock starts at the first install command, after these rulings,
 # the runner and its stub tests are committed. Installing Ollama, downloading
