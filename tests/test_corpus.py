@@ -214,6 +214,9 @@ CANARY_SCAN_GLOBS = (
     "ablation/**/*.py",
     "results/**/*.json",
     "results/**/*.md",
+    # The volume model, added at M6 by the owner's ruling of 23 September
+    # 2026. It reads every captured event, so it is held to the same rule.
+    "cost/**/*.py",
 )
 
 
