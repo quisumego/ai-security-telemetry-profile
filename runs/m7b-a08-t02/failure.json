@@ -1,0 +1,9 @@
+{
+  "run_id": "m7b-a08-t02",
+  "scenario": "a08",
+  "trial": 2,
+  "date": "2026-09-23T20:42:17Z",
+  "error_type": "ServerErrorThenProcessStopped",
+  "error": "The local server answered the trial's first model request with HTTP 500 at 20:42:17Z. Shortly after, Claude Code stopped the Ollama server, the pass runner and a watcher because the system was critically low on memory. The server's own prompt cache stood at 7667.327 MiB over 34 prompts against its 8192 MiB limit. The runner was killed before it could write a manifest or this record.",
+  "recorded_by": "hand, after the runner was killed, under ruling 13 as the owner chose on 23 September 2026: recorded, not retried, and the scenario stops"
+}
