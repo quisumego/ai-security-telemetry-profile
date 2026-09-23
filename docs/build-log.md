@@ -2588,6 +2588,32 @@ server was restarted fresh for A9 and A10 at the owner's instruction.
    untested until M7b runs.** It has now run. The section is a pre-committed
    document and was not edited; the handover names the line for M8.
 
+### Sources, all read on 23 September 2026
+
+Each page was read from its raw text, not through a summarising fetch. Search
+results were used to find pages and never as evidence. No documentation page
+carries a date; the release record in row 6 carries its publication date.
+
+| # | Source | What it settled |
+|---|---|---|
+| 1 | Ollama, Anthropic compatibility, `docs.ollama.com/api/anthropic-compatibility` | `/v1/messages` with tools, tool results, system prompts and thinking on or off; `ANTHROPIC_BASE_URL` and the `ANTHROPIC_AUTH_TOKEN` placeholder; token counts approximate; no prompt caching, `count_tokens`, `tool_choice` or `metadata` |
+| 2 | Ollama, Claude Code, `docs.ollama.com/integrations/claude-code` | The route for Claude Code; its manual setup sets `ANTHROPIC_API_KEY` to empty, which the pass did not do |
+| 3 | Ollama, Context length and FAQ, `docs.ollama.com/context-length`, `docs.ollama.com/faq` | `OLLAMA_CONTEXT_LENGTH`; 4,096 by default below 24 GiB of VRAM; at least 64,000 for agents; loopback bind by default |
+| 4 | Ollama, Linux, `docs.ollama.com/linux` | The manual tarball install to `/usr` |
+| 5 | Ollama API, `docs.ollama.com/api/tags`, `/api/ps`, `/api-reference/get-version` | The model digest, the context length in force, the server version |
+| 6 | GitHub releases API for `ollama/ollama` | v0.34.3, published 19 September 2026; the package at 1,427,391,999 bytes |
+| 7 | Ollama library, `ollama.com/library/granite4.1` and its tags page | `granite4.1:3b`, the `tools` capability, 2.1 GB, 128K context, digest prefix `6fd349357287` |
+| 8 | Claude Code, Other LLM gateways, `code.claude.com/docs/en/llm-gateway` | Anthropic does not support routing Claude Code to non-Claude models; a base URL alone keeps the login active |
+| 9 | Claude Code, Authentication, `code.claude.com/docs/en/authentication` | `ANTHROPIC_AUTH_TOKEN` ranks above `ANTHROPIC_API_KEY` and the subscription login |
+| 10 | Claude Code, Environment variables, `code.claude.com/docs/en/env-vars` | `ANTHROPIC_DEFAULT_HAIKU_MODEL`, `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`, `API_TIMEOUT_MS` |
+| 11 | Claude Code, Gateway compatibility guide, `code.claude.com/docs/en/llm-gateway-protocol` | Background calls on the main model when a bearer token is set; the `/api/hello` startup probe |
+| 12 | Claude Code, Data usage, `code.claude.com/docs/en/data-usage` | Telemetry defaults by provider |
+| 13 | Agent SDK Python reference, `code.claude.com/docs/en/agent-sdk/python` | `env` merged over the inherited environment; `model_usage` excludes helper calls |
+| 14 | Claude Code changelog, `github.com/anthropics/claude-code`, 2.1.234 to 2.1.280 | The gateway fixes that came after the bundled 2.1.233 |
+
+The installed `claude_agent_sdk` 0.2.139 source was read locally for the
+environment merge and for the bundled CLI being found before PATH.
+
 ### Still open
 
 - **The `max_turns` cap fix remains unverified against a live cap.** No local
