@@ -2621,3 +2621,60 @@ environment merge and for the bundled CLI being found before PATH.
 - **The Sentinel queries have never run.**
 - **The A8 vendor answer is unconfirmed on both model layers.**
 - **A8 on a local model is unmeasured**, for the reason above.
+
+## History rewrite, before anything is public
+
+**Date:** 30 September 2026
+**Stage:** between M7b and M8, its own step, ruled at M8
+**Outcome:** every commit and tag rewritten; nothing else changed. The history
+before this entry is the rewritten one
+
+Before anything was made public, the whole history was rewritten to take the
+owner's own personal data out, as the owner ruled on 24 September 2026. The
+rulings for the rewrite and the table of old and new hashes are in
+`docs/history-rewrite.md`. No model call was made and no capture was taken.
+
+Three kinds of change were made, and nothing else:
+
+1. `CLAUDE.md`: the owner line, and the line on where the planning files are
+   kept, in both versions of the file.
+2. Account details reworded in this log, in five commit messages and in one
+   test docstring, keeping the facts the method relies on: the captures ran on
+   a subscription allowance, no money was spent, and extra usage was off
+   throughout.
+3. Commit hashes cited in commit and tag messages, the results files, the
+   register, `crosscheck/rulings.py` and this log replaced by their new values.
+   The 294 manifests keep the commit each was captured at, and the table
+   resolves them.
+
+**Checked commit by commit against the original,** by a second script written
+apart from the one that did the rewrite: the same 92 commits in the same order
+and parent structure; the same authors, committers and dates to the second,
+with their timezone; every difference in a message or a file one of the three
+kinds above; the frozen paths byte for byte the same at every commit; the eight
+tags on their mapped commits with their original tagger dates; and the inputs
+to `corpus.digest` identical. The suite passed, 506 tests, and the 26
+post-capture checks with it.
+
+**The pre-commitment** is still the second commit, with the same dates. It was
+`52821cd` and is now `c8b28dd`. `docs/methodology.md` has the same blob hash in both
+histories, so the rules are byte for byte the ones committed on 12 August 2026.
+
+| Tag | Commit |
+|---|---|
+| `freeze-m2` | `3259a1e` |
+| `capture-m2` | `1f29ded` |
+| `capture-m3` | `3d98dfb` |
+| `freeze-m4` | `07747ff` |
+| `tiers-m5` | `e33c700` |
+| `volume-m6` | `959a562` |
+| `gap-m7` | `8392341` |
+| `capture-m7b` | `8bebf31` |
+
+**Found during the checks, and not caused by the rewrite.** `corpus.digest`
+hashes the files on disk under its inputs, and the original working tree holds
+a git-ignored `__pycache__` file under `attacks/overlays/a08/`. The digest the
+manifests record, `5ae2e5c0`, includes it. A fresh clone has no such file and
+computes `65bb7f2a` from the same committed content, in both histories. The
+digest identifies the material a session read only where the working tree
+matches, which the M8 limitations should say.
