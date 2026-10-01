@@ -1,0 +1,504 @@
+# The figure ledger. Every figure SPEC.md, README.md and docs/write-up.md quote,
+# with the committed file it comes from. Ruled at M8: spec/rulings.py, rulings 9
+# and 10. Figures inside SPEC.md's generated blocks are written by spec/render.py
+# and held by its own test, so they are not listed here.
+#
+#   quoted   the text exactly as the documents print it
+#   in       the documents that print it
+#   source   a committed result file: results/, the register, or siem/sentinel/
+#   inputs   name: key path in the source (spec/ledger.py describes the form)
+#   compute  name: a formula over the inputs, in the order given
+#   render   the quoted text, built from the inputs and the computed values
+#   check    a condition the source must meet for the quoted text to be true
+#
+# tests/test_spec.py resolves every entry, requires its render to equal its
+# quoted text and its check to hold, and fails on any number in a published
+# document that is neither here nor an identifier.
+
+figures:
+
+  # ------------------------------------------------------------- the register --
+  - id: field-count
+    quoted: "37 fields"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "len(fields)"}
+    render: "{n} fields"
+  - id: otel-full
+    quoted: "13 map fully"
+    in: [SPEC.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'otel', 'full')"}
+    render: "{n} map fully"
+  - id: otel-partial
+    quoted: "6 map partially"
+    in: [SPEC.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'otel', 'partial')"}
+    render: "{n} map partially"
+  - id: otel-none
+    quoted: "18 have no equivalent"
+    in: [SPEC.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'otel', 'none')"}
+    render: "{n} have no equivalent"
+  - id: required-count-readme
+    quoted: "3 tier Required"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'required')"}
+    render: "{n} tier Required"
+  - id: required-count-post
+    quoted: "3 fields tier Required"
+    in: [docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'required')"}
+    render: "{n} fields tier Required"
+  - id: recommended-count-readme
+    quoted: "0 tier Recommended"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'recommended')"}
+    render: "{n} tier Recommended"
+  - id: recommended-count-post
+    quoted: "0 Recommended"
+    in: [docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'recommended')"}
+    render: "{n} Recommended"
+  - id: optional-count
+    quoted: "10 Optional"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'optional')"}
+    render: "{n} Optional"
+  - id: not-required-count
+    quoted: "24 Not required"
+    in: [README.md, docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'not_required')"}
+    render: "{n} Not required"
+
+  # ------------------------------------------------- the headline, in words --
+  - id: tested-two-of-seven-spec
+    quoted: "Two of the seven security-only fields could be tested at all"
+    in: [SPEC.md]
+    source: results/necessity.json
+    inputs: {tested: verdict.security_only_tested, tiers: tiers}
+    compute: {a: "words(len(tested)).capitalize()", b: "words(count(tiers, 'security_only', True))"}
+    render: "{a} of the {b} security-only fields could be tested at all"
+  - id: tested-two-of-seven-readme
+    quoted: "only two of the seven could be tested"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {tested: verdict.security_only_tested, tiers: tiers}
+    compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
+    render: "only {a} of the {b} could be tested"
+  - id: tested-two-of-seven-post
+    quoted: "only two of my seven security-only fields"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {tested: verdict.security_only_tested, tiers: tiers}
+    compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
+    render: "only {a} of my {b} security-only fields"
+  - id: tested-two-of-seven-subtitle
+    quoted: "Only two of the seven fields I added for security"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {tested: verdict.security_only_tested, tiers: tiers}
+    compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
+    render: "Only {a} of the {b} fields I added for security"
+  - id: untested-other-five
+    quoted: "other five"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/necessity.json
+    inputs: {untested: verdict.security_only_untested}
+    compute: {n: "words(len(untested))"}
+    render: "other {n}"
+  - id: weakened-five-of-seven-readme
+    quoted: "five of the seven tier Not required"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {weakened: verdict.weakened_limb.security_only_optional_or_not_required, tiers: tiers}
+    compute: {a: "words(len(weakened))", b: "words(count(tiers, 'security_only', True))"}
+    render: "{a} of the {b} tier Not required"
+    check: "all(tiers[f]['tier'] == 'not_required' for f in weakened)"
+  - id: weakened-five-of-seven-post
+    quoted: "Five of the seven security-only fields"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {weakened: verdict.weakened_limb.security_only_optional_or_not_required, tiers: tiers}
+    compute: {a: "words(len(weakened)).capitalize()", b: "words(count(tiers, 'security_only', True))"}
+    render: "{a} of the {b} security-only fields"
+  - id: classes-with-a-success
+    quoted: "five of the ten classes"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {n: "words(len([c for c in classes.values() if c['successful'] > 0]))", t: "words(len(classes))"}
+    render: "{n} of the {t} classes"
+
+  # ------------------------------------------------------ the corpora and sweep --
+  - id: attack-trials
+    quoted: "100 attack trials"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {n: total.m2_trials}
+    render: "{n} attack trials"
+  - id: benign-sessions
+    quoted: "100 benign sessions"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/benign.json
+    inputs: {n: total.sessions}
+    render: "{n} benign sessions"
+  - id: single-fields
+    quoted: "37 singly"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {n: passes.single}
+    render: "{n} singly"
+  - id: pairs
+    quoted: "103 pairs"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/necessity.json
+    inputs: {n: passes.pairs}
+    render: "{n} pairs"
+  - id: predicted-matches
+    quoted: "9 of 37 fields"
+    in: [SPEC.md]
+    source: results/necessity.json
+    inputs: {tiers: tiers}
+    compute: {m: "count(tiers, 'match', True)", n: "len(tiers)"}
+    render: "{m} of {n} fields"
+  - id: unread-fields
+    quoted: "30 of the 37 fields"
+    in: [SPEC.md]
+    source: results/necessity.json
+    inputs: {fields: field_order, detectors: detectors}
+    compute: {n: "len(fields)", unread: "n - len({f for d in detectors.values() for f in d['reads']})"}
+    render: "{unread} of the {n} fields"
+  - id: not-required-unmeasured
+    quoted: "23 of the 24 Not required fields"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {unmeasured: retention.not_required_unmeasured, total: retention.not_required}
+    render: "{unmeasured} of the {total} Not required fields"
+
+  # ----------------------------------------------- the rule's fixed numbers --
+  - id: material-fall
+    quoted: "20 percentage points"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/necessity.json
+    inputs: {n: methodology.material_fall_points}
+    render: "{n} percentage points"
+  - id: false-positive-ceiling
+    quoted: "10 per cent"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/necessity.json
+    inputs: {n: methodology.fp_ceiling_percent}
+    render: "{n} per cent"
+
+  # ------------------------------------------------------ attack and detection --
+  - id: m2-success
+    quoted: "32/100"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {s: total.m2_successes, n: total.m2_trials}
+    render: "{s}/{n}"
+  - id: local-success
+    quoted: "18/91"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {s: total.local_successes, n: total.local_trials}
+    render: "{s}/{n}"
+  - id: local-trials
+    quoted: "the 91 attack trials"
+    in: [SPEC.md]
+    source: results/m7b-crosscheck.json
+    inputs: {n: total.local_trials}
+    render: "the {n} attack trials"
+  - id: a1-local
+    quoted: "9 of 10 trials"
+    in: [SPEC.md]
+    source: results/m7b-crosscheck.json
+    inputs: {s: "per_class[class=A1].local.successes", n: "per_class[class=A1].local.trials"}
+    render: "{s} of {n} trials"
+  - id: a1-oracle-benign
+    quoted: "1 of 100 benign sessions"
+    in: [SPEC.md, README.md, docs/write-up.md]
+    source: results/benign.json
+    inputs: {fired: oracle_false_positives.a01.fired, of: oracle_false_positives.a01.of, sessions: oracle_false_positives.a01.sessions}
+    render: "{fired} of {of} benign sessions"
+    check: "sessions == ['m3-b100']"
+  - id: a1-attack-trials
+    quoted: "none of the 10 A1 attack trials"
+    in: [SPEC.md, README.md]
+    source: results/baseline.json
+    inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
+    render: "none of the {trials} A1 attack trials"
+    check: "successes == 0"
+  - id: a1-attack-trials-post
+    quoted: "none of the 10 attack trials"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
+    render: "none of the {trials} attack trials"
+    check: "successes == 0"
+  - id: d-a01-benign
+    quoted: "0/100 benign sessions"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/baseline.json
+    inputs: {fp: per_detector.d-a01.false_positives, n: per_detector.d-a01.benign_total}
+    render: "{fp}/{n} benign sessions"
+  - id: a6-goes-dark
+    quoted: "falls from 10/10 to 0/10"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {cell: "single['retrieval.document_ids'].cells.A6"}
+    render: "falls from {cell[before]}/{cell[n]} to {cell[after]}/{cell[n]}"
+    check: "cell['cell'] == 'X'"
+  - id: a9-holdout
+    quoted: "10 of 10 successful A9"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/baseline.json
+    inputs: {caught: "holdout_generalisation.A9.fired.d-a03.on_successful", of: "holdout_generalisation.A9.fired.d-a03.successful_total"}
+    render: "{caught} of {of} successful A9"
+  - id: d-a03-benign
+    quoted: "0/100 benign false positives"
+    in: [SPEC.md, docs/write-up.md]
+    source: results/baseline.json
+    inputs: {fp: per_detector.d-a03.false_positives, n: per_detector.d-a03.benign_total}
+    render: "{fp}/{n} benign false positives"
+  - id: a2-delivery
+    quoted: "6 of 10 trials"
+    in: [SPEC.md]
+    source: results/m7b-crosscheck.json
+    inputs: {d: "per_class[class=A2].m2.delivery", n: "per_class[class=A2].m2.trials", s: "per_class[class=A2].m2.successes"}
+    render: "{d} of {n} trials"
+    check: "s == 0"
+  - id: a4-b1-baseline
+    quoted: "none of the 30"
+    in: [SPEC.md]
+    source: results/necessity.json
+    inputs: {count: "baseline.false_positives.d-a04.count", n: "baseline.false_positives.d-a04.denominator"}
+    render: "none of the {n}"
+    check: "count == 0"
+  - id: a10-delivery
+    quoted: "any of the 10 trials"
+    in: [SPEC.md]
+    source: results/m7b-crosscheck.json
+    inputs: {d: "per_class[class=A10].m2.delivery", n: "per_class[class=A10].m2.trials"}
+    render: "any of the {n} trials"
+    check: "d == 0"
+  - id: a8-tool-calls
+    quoted: "15 tool calls against a threshold of 10"
+    in: [SPEC.md]
+    source: results/necessity.json
+    inputs: {calls: circular.A8.tool_pre_events_per_successful_trial, threshold: circular.A8.tool_call_threshold}
+    compute: {each: "calls[0]"}
+    render: "{each} tool calls against a threshold of {threshold}"
+    check: "set(calls) == {calls[0]}"
+  - id: a4-oracle-benign
+    quoted: "45 of 100 benign sessions"
+    in: [SPEC.md]
+    source: results/benign.json
+    inputs: {fired: oracle_false_positives.a04.fired, of: oracle_false_positives.a04.of}
+    render: "{fired} of {of} benign sessions"
+
+  # ------------------------------------------------------- the M7b comparison --
+  - id: m7b-cells
+    quoted: "148 of 370 cells"
+    in: [SPEC.md]
+    source: results/m7b-necessity.json
+    inputs: {differences: differences, fields: field_order, classes: classes}
+    compute: {d: "len(differences)", n: "len(fields) * len(classes)"}
+    render: "{d} of {n} cells"
+  - id: m7b-measured
+    quoted: "5 of them in measured states"
+    in: [SPEC.md]
+    source: results/m7b-necessity.json
+    inputs: {differences: differences}
+    compute:
+      measured: "{'X', 'x', '.', 'Xc', 'xc', '.c'}"
+      n: "len([d for d in differences if d['m5'] in measured or d['local'] in measured])"
+    render: "{n} of them in measured states"
+  - id: context-length
+    quoted: "65,536 tokens"
+    in: [SPEC.md]
+    source: results/m7b-crosscheck.json
+    inputs: {n: "context_length_in_force[0]"}
+    render: "{n:,} tokens"
+
+  # ------------------------------------------------------------ the vendor gap --
+  - id: vendor-surfaces-spec
+    quoted: "the 6 vendor surfaces"
+    in: [SPEC.md]
+    source: results/vendor-gap.json
+    inputs: {surfaces: surfaces}
+    compute: {n: "len(surfaces)"}
+    render: "the {n} vendor surfaces"
+    check: "all(s['security_only'] == {'absent': 7} for s in surfaces.values())"
+  - id: vendor-surfaces
+    quoted: "the 6 surfaces"
+    in: [README.md, docs/write-up.md]
+    source: results/vendor-gap.json
+    inputs: {surfaces: surfaces}
+    compute: {n: "len(surfaces)"}
+    render: "the {n} surfaces"
+    check: "all(s['security_only'] == {'absent': 7} for s in surfaces.values())"
+
+  # ---------------------------------------------------- retention and volume --
+  - id: hash-raw
+    quoted: "11.2 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: postures.benign.change_vs_full_percent.hash.raw}
+    compute: {cut: "abs(x)"}
+    render: "{cut:.1f} per cent"
+    check: "x < 0"
+  - id: hash-value
+    quoted: "22.8 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: postures.benign.change_vs_full_percent.hash.value}
+    compute: {cut: "abs(x)"}
+    render: "{cut:.1f} per cent"
+    check: "x < 0"
+  - id: truncate-length
+    quoted: "1,024 characters"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {n: rulings.truncate_chars}
+    render: "{n:,} characters"
+  - id: truncate-cuts
+    quoted: "0.6 and 1.2 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {raw: postures.benign.change_vs_full_percent.truncate.raw, value: postures.benign.change_vs_full_percent.truncate.value}
+    compute: {r: "abs(raw)", v: "abs(value)"}
+    render: "{r:.1f} and {v:.1f} per cent"
+    check: "raw < 0 and value < 0"
+  - id: spend-attack
+    quoted: "$2.8318"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: model_spend.attack.total.cost_usd}
+    render: "${x:.4f}"
+  - id: spend-attack-sessions
+    quoted: "100 attack sessions"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {n: model_spend.attack.total.sessions}
+    render: "{n} attack sessions"
+  - id: spend-benign
+    quoted: "$1.0860"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: model_spend.benign.total.cost_usd}
+    render: "${x:.4f}"
+  - id: a8-share-of-spend
+    quoted: "75.2 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: model_spend.attack.a8_share_of_cost_percent}
+    render: "{x:.1f} per cent"
+  - id: a8-share-of-raw-bytes
+    quoted: "48.6 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {a8: volume.attack.per_label.A8.raw_bytes, all: volume.attack.raw_bytes}
+    compute: {share: "100 * a8 / all"}
+    render: "{share:.1f} per cent"
+  - id: benign-events-per-session
+    quoted: "10.31 events"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.benign.events_per_session.mean}
+    render: "{x:.2f} events"
+  - id: benign-raw-bytes-per-session
+    quoted: "10,219.79 raw bytes"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.benign.raw_bytes_per_session.mean}
+    render: "{x:,.2f} raw bytes"
+  - id: attack-events-per-session
+    quoted: "13.68 events"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.attack.events_per_session.mean}
+    render: "{x:.2f} events"
+  - id: session-group-share
+    quoted: "23.2 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.benign.groups.session.raw_share_percent}
+    render: "{x:.1f} per cent"
+  - id: content-group-share
+    quoted: "20.3 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.benign.groups.content.raw_share_percent}
+    render: "{x:.1f} per cent"
+  - id: null-share
+    quoted: "10.1 per cent"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {x: volume.benign.nulls.raw_share_percent}
+    render: "{x:.1f} per cent"
+  - id: sessions-per-user
+    quoted: "10 sessions per user per day"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {n: rulings.sessions_per_user_per_day}
+    render: "{n} sessions per user per day"
+  - id: projection-1000
+    quoted: "0.1022 GB a day of raw bytes at 1,000 users"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {gb: "projections[users=1000].postures.full.raw.gb_per_day", users: "projections[users=1000].users"}
+    render: "{gb:.4f} GB a day of raw bytes at {users:,} users"
+  - id: projection-10000
+    quoted: "1.0220 GB at 10,000"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {gb: "projections[users=10000].postures.full.raw.gb_per_day", users: "projections[users=10000].users"}
+    render: "{gb:.4f} GB at {users:,}"
+  - id: projection-hash
+    quoted: "0.0908 and 0.9078 GB"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {a: "projections[users=1000].postures.hash.raw.gb_per_day", b: "projections[users=10000].postures.hash.raw.gb_per_day"}
+    render: "{a:.4f} and {b:.4f} GB"
+  - id: bytes-per-gb
+    quoted: "10^9 bytes"
+    in: [SPEC.md]
+    source: results/volume.json
+    inputs: {gb: rulings.bytes_per_gb}
+    render: "10^9 bytes"
+    check: "gb == 10 ** 9"
+
+  # --------------------------------------------------------------- the SIEM --
+  - id: sentinel-columns
+    quoted: "42 columns"
+    in: [SPEC.md]
+    source: siem/sentinel/astp-table.json
+    inputs: {columns: properties.schema.columns}
+    compute: {n: "len(columns)"}
+    render: "{n} columns"
+  - id: transformation-length
+    quoted: "2,683-character"
+    in: [SPEC.md]
+    source: siem/sentinel/astp-dcr.json
+    inputs: {kql: "properties.dataFlows[0].transformKql"}
+    compute: {n: "len(kql)"}
+    render: "{n:,}-character"
