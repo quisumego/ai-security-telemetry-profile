@@ -12,10 +12,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Needed from M1 onward, when the lab agent starts making model calls.
-# Plan decision Q2: the lab agent runs on the Claude Agent SDK. Funded by the
-# subscription Agent SDK credit, not purchased API credits, amended 17 August
-# 2026. Version bound is left open until M1 installs and verifies it.
+# The lab agent runs on the Claude Agent SDK, which the agent, its three
+# capture runners, the two cross-check reports and six test files load. The
+# captures were taken with claude-agent-sdk 0.2.139; the bound is left open.
 lab = [
     "claude-agent-sdk",
     "python-dotenv>=1.0",
@@ -29,7 +28,19 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["lab", "attacks", "benign", "detect", "ablation", "cost"]
+packages = [
+    "lab",
+    "lab.tools",
+    "attacks",
+    "benign",
+    "detect",
+    "ablation",
+    "cost",
+    "siem",
+    "vendor_gap",
+    "crosscheck",
+    "spec",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
