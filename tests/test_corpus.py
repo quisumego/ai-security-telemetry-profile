@@ -230,6 +230,16 @@ CANARY_SCAN_GLOBS = (
     # The local model cross-check, added at M7b by the owner's ruling of 23
     # September 2026. Its runner and report read every captured event.
     "crosscheck/**/*.py",
+    # The published documents, the demo tape, the M8 package and the tests,
+    # added at M8 by the owner's ruling of 1 October 2026. SPEC.md and
+    # README.md sit at the root, outside every glob above, and a test that
+    # carried a registered value would plant it in a second file.
+    "SPEC.md",
+    "README.md",
+    "docs/**/*.tape",
+    "spec/**/*.py",
+    "spec/**/*.yaml",
+    "tests/**/*.py",
 )
 
 

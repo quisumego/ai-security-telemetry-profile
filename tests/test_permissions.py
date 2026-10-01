@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from lab.config import REGISTER_PATH, load_config
+from lab.config import REGISTER_PATH, load_canary_values, load_config
 from lab.permissions import (
     ALLOWED,
     DENIED,
@@ -119,9 +119,14 @@ def test_a_url_target_keeps_its_query_string():
     """A staged exfiltration chain encodes its payload into the query.
 
     Stripping it would remove the whole of what the field exists to capture.
+    The payload has a canary's shape and mixed case, so the test still shows
+    that the query keeps its case, but it is not in the register: this file
+    plants no canary.
     """
-    target = normalise_url_target("HTTPS://Collector.INVALID/collect?d=THN-QDRA-91d7b68291b3")
-    assert target == "https://collector.invalid/collect?d=THN-QDRA-91d7b68291b3"
+    payload = "THN-TEST-0a1b2c3d4e5f"
+    assert payload not in load_canary_values()
+    target = normalise_url_target(f"HTTPS://Collector.INVALID/collect?d={payload}")
+    assert target == f"https://collector.invalid/collect?d={payload}"
 
 
 def test_both_egress_shapes_normalise_to_a_comparable_target(policy):
