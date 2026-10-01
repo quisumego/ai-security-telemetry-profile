@@ -159,3 +159,33 @@ memory stores, prompt management and workflow naming. None of them carries a
 detection role in the threat model in `SPEC.md`, so none is emitted. If the
 ablation shows the profile is missing a signal these would have covered, that
 is a finding and it gets reported.
+
+---
+
+## Re-checked 1 October 2026
+
+Ruled at M8: the mapping above is stated as at the pinned commit, and a live
+check is recorded beside it. The register is not edited.
+
+| Item | Value |
+|---|---|
+| Repository head read | `b31e9e8ea26ac1c086d3313d474e31d7c3f391ae`, 30 September 2026, 33 commits after the pinned commit |
+| Releases and tags at the head | none |
+| Read at | 21:28 UTC: `model/gen-ai/registry.yaml` at both commits, and `model/user/registry.yaml` on `main` of `open-telemetry/semantic-conventions` |
+
+- Every attribute this file maps to is present at the head, at Development
+  stability as at the pin, and none is deprecated. No GenAI attribute is marked
+  stable. `user.id` is still Development in the general registry.
+- Three of them carry longer notes than at the pin, and none of the additions
+  changes a mapping above. `gen_ai.usage.input_tokens` adds an example of
+  per-modality and cached counts as subsets of the total.
+  `gen_ai.response.finish_reasons` adds how its positions align with the
+  generations and when to report `error`. `gen_ai.output.messages` adds that
+  finish reasons stay aligned with what the provider returned.
+- Since the pin the registry has grown from 63 to 79 attributes. The two
+  removed, `gen_ai.token.type` and `gen_ai.usage.cache_creation.input_tokens`,
+  are not mapped by this profile.
+- At the pin, the note on `gen_ai.usage.input_tokens` already says the value
+  should include cached tokens, so `turn.tokens_in` carries what the attribute
+  defines. The comparison in "What `turn.tokens_in` counts" above is with a
+  provider's own uncached `input_tokens` figure, not with the attribute.

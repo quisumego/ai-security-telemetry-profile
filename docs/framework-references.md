@@ -104,3 +104,18 @@ these documents require that logging and monitoring happen. This profile is
 evidence about **which fields** make that logging useful for detection. It does
 not certify compliance with any of them, and no part of this repository should
 be read as doing so.
+
+---
+
+## Re-checked 1 October 2026
+
+Ruled at M8: every identifier cited in public text is re-checked against its
+live source before `SPEC.md` is written, with the new date recorded beside the
+original and any difference reported beside the value above, which is left as
+recorded at M0.
+
+| Framework | Source read, times UTC | Result |
+|---|---|---|
+| DSIT Code of Practice | The GOV.UK content API for the publication and for the Code itself, 21:27 | Unchanged. First published and last updated 31 January 2025. Thirteen principles, and Principle 12 carries the title recorded above |
+| NCSC Guidelines | `ncsc.gov.uk`, the collection page and its Section 4 page, 21:27 | Version 1.0, published and reviewed 27 November 2023. Section 4 and three of its four guideline titles read as recorded. **One difference:** the live page titles the second guideline "Monitor your system's input", singular, where the list above records "inputs". `SPEC.md` cites the live title |
+| ETSI TS 104 223 | ETSI's publication directory and the V1.1.1 PDF, 21:28 | Unchanged. V1.1.1 (2025-04, DTS/SAI-0014) is still the only published version. Clause 5.4.2, under 5.4 Secure Maintenance, carries the four provisions recorded above: `5.4.2-1` a firm obligation and the other three recommendations. ETSI EN 304 223 now has a published V2.1.1, and it is still not mapped |

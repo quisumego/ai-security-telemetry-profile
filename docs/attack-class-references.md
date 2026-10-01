@@ -79,3 +79,13 @@ Citing an identifier is not the same as reproducing a standard. This file gives
 identifiers and titles only. Where the profile discusses what a provision or
 technique intends, it paraphrases in original wording. No text is reproduced
 from OWASP, MITRE, DSIT, NCSC or ETSI anywhere in this repository.
+
+## Re-checked 1 October 2026
+
+Ruled at M8, as recorded in `docs/framework-references.md`. The tables above
+are left as recorded at M0.
+
+| Source | Read, times UTC | Result |
+|---|---|---|
+| OWASP Top 10 for LLM Applications | `genai.owasp.org/llm-top-10/`, 21:26 | Unchanged. All ten 2025 identifiers carry the titles above, and no later list is published |
+| MITRE ATLAS | `mitre-atlas/atlas-data`, `dist/v6/ATLAS-2026.07.yaml` and `dist/v6/ATLAS-2026.09.yaml`, 21:26 | The latest release is `v2026.09`, published 15 September 2026, with 120 techniques and 88 sub-techniques. Every identifier cited above is present in it under the same name. **A9 still has no clean identifier**: three of the techniques new in 2026.09 mention a tenant, and they cover reconnaissance of hosted resources and account creation, not crossing a tenant boundary in retrieval. The mapping above stays pinned to data version 2026.07 |
