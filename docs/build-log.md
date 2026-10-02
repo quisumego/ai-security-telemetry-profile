@@ -2933,3 +2933,11 @@ detectors, and lines in this log that a later entry overtook, stay; the README
 and the stage key in `SPEC.md` tell the reader. `publish-m8` moves to the final
 commit before the repository is made public, each step confirmed by the owner at
 that moment (ruling 9).
+
+**2 October 2026, later.** At the owner's request, `README.md` was rewritten at
+`7e6b4b7` around what was done, what it achieved, what was learnt, the tools
+used and the skills learnt, with no reference to commits, and the post's six
+sentences that referred to commits were put in plain words; `SPEC.md` keeps its
+references, as the evidence document. Eight questions were put, and the owner
+took the recommended option on each; no test and no ledger entry changed, and
+739 passed.
