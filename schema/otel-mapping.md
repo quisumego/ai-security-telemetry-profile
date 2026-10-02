@@ -189,3 +189,5 @@ check is recorded beside it. The register is not edited.
   should include cached tokens, so `turn.tokens_in` carries what the attribute
   defines. The comparison in "What `turn.tokens_in` counts" above is with a
   provider's own uncached `input_tokens` figure, not with the attribute.
+- The ablation this file anticipates ran at M5, and `SPEC.md` Section 3 gives
+  its result.

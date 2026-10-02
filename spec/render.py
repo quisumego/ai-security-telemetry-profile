@@ -37,9 +37,9 @@ TIER_WORDS = {"required": "Required", "recommended": "Recommended", "optional": 
 MEASURED = {"X", "x", ".", "Xc", "xc", ".c"}
 BLOCKS = ("verdict", "register", "definitions", "m7b", "rule")
 A9_EXPOSURE = (
-    "That A9 result carries its exposure: the session that built the detectors "
-    f"{rulings.A9_EXPOSURE_PHRASES[0]}, the project's own handover at M4 "
-    f"{rulings.A9_EXPOSURE_PHRASES[1]} to any session that read it, the detectors were "
+    "That A9 result carries its exposure: the working session that built the detectors "
+    f"{rulings.A9_EXPOSURE_PHRASES[0]}, the project's private working notes at M4 "
+    f"{rulings.A9_EXPOSURE_PHRASES[1]} to any session that read them, the detectors were "
     f"{rulings.A9_EXPOSURE_PHRASES[2]}, and the result is "
     f"{rulings.A9_EXPOSURE_PHRASES[3]}."
 )

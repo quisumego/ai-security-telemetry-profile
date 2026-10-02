@@ -62,9 +62,10 @@ computable, and A10 is absent from the corpus; they read `nt` and `ab` in every
 column. A5 and A7 each rest on one successful trial. A8's detector uses the A8
 oracle's own thresholds, so its baseline measures nothing independent. A5 and A9
 are the holdouts, and the A9 baseline of 10 of 10 carries its exposure: the
-session that built the detectors knew both holdout outcomes, the handover at M4
-disclosed A9's retrieval signature, the detectors were authored from fixtures
-only, and the result is weakened evidence, not a clean holdout.
+working session that built the detectors knew both holdout outcomes, the
+project's private working notes at M4 disclosed A9's retrieval signature, the
+detectors were authored from fixtures only, and the result is weakened
+evidence, not a clean holdout.
 
 ## How the lab is placed on a vendor
 

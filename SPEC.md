@@ -17,6 +17,16 @@
 > 8's reading of Section 9, ruled on 22 September 2026: before the ablation
 > sweep ran, but after the M4 baseline had shown which classes had a
 > successful attack to detect.
+>
+> **Stages.** The work ran in stages, and these documents name them: M0, the
+> rules and the schema; M1, the lab agent; M2, the attack captures; M3, the
+> benign captures; M4, the detectors and their baseline; M5, the ablation and
+> the tiers; M6, volume and the Sentinel mapping; M7, the vendor gap; M7b, the
+> second-model cross-check; M8, this specification. A ruling cited by number
+> from M5 on is in that stage's `rulings.py`, so M5 ruling 8 is in
+> `ablation/rulings.py`; earlier rulings are in `docs/build-log.md`. The build
+> log and the methodology also cite the plan, the checklist and the handover:
+> the author's private working notes, kept outside the repository.
 
 <!-- generated:verdict -->
 **Headline: undertested.** Read literally, methodology Section 9 says **weakened**. The claim is not refuted.
@@ -189,7 +199,7 @@ tiers are derived against `claude-haiku-4-5` on this corpus.
 | `control.policy_version` | none |  | **Optional** | no measurable detection effect; a stated justification in its M0 rationale, ruled 2026-09-22 | none | `nt nt nt nt nr nr nr nr nr ab` |
 | `control.block_reason` | none | yes | **Not required** | no measurable detection effect and no stated justification | none | `nt nt nt nt nr nr nr nr nr ab` |
 
-Codes, as in `results/necessity-matrix.md`: `X` the class became undetectable with the field nulled, `.` tested with no measurable effect, `nr` not read by the class's counted detector, `nt` no successful trial, `ab` absent, and the suffix `c` the circular A8 column. A5 and A9 were the holdouts, and the A5 and A7 cells each rest on one successful trial. The tiers of `retrieval.permission_context` and `control.canary_triggered` rest on A9 cells, which record how the detector counted for A9, `d-a03`, did when a field was nulled. That A9 result carries its exposure: the session that built the detectors knew both holdout outcomes, the project's own handover at M4 disclosed A9's retrieval signature to any session that read it, the detectors were authored from fixtures only, and the result is weakened evidence, not a clean holdout.
+Codes, as in `results/necessity-matrix.md`: `X` the class became undetectable with the field nulled, `.` tested with no measurable effect, `nr` not read by the class's counted detector, `nt` no successful trial, `ab` absent, and the suffix `c` the circular A8 column. A5 and A9 were the holdouts, and the A5 and A7 cells each rest on one successful trial. The tiers of `retrieval.permission_context` and `control.canary_triggered` rest on A9 cells, which record how the detector counted for A9, `d-a03`, did when a field was nulled. That A9 result carries its exposure: the working session that built the detectors knew both holdout outcomes, the project's private working notes at M4 disclosed A9's retrieval signature to any session that read them, the detectors were authored from fixtures only, and the result is weakened evidence, not a clean holdout.
 <!-- /generated:register -->
 
 ### 3.2 Reading the tiers
@@ -449,8 +459,8 @@ bytes approximate a column store: neither is a billed size.
 **Sigma.** Seven rules in `detect/sigma/`, one per detector, state each
 detector's intent in a portable form. `detect/detectors.py` is what scored every
 figure, and where the two differ the Python wins. There is no rule for A5 or A9,
-the holdouts, and none for A10, whose attack never reached the model in any
-trial.
+the holdouts, and none for A10, whose attack never reached the model in any of
+the 10 trials on `claude-haiku-4-5`.
 
 **Microsoft Sentinel, documented and not deployed.** `docs/sentinel-mapping.md`
 sets out a custom table, `AstpEvents_CL`, of 42 columns on the Analytics plan; a
@@ -549,11 +559,11 @@ rate is given as a fraction.
 existed and opened only after the detector set was frozen. `d-a03`, written for
 A3, caught 10 of 10 successful A9 trials with 0/100 benign false positives, so
 the gap between developed-against and held-out detection is zero on this
-evidence. That A9 result carries its exposure: the session that built the
-detectors knew both holdout outcomes, the project's own handover at M4 disclosed
-A9's retrieval signature to any session that read it, the detectors were
-authored from fixtures only, and the result is weakened evidence, not a clean
-holdout. `d-a06`, written for A6, caught A5's one successful trial.
+evidence. That A9 result carries its exposure: the working session that built
+the detectors knew both holdout outcomes, the project's private working notes at
+M4 disclosed A9's retrieval signature to any session that read them, the
+detectors were authored from fixtures only, and the result is weakened evidence,
+not a clean holdout. `d-a06`, written for A6, caught A5's one successful trial.
 
 **Rules read after some results were known.** The undertested reading of Section
 9 (M5 ruling 8) and the list of fields whose M0 rationale counts as a stated

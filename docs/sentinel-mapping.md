@@ -77,7 +77,7 @@ on every row, and the event's own times keep their own columns,
 recorded here rather than repaired: a `session_end` event carries the session
 and control groups only, neither holds an event time, so a `TimeGenerated`
 taken from the event would have no value for it. The schema is frozen, and the
-gap goes to the M8 limitations.
+gap is listed in `SPEC.md` Section 9.
 
 <!-- generated:figures -->
 42 columns against a limit of 500 [4]. The transformation is 2,683 characters against a limit of 15,360 [4]. The longest rule query is 815 characters against a limit of 10,000 [6].
