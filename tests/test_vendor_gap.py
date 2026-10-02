@@ -303,6 +303,7 @@ def test_the_results_hold_identifiers_and_counts_only(doc):
 def test_tiers_shown_are_the_registers(fields):
     tiers = {f["name"]: f["tier"] for f in fields}
     rows = re.findall(r"^\| `([a-z_]+\.[a-z_]+)` \| ([a-z_]+) \|", DOC_TEXT, re.MULTILINE)
+    rows += re.findall(r"`([a-z_]+\.[a-z_]+)`(?:, | \()(required|recommended|optional|not_required)\b", DOC_TEXT)
     assert rows
     for name, tier in rows:
         assert tier == tiers[name], name

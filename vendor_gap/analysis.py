@@ -816,20 +816,17 @@ def block_combined() -> str:
 
 
 def blocks(doc: dict[str, Any]) -> dict[str, str]:
+    """The blocks the page carries. Since the page was condensed on 2 October
+    2026, the field-by-field tables, the deciding rows, the passes, the combined
+    answer and the any-detector table stay in results/vendor-gap.json and
+    vendor_gap/evidence.yaml, and main() still prints the passes."""
     return {
         "headline": block_headline(doc),
-        "combined": block_combined(),
         "sources": block_sources(),
         "quotes": block_quotes(),
         "surfaces": block_surfaces(),
         "counts": block_counts(doc),
-        "fields-azure": block_fields("azure"),
-        "fields-aws": block_fields("aws"),
-        "decisive-azure": block_decisive("azure"),
-        "decisive-aws": block_decisive("aws"),
         "classes": block_classes(doc),
-        "passes": block_passes(doc),
-        "any-detector": block_any(doc),
         "additions": block_additions(doc),
     }
 
