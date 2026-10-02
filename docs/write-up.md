@@ -4,7 +4,7 @@
 
 Everyone agrees you should log your LLM applications. Almost nobody says which fields, and the closest thing to a standard, the OpenTelemetry GenAI semantic conventions, is built for observability rather than detection. So I built an agent, attacked it, and then removed each field from the captured logs to see which detections went dark.
 
-I expected the fields that matter most to be the security fields the conventions leave out. That claim is **undertested**: only two of my seven security-only fields could be tested at all, and both turned out to be required. Undertested is the reading I settled on after the detector baseline was known, though before the ablation ran. The rule I'd committed before the first capture says **weakened**, because the other five came out as not required. It doesn't say refuted: none of the fields that went dark is one the conventions fully cover. Both words are the result, and this post is about why they differ.
+I expected the fields that matter most to be the security fields the conventions leave out. That claim is **undertested**: only two of my seven security-only fields could be tested at all, and both turned out to be required. Undertested is the reading I settled on after the detector baseline was known, though before the ablation ran. The rule I'd set before the first capture says **weakened**, because the other five came out as not required. It doesn't say refuted: none of the fields that went dark is one the conventions fully cover. Both words are the result, and this post is about why they differ.
 
 ## What exists already
 
@@ -20,21 +20,21 @@ Of the profile's 37 fields, 13 map fully to an attribute of the conventions, 6 m
 
 Everything is public at [github.com/quisumego/ai-security-telemetry-profile](https://github.com/quisumego/ai-security-telemetry-profile): the specification, the agent, the attacks, every capture and every result.
 
-![Two report commands rebuilding the results from the committed captures](https://github.com/quisumego/ai-security-telemetry-profile/raw/main/docs/demo.gif)
+![Two report commands rebuilding the results from the saved captures](https://github.com/quisumego/ai-security-telemetry-profile/raw/main/docs/demo.gif)
 
-The lab is a deliberately small agent on the Claude Agent SDK, pinned to `claude-haiku-4-5`, working for a fictional UK insurer called Thornfield Mutual. It has six tools: document search, a claims lookup, a case file reader, a case note writer, email and a URL fetcher. Its synthetic document estate holds policy wordings, procedures, underwriting notes, outside correspondence, and the files of a second tenant it should never read. Nothing it does reaches the network: email is written to a file, fetched pages come from committed fixtures, and every destination it is configured with is under the `.invalid` domain.
+The lab is a deliberately small agent on the Claude Agent SDK, pinned to `claude-haiku-4-5`, working for a fictional UK insurer called Thornfield Mutual. It has six tools: document search, a claims lookup, a case file reader, a case note writer, email and a URL fetcher. Its synthetic document estate holds policy wordings, procedures, underwriting notes, outside correspondence, and the files of a second tenant it should never read. Nothing it does reaches the network: email is written to a file, fetched pages are served from fixtures, and every destination it is configured with is under the `.invalid` domain.
 
 Ten attack classes, numbered A1 to A10 in this order, follow the OWASP Top 10 for LLM Applications, with MITRE ATLAS techniques cross-referenced: direct and indirect prompt injection, sensitive information disclosure, tool misuse, improper output handling, retrieval poisoning, system prompt leakage, unbounded consumption, cross-tenant retrieval and a staged exfiltration chain. Each ran ten times, and each has an oracle, written before the runs, that decides success mechanically. Canaries, unique strings planted in restricted documents, claim records and the system prompt, turn "did it leak?" into a string match rather than a judgement.
 
-Every event the agent emits is a line of JSON in six groups: session, turn, content, retrieval, action and control. The 100 attack trials and 100 benign sessions were captured once and committed, and everything after that reads them: the ablation calls no model at all.
+Every event the agent emits is a line of JSON in six groups: session, turn, content, retrieval, action and control. The 100 attack trials and 100 benign sessions were captured once and saved, and everything after that reads them: the ablation calls no model at all.
 
 ## The method
 
-The rules came first. Before any capture, I committed the rule that turns measurements into tiers, and it's the second commit in the repository. A field is Required if removing it makes at least one attack class undetectable, and Recommended if removing it degrades detection materially, a fall of 20 percentage points or more, or a false positive rate pushed above 10 per cent, with nothing going dark. It's Optional if removing it has no measurable effect but a reason to keep it was written down beforehand, and Not required if it has neither.
+The rules came first. Before any capture, I set and locked the rule that turns measurements into tiers. A field is Required if removing it makes at least one attack class undetectable, and Recommended if removing it degrades detection materially, a fall of 20 percentage points or more, or a false positive rate pushed above 10 per cent, with nothing going dark. It's Optional if removing it has no measurable effect but a reason to keep it was written down beforehand, and Not required if it has neither.
 
 Two of the ten classes were held out: no detector was written for them, and they were opened only after the detector set was frozen. The seven detectors were written against throwaway fixtures, never against a capture. Then the ablation: each field set to null in the captured logs, singly and in pairs within a group, and every detector re-run, with no model call anywhere. No step in the scoring is decided by hand.
 
-One note on the record itself. The public repository was created after every capture, and before publishing I rewrote its history once to take personal data out, keeping every commit's recorded dates. Git dates are set by whoever commits, in any repository, so what a reader can check is the order: the rules come second, before the schema, any detector or any capture.
+One note on the record itself. The public repository was created after every capture, and before publishing I rewrote its history once to take personal data out, keeping every recorded date. Those dates are set by whoever records the work, in any repository, so what a reader can check is the order: the rules come before the schema, any detector or any capture, and the [specification](https://github.com/quisumego/ai-security-telemetry-profile/blob/main/SPEC.md#4-the-tiering-rule) explains how to check it.
 
 ## The results
 

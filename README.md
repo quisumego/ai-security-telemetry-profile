@@ -1,131 +1,121 @@
 # AI Security Telemetry Profile (ASTP)
 
-A security logging profile for LLM applications and agents, published with the
-measurement that produced it: build an agent, attack it, then remove each field
-from the captured logs and see which detections go dark.
+A security logging profile for LLM applications and agents, tiered by
+measurement: attack an agent, remove each field from its logs, and see which
+detections go dark.
 
-![Terminal recording: attacks.report prints attack success per class from the committed captures, then ablation.matrix prints the headline verdict and the Required fields](docs/demo.gif)
+![Terminal recording: attacks.report prints attack success per class from the saved captures, then ablation.matrix prints the headline verdict and the Required fields](docs/demo.gif)
 
 ## The result
 
-The claim under test: the fields with the most detection value are the ones the
-OpenTelemetry GenAI conventions do not cover, in particular seven security
-fields this profile adds. The verdict is **undertested**, a reading settled
-after the detector baseline was known and before the ablation ran: only two of
-the seven could be tested at all, and both tier Required. Read literally, the
-rule committed before any capture says **weakened**, because five of the seven
-tier Not required, and the claim is not refuted. [`SPEC.md`](SPEC.md) has the
-detail.
+I tested one claim: that the log fields that matter most for catching attacks
+on an AI agent are the seven security fields this profile adds, which the
+OpenTelemetry GenAI conventions do not cover. The answer is **undertested**:
+only two of the seven could be tested at all, and both came out Required. Read
+literally, the rule I set before any data says **weakened**, because
+five of the seven tier Not required. The claim is not refuted. I settled on
+undertested once the detector baseline was known, so both words are published.
 
-## What was built
+## What I did
 
-- A small agent on the Claude Agent SDK, pinned to `claude-haiku-4-5`, with six
-  tools over a synthetic document estate for a fictional insurer, logging every
-  field of the profile as JSON Lines.
-- Ten attack classes, ten trials each, every trial scored by an oracle written
-  before the runs, and 100 benign sessions so that every detector has a false
-  positive rate beside its detection rate.
-- Seven detectors with Sigma rules, and an ablation harness that sets each
-  field to null in the captured logs and re-runs every detector, with no model
-  call.
-- A Microsoft Sentinel mapping, a telemetry volume model, a gap analysis of
-  what Microsoft Foundry and Amazon Bedrock log by default, and a cross-check of
-  the attacks on a second, local model.
-- The profile itself, [`SPEC.md`](SPEC.md).
+- **A lab agent** on the Claude Agent SDK, pinned to `claude-haiku-4-5`, with
+  six tools over made-up insurance documents, logging every field as JSON
+  Lines.
+- **Attacks and normal sessions:** ten attack types, from prompt injection to
+  data exfiltration, ten trials each, and 100 benign sessions for false
+  positives.
+- **Seven detectors** with Sigma rules, then **field removal**: each field
+  nulled in the saved logs and every detector re-run, with no model call.
+- **A vendor check** of Microsoft Foundry and Amazon Bedrock logging, and **a
+  re-run on a local model**.
+- **Mappings** to Microsoft Sentinel, OWASP, MITRE ATLAS and the DSIT, NCSC and
+  ETSI guidance.
 
-## What was found
+The rules for judging the results were locked before the first attack, two
+attack types were held back until the detectors were frozen, and tested code
+scored every outcome. [SPEC.md Section 4](SPEC.md#4-the-tiering-rule) shows how
+to check that the rules came first.
 
-- Of the 37 fields, 3 tier Required: `retrieval.document_ids`,
-  `retrieval.permission_context` and `control.canary_triggered`. Removing any
-  one of them made at least one attack class undetectable. 0 tier Recommended,
-  10 Optional and 24 Not required, and most Not required fields were never read
-  by a detector with a successful attack to detect, so that tier is not
-  evidence that a field carries no signal.
-- A planted value leaving by email was not a usable signal on its own. The
-  oracle for direct prompt injection fired on 1 of 100 benign sessions and on
-  none of the 10 attack trials. What separated the attack from the benign email
-  was the destination, which `action.egress_target` records, and the tiering
-  rule cannot credit a field for the false positives it prevents, so that field
-  tiers Not required with the evidence beside it.
-- Default logging on Microsoft Foundry and Amazon Bedrock carries none of the
-  seven security-only fields on any of the 6 surfaces assessed, from their
-  documentation: a deployment has to log them itself. That supports the case
-  for a profile and does not test the claim.
-- On a second, local model the attacks that succeeded changed, 18/91 against
-  32/100, and one tier would move. That is one comparison, and the tiers do not
-  use it.
+**Who did what.** I did this work with Claude Code, Anthropic's AI coding
+assistant: it wrote the code, ran the captures and drafted the documents. Each
+stage's design came to me as questions, which I ruled on before work acted on
+them, as the [build log](docs/build-log.md) records. I wrote the four injection
+documents the attacks plant.
 
-## Skills demonstrated
+## What it achieved
 
-- AI security testing: ten attack classes run against an LLM agent, mapped to
-  OWASP and MITRE ATLAS, each with a success oracle in code
-  ([`attacks/`](attacks/),
-  [`docs/attack-class-references.md`](docs/attack-class-references.md)).
-- Security logging design and agent instrumentation: a field register mapped to
-  the OpenTelemetry GenAI conventions, emitted from the Claude Agent SDK's hooks
-  and the session harness, and validated against a JSON Schema as it is
-  written
-  ([`schema/`](schema/), [`lab/`](lab/)).
-- Detection engineering: seven detectors and their Sigma rules, written against
-  synthetic fixtures and never against the captures, and scored for detections
-  and false positives ([`detect/`](detect/)).
-- Experimental design: the rules, the thresholds and what would weaken or
-  refute the claim, committed before any data, with holdout classes and no
-  manual judgement in the scoring ([`docs/methodology.md`](docs/methodology.md)).
-- Measurement by ablation: what each field is worth to detection, measured by
-  removing it and re-running every detector ([`ablation/`](ablation/),
-  [`results/necessity-matrix.md`](results/necessity-matrix.md)).
-- SIEM engineering: a Microsoft Sentinel custom table, data collection rule and
-  KQL rules generated from the schema and checked against Microsoft's
-  documented limits, not deployed
-  ([`docs/sentinel-mapping.md`](docs/sentinel-mapping.md)).
-- Cloud logging assessment: what Azure and AWS record by default for a model and
-  for an agent, every claim cited to vendor documentation with its retrieval
-  date ([`docs/vendor-gap-analysis.md`](docs/vendor-gap-analysis.md)).
-- Governance mapping: the profile mapped to the DSIT Code of Practice, the NCSC
-  guidelines and ETSI TS 104 223 by identifier, with no text reproduced
-  ([`docs/framework-references.md`](docs/framework-references.md)).
-- Telemetry volume and retention: what the profile costs to log, measured from
-  the captures, and what hashing or truncating content saves
-  ([`results/volume.md`](results/volume.md)).
-- Reproducible engineering: a Python test suite that rebuilds every result from
-  the captures, and a ledger that ties every published figure to a committed
-  file ([`tests/`](tests/), [`spec/figures.yaml`](spec/figures.yaml)).
+- **The profile, [`SPEC.md`](SPEC.md):** 37 fields, each tiered with its
+  evidence: 3 tier Required, 0 tier Recommended, 10 Optional and 24 Not
+  required.
+- **Required:** `retrieval.document_ids`, `retrieval.permission_context` and
+  `control.canary_triggered`. Removing any one made at least one attack type
+  undetectable.
+- **A planted marker leaving by email is not a signal on its own.** The direct
+  prompt injection check fired on 1 of 100 benign sessions and on none of the
+  10 attack trials. The destination, `action.egress_target`, told them apart,
+  which the tiering rule could not credit.
+- **Vendor logs leave the gap:** by their documentation, Microsoft Foundry and
+  Amazon Bedrock log none of the seven security fields on any of the 6 surfaces
+  assessed.
+- **The model matters:** on a small local model the attacks that succeeded
+  changed, 18/91 against 32/100. One comparison, not used in the tiers.
 
-## How it was done
+**Limits.** One agent, one model, synthetic data, ten trials per attack type,
+and one author behind the schema, the attacks and the detectors, so the tiers
+describe this setup. The Sentinel queries have never run, and the vendor
+findings rest on documentation. [SPEC.md Section 9](SPEC.md#9-limitations)
+lists the rest.
 
-The rules came first. The tiering rule, the threshold for a material change
-and what would weaken or refute the claim were committed before any capture, as
-the second commit, `c8b28dd`. Two of the ten attack classes were held out: no
-detector was written for them, and they were opened only after the detectors
-were frozen. Every outcome is computed by tested code from the captured logs,
-with no manual judgement anywhere in the scoring, and the test suite rebuilds
-every result from the captures and fails if a committed result or a quoted
-figure drifts from it.
+## What I learnt
 
-The repository's history was rewritten once before publication to take
-personal data out, with every commit's dates copied unchanged. Git dates are
-set by whoever commits, so what a reader can check is the order: the rules come
-before the schema, any detector and any capture.
-[`docs/history-rewrite.md`](docs/history-rewrite.md) records how the rewrite
-was checked.
+- **A canary is not a signal on its own; the canary with its destination is.**
+  Ordinary traffic showed it, not an attack.
+- **The model refused what it recognised as an attack** and complied with what
+  looked like good work, such as following a retrieved procedure.
+- **A measurement only reaches what it can test.** A Not required tier can mean
+  never tested, and undertested is a result worth publishing.
+- **Fix the rules before the data**, and label anything decided after.
+- **An AI coding assistant needs checks of its own.** Tests tied every figure
+  to its source, yet reading the claims still caught drafts that said too
+  much.
 
-The work was done with Claude Code, Anthropic's AI coding assistant: it wrote
-the code, ran the captures and drafted the documents. Each stage's design was
-put to the author as questions and ruled before work acted on it, as the
-rulings files and [`docs/build-log.md`](docs/build-log.md) record, and the
-author wrote the four injection documents the attacks use.
+## Tools I used
 
-## Limitations
+- **Building and testing:** Python, pytest, PyYAML and jsonschema.
+- **Models and runtimes:** the Claude Agent SDK with `claude-haiku-4-5`; Ollama
+  with `granite4.1:3b`; Claude Code.
+- **Logging and threat frameworks:** OpenTelemetry GenAI conventions, JSON
+  Schema, JSON Lines; OWASP Top 10 for LLM Applications, MITRE ATLAS; DSIT,
+  NCSC and ETSI TS 104 223.
+- **SIEM and detection formats:** Sigma rules, stating intent while the Python
+  detectors scored; a Microsoft Sentinel table, Data Collection Rule and KQL
+  queries, written but never deployed or run; Azure and AWS logging, assessed
+  from documentation without signing in to either cloud.
+- **The demo:** vhs, ttyd and ffmpeg.
 
-One agent, one model and a synthetic corpus, with ten trials per attack class,
-and one author who designed the schema, the attacks and the detectors: the
-tiers are evidence about this schema and these detectors, not a ranking of
-logging fields in general. The Sentinel queries have never been run, and the
-vendor findings rest on documentation, with no vendor log observed.
-[`SPEC.md` Section 9](SPEC.md#9-limitations) has the full list.
+## Skills I learnt
 
-## Reproduce it
+- **Threat modelling an AI agent:** ruling on ten attack designs mapped to
+  OWASP and MITRE ATLAS ([`attacks/`](attacks/)).
+- **Writing indirect prompt injection:** the four injection documents, written
+  myself ([`attacks/overlays/`](attacks/overlays/)).
+- **Designing an experiment that can fail:** deciding the rules and holdouts
+  before any data ([`docs/methodology.md`](docs/methodology.md)).
+- **Security logging design:** reviewing a field register built on
+  OpenTelemetry ([`schema/`](schema/)).
+- **Detection engineering:** deciding that every detector reports false
+  positives as well as detections ([`detect/`](detect/)).
+- **Measurement by ablation:** ruling how each field is valued by what breaks
+  without it ([`results/necessity-matrix.md`](results/necessity-matrix.md)).
+- **SIEM and cloud logging:** ruling on a Sentinel mapping and a vendor log
+  review ([`docs/sentinel-mapping.md`](docs/sentinel-mapping.md),
+  [`docs/vendor-gap-analysis.md`](docs/vendor-gap-analysis.md)).
+- **Directing an AI coding assistant** under written rulings, with every figure
+  checked by a test ([`spec/`](spec/)).
+
+## Run it yourself
+
+No command here calls a model: each reads the captures saved under `runs/`.
 
 ```bash
 # Python 3.10 or later
@@ -133,59 +123,26 @@ git clone https://github.com/quisumego/ai-security-telemetry-profile.git
 cd ai-security-telemetry-profile
 python -m venv .venv
 .venv/bin/pip install -e ".[lab,dev]"
-.venv/bin/python -m pytest
+.venv/bin/python -m attacks.report    # attack success per attack type
+.venv/bin/python -m benign.report     # the benign sessions and each check's false alarms
+.venv/bin/python -m ablation.matrix   # the field-removal results, the tiers and the verdict
 ```
 
-No command here calls a model: each reads the captures committed under
-`runs/`, and the suite fails if a result it rebuilds differs from the committed
-file under `results/`. The `lab` extra installs the Claude Agent SDK, which the
-agent and part of the suite load; the captures were taken with version 0.2.139.
-From the repository root:
+## Read more
 
-```bash
-.venv/bin/python -m attacks.report                      # attack success per class
-.venv/bin/python -m benign.report                       # the benign sessions and each oracle's false positives
-.venv/bin/python -m detect.evaluate                     # the detector baseline, holdouts closed
-.venv/bin/python -m detect.evaluate --include-holdouts  # the baseline with the two holdouts opened
-.venv/bin/python -m ablation.matrix                     # the necessity matrix, the tiers and the verdict
-.venv/bin/python -m cost.model                          # model spend, telemetry volume, retention postures
-.venv/bin/python -m siem.sentinel                       # the Sentinel table, data collection rule and queries
-.venv/bin/python -m vendor_gap.analysis                 # the vendor gap answers
-.venv/bin/python -m crosscheck.report                   # attack success on the second model
-.venv/bin/python -m crosscheck.matrix                   # the necessity matrix on the second model
-.venv/bin/python -m spec.render                         # fails if SPEC.md's generated tables are stale
-```
-
-Both `detect.evaluate` forms print a holdout note written before the holdouts
-were opened. The detector file it comes from is frozen, so the note stays: read
-the holdout result in [`SPEC.md`](SPEC.md) Section 9, with the caveat it
-carries.
-
-## Where to read more
-
-- [`SPEC.md`](SPEC.md): the profile, with every field's evidence, retention
-  and volume guidance, the Sentinel and framework mappings, and the
+- [`SPEC.md`](SPEC.md): the profile, every field's evidence, and the full
   limitations.
-- [`docs/methodology.md`](docs/methodology.md): the rules, committed before any
-  capture.
+- [`docs/methodology.md`](docs/methodology.md): the rules, written before the
+  first attack ran.
 - [`docs/write-up.md`](docs/write-up.md): the write-up, for a general security
   audience.
-- [`docs/build-log.md`](docs/build-log.md): what happened at each stage,
+- [`docs/build-log.md`](docs/build-log.md): what happened at each step,
   including what went wrong.
 - [`results/`](results/) and [`spec/figures.yaml`](spec/figures.yaml): every
-  measured result, and the source of every figure the published documents
-  quote.
-- [`docs/vendor-gap-analysis.md`](docs/vendor-gap-analysis.md),
-  [`docs/sentinel-mapping.md`](docs/sentinel-mapping.md) and
-  [`docs/history-rewrite.md`](docs/history-rewrite.md).
-- The external identifiers, each checked against its live source with a
-  retrieval date: [`docs/attack-class-references.md`](docs/attack-class-references.md),
-  [`docs/framework-references.md`](docs/framework-references.md) and
-  [`schema/otel-mapping.md`](schema/otel-mapping.md).
+  result, and the source of every figure quoted here.
 
-The files under `attacks/` and `lab/` that the captures read are frozen as they
-were captured, so notes inside them describe the project before the detectors
-existed.
+Files under `attacks/` and `lab/` are kept exactly as the captures read them,
+so notes inside them predate the detectors.
 
 ## Licence
 
