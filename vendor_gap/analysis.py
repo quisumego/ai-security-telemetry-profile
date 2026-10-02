@@ -587,24 +587,6 @@ FORM_WORDS = {
 }
 
 
-def _form_words(row: dict[str, Any], kind: str) -> str:
-    form = form_of(row)
-    words = "as a record of its own" if kind == "event" and form == "own" else FORM_WORDS[form]
-    if row.get("path") == "undocumented":
-        words += ", at a path no page documents"
-    return words
-
-
-def _cell(row: dict[str, Any]) -> str:
-    parts = [row["v"]]
-    form = form_of(row)
-    if form != "own":
-        parts.append(form + ("*" if row.get("path") == "undocumented" else ""))
-    if row.get("partial"):
-        parts.append("partial")
-    return " ".join(parts) + " " + _cite(row["src"])
-
-
 def block_sources() -> str:
     lines = ["| # | Source | Page updated | Retrieved |", "|---|---|---|---|"]
     for s in evidence()["sources"]:
@@ -645,45 +627,6 @@ def block_counts(doc: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def block_fields(vendor: str) -> str:
-    ids = [f"{vendor}-{layer}" for layer in ("as-shipped", *rulings.LAYERS)]
-    lines = ["| Field | Tier | Security only | As shipped | Model layer | Agent layer |", "|---|---|---|---|---|---|"]
-    for f in register():
-        cells = [_cell(surface(i)["fields"][f["name"]]) for i in ids]
-        lines.append(f"| `{f['name']}` | {f['tier']} | {'yes' if f['security_only'] else ''} | " + " | ".join(cells) + " |")
-    lines.append("")
-    lines.append("| Event type | As shipped | Model layer | Agent layer |")
-    lines.append("|---|---|---|---|")
-    for e in rulings.EVENT_TYPES:
-        cells = [_cell(surface(i)["events"][e]) for i in ids]
-        lines.append(f"| `{e}` | " + " | ".join(cells) + " |")
-    return "\n".join(lines)
-
-
-def block_decisive(vendor: str) -> str:
-    """The rows the counted detectors of A5 to A9 read or need, with why."""
-    wanted: list[tuple[str, str]] = []
-    for cls in ("A5", "A6", "A7", "A8", "A9"):
-        for inp in inputs_of(DETECTOR_BY_ID[m5.CLASS_DETECTOR[cls]]):
-            if inp not in wanted:
-                wanted.append(inp)
-    lines = []
-    for layer in ("as-shipped", *rulings.LAYERS):
-        s = surface(f"{vendor}-{layer}")
-        lines.append(f"**{s['name']}.**")
-        lines.append("")
-        for kind, name in wanted:
-            row = s["events" if kind == "event" else "fields"][name]
-            label = f"`{name}` events" if kind == "event" else f"`{name}`"
-            if kind == "group":
-                label = f"`{name}`, for grouping"
-            partial = f" Partial: {row['partial']}." if row.get("partial") else ""
-            lines.append(f"- {label}: {VERDICT[row['v']].replace('_', ' ')}, {_form_words(row, kind)}. "
-                         f"{row['note']}{partial} {_cite(row['src'])}")
-        lines.append("")
-    return "\n".join(lines).rstrip()
-
-
 def block_classes(doc: dict[str, Any]) -> str:
     cols = [c for c in columns()]
     head = "| Class | Counted detector | n | " + " | ".join(f"{VENDOR_NAME[c.vendor]}: {c.label}" for c in cols) + " |"
@@ -718,19 +661,6 @@ def block_passes(doc: dict[str, Any]) -> str:
             span = lambda xs: str(xs[0]) if len(xs) == 1 else f"{xs[0]} to {xs[-1]}"
             lines.append(f"| {VENDOR_NAME[c.vendor]}: {c.label} | {cls} | {', '.join(missing) or 'none'} "
                          f"| {span(caught)} of {a['n']} | {span(fps)} of {doc['baseline'][cls]['fp_denominator']} |")
-    return "\n".join(lines)
-
-
-def block_any(doc: dict[str, Any]) -> str:
-    cols = [c for c in columns() if not c.combined]
-    lines = ["| Class | n | " + " | ".join(f"{VENDOR_NAME[c.vendor]}: {c.label}" for c in cols) + " |",
-             "|---|---|" + "---|" * len(cols)]
-    for cls in ("A5", "A6", "A7", "A8", "A9"):
-        row = [cls, str(doc["baseline"][cls]["n"])]
-        for c in cols:
-            r = doc["any_detector"][c.key][cls]
-            row.append(str(r["pessimistic"]) if r["pessimistic"] == r["optimistic"] else f"{r['pessimistic']} to {r['optimistic']}")
-        lines.append("| " + " | ".join(row) + " |")
     return "\n".join(lines)
 
 
@@ -803,15 +733,6 @@ def block_headline(doc: dict[str, Any]) -> str:
                  + (" " + ", ".join(f"`{f}`" for f in counted) + "." if counted else "")
                  + f" On all six surfaces every one reads {' or '.join(verdicts)}, in the form "
                  + " or ".join(forms) + ".")
-    return "\n".join(lines)
-
-
-def block_combined() -> str:
-    lines = []
-    for v in VENDORS:
-        item = evidence()["combined"][v]
-        state = "linked" if item["linked"] else "not linked"
-        lines.append(f"- **{VENDOR_NAME[v]}: {state}.** {' '.join(str(item['note']).split())} {_cite(item['src'])}")
     return "\n".join(lines)
 
 

@@ -17,7 +17,6 @@ dependencies = [
 # captures were taken with claude-agent-sdk 0.2.139; the bound is left open.
 lab = [
     "claude-agent-sdk",
-    "python-dotenv>=1.0",
 ]
 dev = [
     "pytest>=8.0",
