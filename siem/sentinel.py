@@ -294,25 +294,14 @@ def rule_file(detector_id: str) -> str:
 
 
 # -------------------------------------------------------------- the doc --
-def _columns_block() -> str:
-    lines = ["| Column | Type | ASTP field | Tier | Note |", "|---|---|---|---|---|"]
-    for c in columns():
-        field = f"`{c['field']}`" if c["field"] else ""
-        lines.append(f"| `{c['column']}` | {c['type']} | {field} | {c['tier'] or ''} | {c['note']} |")
-    return "\n".join(lines)
-
-
-def _dcr_block() -> str:
-    return "```json\n" + json.dumps(dcr_definition(), indent=2) + "\n```"
-
-
+# Since the doc was condensed on 2 October 2026 it carries the translation table
+# and the figures only; the column table, the Data Collection Rule and the rule
+# queries are the files under siem/sentinel/.
 def _rules_block() -> str:
     lines = ["| Detector | Translates | Why |", "|---|---|---|"]
     for d in DETECTORS:
         status, why = TRANSLATION[d.id]
         lines.append(f"| `{d.id}` | {status} | {why} |")
-    for d in DETECTORS:
-        lines += ["", f"**`{d.id}`**, {d.title.lower()}:", "", "```kql", rules()[d.id], "```"]
     return "\n".join(lines)
 
 
@@ -324,8 +313,6 @@ def _figures_block() -> str:
 
 
 BLOCKS = {
-    "columns": _columns_block,
-    "dcr": _dcr_block,
     "rules": _rules_block,
     "figures": _figures_block,
 }
