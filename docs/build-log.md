@@ -2719,10 +2719,17 @@ Two findings were put to the owner and ruled to stay:
   the A7 capture commit. It is left as it is (M8 ruling 1): the same value is
   published by design at its registered placement and in the captures under
   `runs/`, no oracle reads a commit message, and changing a message would need
-  a second history rewrite. This entry quotes no canary value.
+  a second history rewrite. The final scan of 2 October 2026 found the same
+  value in every version of `tests/test_permissions.py` from `fcf2038` to
+  `024a7a7`, in a URL normalisation test; ruling 28 replaced it in the tree at
+  `a16636d`, and the owner ruled the same day that the history keeps it, on
+  the same grounds. This entry quotes no canary value.
 - **The pre-commitment's old hash** stands in the rewrite entry above and in
   the message of `eed63d5`. It is the rewrite's own record of the mapping,
-  which `docs/history-rewrite.md` resolves (M8 ruling 2).
+  which `docs/history-rewrite.md` resolves (M8 ruling 2). The final scan also
+  found it as ruling 2's own constant in `spec/rulings.py`, from `024a7a7` on,
+  and the owner ruled the same day that it stays, as that ruling's record of
+  the hash.
 
 **The pre-flight, 2 October 2026, at `a7b72e3`,** before the GIF, passed in
 full: 101 commits, `main` seven ahead of `origin/main` and none behind, the
