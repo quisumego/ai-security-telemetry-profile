@@ -110,12 +110,11 @@ before the schema, any detector and any capture.
 [`docs/history-rewrite.md`](docs/history-rewrite.md) records how the rewrite
 was checked.
 
-The work was done with Claude Code, Anthropic's AI coding assistant, under the
-rules in [`CLAUDE.md`](CLAUDE.md): it wrote the code, ran the captures and
-drafted the documents. Each stage's design was put to the author as questions
-and ruled before work acted on it, as the rulings files and
-[`docs/build-log.md`](docs/build-log.md) record, and the author wrote the four
-injection documents the attacks use.
+The work was done with Claude Code, Anthropic's AI coding assistant: it wrote
+the code, ran the captures and drafted the documents. Each stage's design was
+put to the author as questions and ruled before work acted on it, as the
+rulings files and [`docs/build-log.md`](docs/build-log.md) record, and the
+author wrote the four injection documents the attacks use.
 
 ## Limitations
 
