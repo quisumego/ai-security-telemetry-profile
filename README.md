@@ -141,6 +141,20 @@ python -m venv .venv
 - [`results/`](results/) and [`spec/figures.yaml`](spec/figures.yaml): every
   result, and the source of every figure quoted here.
 
+What each folder holds:
+
+| Folder | What it holds |
+|---|---|
+| `lab/` | The agent, its tools, and the made-up documents and claims it works on |
+| `attacks/`, `benign/` | The attack scenarios and their success checks, and the benign sessions |
+| `runs/` | Every saved capture, which everything else reads |
+| `detect/` | The detectors and their Sigma rules |
+| `ablation/`, `crosscheck/` | The field-removal sweep, and the re-run on a local model |
+| `cost/`, `siem/`, `vendor_gap/` | Log volume, the Sentinel mapping and the vendor check |
+| `schema/`, `results/` | The field register with its tiers, and every measured result |
+| `spec/`, `tests/` | The figure ledger, the renderer for `SPEC.md`, and the test suite |
+| `docs/` | The method, the write-up, the build log, the references and the demo |
+
 Files under `attacks/` and `lab/` are kept exactly as the captures read them,
 so notes inside them predate the detectors.
 
