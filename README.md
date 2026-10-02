@@ -4,6 +4,8 @@ A security logging profile for LLM applications and agents, published with the
 measurement that produced it: build an agent, attack it, then remove each field
 from the captured logs and see which detections go dark.
 
+![Terminal recording: attacks.report prints attack success per class from the committed captures, then ablation.matrix prints the headline verdict and the Required fields](docs/demo.gif)
+
 ## The result
 
 **The headline claim came back undertested.** The claim was that the fields
