@@ -30,19 +30,17 @@ MODEL_CALLS = False
 CAPTURES = False
 
 # Ruling 1. The pre-publication scan of 30 September 2026 found the system
-# prompt canary quoted in the message of 13b7f5d, the A7 capture commit. It is
-# left as it is: the same value is published by design at its registered
-# placement and in the captures under runs/, no oracle reads a commit message,
-# and changing a message would need a second history rewrite. Recorded in the
-# M8 build log entry.
-CANARY_IN_COMMIT_MESSAGE = "13b7f5d"
+# prompt canary quoted in the message of the A7 capture commit. It is left as it
+# is: the same value is published by design at its registered placement and in
+# the captures under runs/, no oracle reads a commit message, and changing a
+# message would need a second history rewrite. Recorded in the M8 build log
+# entry.
 
 # Ruling 2. The same scan found the pre-commitment's old hash in the rewrite
-# entry of docs/build-log.md, and in the message of eed63d5. Both are left: they
-# are the rewrite's own record of the mapping, which docs/history-rewrite.md
-# resolves. The hash test of ruling 9 covers the public documents, not the
-# dated build log.
-OLD_HASH_IN_REWRITE_RECORD = "52821cd"
+# entry of docs/build-log.md, and in the message of the commit that recorded the
+# rewrite in the build log. Both are left: they are the rewrite's own record of
+# the mapping, which docs/history-rewrite.md resolves. The hash test of ruling 9
+# covers the public documents, not the dated build log.
 
 # Ruling 3. This package holds the M8 code: these rulings, the renderer for the
 # generated blocks of SPEC.md, and the figure ledger.

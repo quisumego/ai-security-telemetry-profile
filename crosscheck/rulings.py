@@ -122,12 +122,11 @@ ON_CONTAMINATION = "stop_pass"
 # turns_unenriched test; tests/test_crosscheck.py asserts the local facts.
 RUN_PREFIX = "m7b"
 
-# Ruling 15. Branch m7b-local from e7fe271. Rulings first. Not pushed until the
+# Ruling 15. Branch m7b-local from main as it stood after M7. Rulings first. Not pushed until the
 # outcome is known. On success, main is fast-forwarded and pushed with the tag.
 # On a kill, the rulings and the kill record reach main as new commits and the
 # branch is deleted once the owner confirms at that moment.
 BRANCH = "m7b-local"
-BRANCH_FROM = "e7fe271"
 
 # Ruling 16. lab/config.yaml is untouched. config_version stays 0.2.0; the
 # model difference is recorded in model.requested, a local block in every

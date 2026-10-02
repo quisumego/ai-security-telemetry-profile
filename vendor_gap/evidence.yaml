@@ -65,7 +65,7 @@ sources:
     publisher: Microsoft Learn
     url: https://learn.microsoft.com/en-us/azure/foundry-classic/openai/how-to/monitor-openai
     updated: 12 May 2026
-    note: a classic page, used because source 2 links to it, as ruling 18 allows
+    note: a classic page, used because source 2 links to it, as the rulings allow
   - n: 6
     title: Activity Log in Azure Monitor
     publisher: Microsoft Learn
@@ -109,7 +109,7 @@ sources:
     url: https://learn.microsoft.com/en-us/azure/foundry-classic/agents/reference/monitor-service
     requested: https://learn.microsoft.com/en-us/azure/ai-foundry/agents/reference/monitor-service
     updated: 14 April 2026
-    note: a classic page, used because the current address redirects to it, as ruling 18 allows
+    note: a classic page, used because the current address redirects to it, as the rulings allow
   - n: 14
     title: Enable diagnostic logging
     publisher: Microsoft Learn, Foundry Tools

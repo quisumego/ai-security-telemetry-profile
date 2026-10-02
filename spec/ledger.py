@@ -164,12 +164,6 @@ def unaccounted(path: str, quoted: list[str]) -> list[str]:
 # --------------------------------------------------------------- the hashes --
 
 HEX = re.compile(r"(?<![0-9A-Za-z_-])[0-9a-f]{7,40}(?![0-9A-Za-z_-])")
-# Hex identifiers a published document cites that are not commits of this
-# repository, each with what it is.
-NOT_COMMITS = {
-    "5ae2e5c0": "the corpus.digest the manifests record",
-    "65bb7f2a": "the corpus.digest a fresh clone computes",
-}
 
 
 def cited_hashes(path: str) -> list[str]:

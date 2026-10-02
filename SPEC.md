@@ -9,9 +9,9 @@
 > value are the seven flagged `security_only`, which the OpenTelemetry GenAI
 > conventions do not cover. The measurement says **undertested**. Read
 > literally, methodology Section 9, committed before any capture, says
-> **weakened**. The claim is not refuted. Undertested is M5 ruling 8's reading,
-> ruled before the ablation ran but after the M4 baseline showed which classes
-> had a successful attack to detect.
+> **weakened**. The claim is not refuted. Undertested is the reading ruled at M5,
+> before the ablation ran but after the M4 baseline showed which classes had a
+> successful attack to detect.
 >
 > **Stages.** M0 rules and schema, M1 lab agent, M2 attack captures, M3 benign
 > captures, M4 detectors, M5 ablation and tiers, M6 volume and Sentinel, M7
@@ -65,12 +65,11 @@ they do not apply, so the ablation nulls a key and never deletes one.
 **Headline: undertested, with weakened, the literal reading of methodology
 Section 9, beside it. The claim is not refuted.** Two of the seven
 security-only fields could be tested at all, and both tier Required; the other
-five tier Not required without ever being tested. Undertested is M5 ruling 8's
-reading, ruled before the sweep and after the M4 baseline was known.
+five tier Not required without ever being tested. Undertested is the reading
+ruled at M5, before the sweep and after the M4 baseline was known.
 
 Tiers were applied mechanically at M5 from a sweep of 37 fields singly and 103
-pairs, over the 100 attack trials and 100 benign sessions; tag `tiers-m5` at
-`e33c700`. Each field's rationale and attribute are in `schema/fields.yaml` and
+pairs, over the 100 attack trials and 100 benign sessions. Each field's rationale and attribute are in `schema/fields.yaml` and
 `schema/otel-mapping.md`.
 
 ### 3.1 Tiers and the evidence for each
@@ -154,7 +153,7 @@ The rest are `nr` and `nt` changing places as classes gained or lost successful 
 ## 4. The tiering rule
 
 From `docs/methodology.md` Sections 3 and 4, committed on its own on 12 August
-2026 as the second commit, `c8b28dd`. **Required:** removing the field makes a
+2026 as the second commit. **Required:** removing the field makes a
 class undetectable. **Recommended:** removing it cuts detection by 20
 percentage points or more, or pushes a false positive rate above 10 per cent,
 with nothing going dark. **Optional:** no measurable effect, but a reason to
@@ -219,8 +218,8 @@ Identifiers only, re-checked on 1 October 2026 in
   outcomes, the project's private working notes at M4 disclosed A9's retrieval
   signature to any session that read them, the detectors were authored from
   fixtures only, and the result is weakened evidence, not a clean holdout.
-- **Rules read after the baseline:** undertested (M5 ruling 8) and the Optional
-  list (M5 ruling 4) were ruled after the M4 baseline, before the sweep.
+- **Rules read after the baseline:** the undertested reading and the list of
+  Optional fields were ruled at M5, after the M4 baseline and before the sweep.
 - **One model:** methodology Section 7.3 left stability across models untested
   until M7b, which is one small local model at a context of 65,536 tokens,
   with A6 and A8 unmeasured, a Claude-captured benign denominator, a route
@@ -230,7 +229,7 @@ Identifiers only, re-checked on 1 October 2026 in
 - **The instrument:** `session_end` carries no event time and no field names a
   session's task; the Sentinel queries and the cap outcome path have never run;
   `versions.claude_cli` names a CLI that never ran (all sessions ran the bundled
-  2.1.233); and `corpus.digest` depends on the working tree, `5ae2e5c0` in the
-  manifests against `65bb7f2a` from a fresh clone.
+  2.1.233); and `corpus.digest` depends on the working tree, so a fresh clone computes
+  a different digest from the one the manifests record.
 - **Vendor verdicts** rest on documentation read on 23 September 2026, with no
   vendor log observed.

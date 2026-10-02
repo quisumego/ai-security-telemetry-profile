@@ -3,8 +3,8 @@
 Ruled at M8 (spec/rulings.py). SPEC.md's generated blocks must be what a fresh
 render writes. Every figure the three published documents quote must be in the
 figure ledger, resolve against its committed source, and appear where the
-ledger says. Every commit hash they cite must be a commit of this repository and
-never an old one. The A9 holdout result never appears without its exposure, and
+ledger says. No document a reader opens cites a commit ID, except the two the
+methodology points to in the build log. The A9 holdout result never appears without its exposure, and
 the headline leads where ruling 7 says it does.
 """
 
@@ -77,30 +77,24 @@ def test_the_sweep_would_catch_a_figure_typed_by_hand():
 
 
 # ------------------------------------------------------------- the hashes --
-def _old_hashes() -> set[str]:
-    """The original history's 92 commits, 8 tag objects and 4 hashes with no
-    counterpart, kept from docs/history-rewrite.md when it left the tree."""
-    return set((REPO_ROOT / "tests" / "old_hashes.txt").read_text(encoding="utf-8").split())
+# Ruled on 3 October 2026: no document a reader opens cites a commit ID, except
+# the two the frozen methodology points to, named at the end of the build log.
+READER_DOCS = tuple(sorted(set(DOCS) | {p.relative_to(REPO_ROOT).as_posix()
+                                        for p in (REPO_ROOT / "docs").glob("*.md")}))
+POINTED_TO_BY_THE_METHODOLOGY = {"docs/build-log.md": ("c8b28dd", "c353533")}
 
 
-def test_the_old_hash_table_was_read():
-    assert len(_old_hashes()) == 92 + 8 + 4
+@pytest.mark.parametrize("doc", READER_DOCS)
+def test_no_document_a_reader_opens_cites_a_commit_id(doc):
+    allowed = POINTED_TO_BY_THE_METHODOLOGY.get(doc, ())
+    assert [h for h in ledger.cited_hashes(doc) if h not in allowed] == []
 
 
-@pytest.mark.parametrize("doc", DOCS)
-def test_every_hash_a_published_document_cites_is_a_commit_here(doc):
-    for h in ledger.cited_hashes(doc):
-        if h in ledger.NOT_COMMITS:
-            continue
+def test_the_commits_the_methodology_points_to_are_commits_here():
+    for h in POINTED_TO_BY_THE_METHODOLOGY["docs/build-log.md"]:
+        assert h in ledger.cited_hashes("docs/build-log.md"), h
         found = subprocess.run(["git", "cat-file", "-e", f"{h}^{{commit}}"], cwd=REPO_ROOT, capture_output=True)
-        assert found.returncode == 0, f"{doc} cites {h}, which is not a commit of this repository"
-
-
-@pytest.mark.parametrize("doc", DOCS)
-def test_no_published_document_cites_an_old_hash(doc):
-    old = _old_hashes()
-    for h in ledger.cited_hashes(doc):
-        assert not any(o.startswith(h) or h.startswith(o) for o in old), f"{doc} cites the old hash {h}"
+        assert found.returncode == 0, f"{h} is not a commit of this repository"
 
 
 # ------------------------------------------------------------ the A9 rule --

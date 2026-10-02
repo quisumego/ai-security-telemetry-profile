@@ -16,7 +16,7 @@ from ablation import rulings
 from ablation.matrix import tier_for
 
 # SHA-256 over the sorted "name:predicted_tier" lines of the register as it was
-# added at b533d6a, on 12 August 2026, before any capture existed.
+# added on 12 August 2026, before any capture existed.
 PREDICTED_AT_REGISTRATION = "a585f6354b8e681191838f93c9faf8d13a575357ec9383674903a97b6678ccb1"
 
 REQUIRED_KEYS = {
