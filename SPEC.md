@@ -489,7 +489,10 @@ with any of them, and nothing in this repository should be read as doing so.
 ETSI TS 104 223 and the DSIT Code share the principle's number and nearly its
 title, so they are related documents and should not be read as independent
 corroboration. The NCSC's second guideline is cited by its live title; the
-record of 12 August 2026 has it in the plural.
+record of 12 August 2026 has it in the plural. ETSI EN 304 223, the European
+Standard that builds on TS 104 223, is published at V2.1.1, as the re-check of
+1 October 2026 found. The mapping above is to TS 104 223 V1.1.1 only, and the
+EN is not mapped.
 
 ## 9. Limitations
 
