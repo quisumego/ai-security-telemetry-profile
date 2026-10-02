@@ -2885,3 +2885,51 @@ with `vhs docs/demo.tape`, unchanged from the version written on 1 October.
 - **A8 on a local model is unmeasured.**
 - **The README's link to the post** comes in one small commit once the post is
   live and the owner supplies its address (ruling 14).
+
+### Addendum, 2 October 2026: the review before publication
+
+Before the repository was made public, the owner asked for three things: a read
+through every public document for sense, a review of the post, and a README
+rewritten for a reader deciding in two minutes what the work shows. The review
+ran read only until he ruled. The pre-flight passed in full at `b7dd71a`, with
+742 passed and both repositories private, and every draft was tested in a
+scratch clone outside the workspace before anything changed here.
+
+**What the review found.** One thing had to change before publication. The
+post's opening said the measurement gave "undertested", when that is the reading
+settled after the detector baseline was known, and its first 150 words did not
+say so, as ruling 7 requires; the test passed because it checks only that the
+phrase appears somewhere in the post. Beyond that: the stage codes and ruling
+labels went unexplained; "session" and "handover" each carried a second sense in
+the A9 exposure; `SPEC.md` said A10's attack never reached the model in any
+trial, though the local model was shown it three times; one reference page said
+ETSI EN 304 223 "now" has a V2.1.1, which is dated December 2025; another still
+promised the ablation; and the post read in places like a specification, with
+stacked bold lead-ins, terms used before they were explained, and no link. Every
+link, path and command the documents give a reader was checked, and each
+resolves. Two claims were read again live on 2 October 2026: the OpenTelemetry
+GenAI registry, at its head of 30 September 2026, has no attribute for trust in
+retrieved content, the caller's entitlement, an outbound destination as a value
+of its own, the documents in context at a tool call or a planted marker, which
+is what the post says; and Medium's help centre, read through its API, documents
+links, inline code, code blocks and GIF images, and no table.
+
+**What changed, and the rulings.** Twelve questions were put as one batch with
+the drafts, every one with a recommended option, and the owner took the
+recommended option on all twelve. In the order of the commits:
+
+| Commit | What |
+|---|---|
+| `6252653` | `README.md` rewritten for a reader deciding in two minutes: the result in plain words, what was built and found, the skills demonstrated with the evidence for each, how the work was done, its limits, how to reproduce it and where to read more. The undertested reading is stated as settled after the detector baseline was known, without the ruling label, which ruling 7 now allows for the README only; the A9 result is left to `SPEC.md` and the post; and the README says the work was done with Claude Code under the rules in `CLAUDE.md`, with each stage's design ruled by the author. The figure ledger follows: four entries' document lists change, and one entry, quoted nowhere now, is removed |
+| `a1d4cc9` | The post: the opening as ruling 7 asks; the gap the governance frameworks leave; the attack classes numbered before A9 appears; prose in place of stacked bold lead-ins; the use of Claude Code among the limitations, and the Claude Code session named in the exposure, the four ruled phrases unchanged; the repository as an absolute link; the public repository's creation after every capture (ruling 19); a linked closing step; contractions; and the demo GIF, which the owner uploads to Medium. 1,975 words by the test's count |
+| `6bc7e7a` | `SPEC.md`'s key to the stage codes; the A9 exposure worded without a second sense of "session" or "handover", in `spec/render.py`, `SPEC.md` and the vendor gap analysis; A10 limited to its 10 trials on `claude-haiku-4-5`; and the reference pages dated and pointed at the result |
+
+Each was committed after the suite was read: 739 passed, three fewer than 742
+because the removed ledger entry carried three parametrised checks. No test
+changed.
+
+**Left as they are, as ruled.** Notes in frozen paths that predate the
+detectors, and lines in this log that a later entry overtook, stay; the README
+and the stage key in `SPEC.md` tell the reader. `publish-m8` moves to the final
+commit before the repository is made public, each step confirmed by the owner at
+that moment (ruling 9).
