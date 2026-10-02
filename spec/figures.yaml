@@ -120,7 +120,7 @@ figures:
     render: "Only {a} of the {b} fields I added for security"
   - id: untested-other-five
     quoted: "other five"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {untested: verdict.security_only_untested}
     compute: {n: "words(len(untested))"}
@@ -161,15 +161,9 @@ figures:
     source: results/benign.json
     inputs: {n: total.sessions}
     render: "{n} benign sessions"
-  - id: single-fields
-    quoted: "37 singly"
-    in: [README.md]
-    source: results/necessity.json
-    inputs: {n: passes.single}
-    render: "{n} singly"
   - id: pairs
     quoted: "103 pairs"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {n: passes.pairs}
     render: "{n} pairs"
@@ -242,14 +236,14 @@ figures:
     check: "sessions == ['m3-b100']"
   - id: a1-attack-trials
     quoted: "none of the 10 A1 attack trials"
-    in: [SPEC.md, README.md]
+    in: [SPEC.md]
     source: results/baseline.json
     inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
     render: "none of the {trials} A1 attack trials"
     check: "successes == 0"
   - id: a1-attack-trials-post
     quoted: "none of the 10 attack trials"
-    in: [docs/write-up.md]
+    in: [README.md, docs/write-up.md]
     source: results/baseline.json
     inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
     render: "none of the {trials} attack trials"
