@@ -78,12 +78,9 @@ def test_the_sweep_would_catch_a_figure_typed_by_hand():
 
 # ------------------------------------------------------------- the hashes --
 def _old_hashes() -> set[str]:
-    doc = _text("docs/history-rewrite.md")
-    old = set(re.findall(r"^\| \d+ \| `([0-9a-f]{40})` \|", doc, re.M))
-    old |= {m for row in re.findall(r"^\| `[a-z0-9-]+` \| `([0-9a-f]{40})` \| `[0-9a-f]{40}` \| `([0-9a-f]{40})` \|",
-                                     doc, re.M) for m in row}
-    old |= set(re.findall(r"^\| `([0-9a-f]{7,8})` \| ", doc.split("### No counterpart")[1], re.M))
-    return old
+    """The original history's 92 commits, 8 tag objects and 4 hashes with no
+    counterpart, kept from docs/history-rewrite.md when it left the tree."""
+    return set((REPO_ROOT / "tests" / "old_hashes.txt").read_text(encoding="utf-8").split())
 
 
 def test_the_old_hash_table_was_read():

@@ -385,9 +385,7 @@ recorded author and committer dates copied unchanged. Git dates are set by
 whoever makes a commit, here as in any repository, so on their own they show the
 order in which work was recorded, not when it was done. What a reader can check
 is that order: the pre-committed rules are the second commit, before the
-schema, any detector and any capture. `docs/history-rewrite.md` records how the
-rewrite was checked against the original, commit by commit, and that
-`docs/methodology.md` is byte for byte the same in both histories.
+schema, any detector and any capture.
 
 ## 5. Retention guidance by tier
 
