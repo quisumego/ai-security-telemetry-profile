@@ -373,8 +373,11 @@ the first person with no reference to commits, and the post's references to
 commits put in plain words (`7e6b4b7`); the top level tidied, with
 `.env.example` removed and a folder map in the README (`fd4d0c8`); the old
 hashes the tests check against moved into `tests/old_hashes.txt` and the
-rewrite record removed from the tree (`3a4ea8e`); and this log condensed. 739
-passed.
+rewrite record removed from the tree (`3a4ea8e`); this log condensed, 739
+passed; and `SPEC.md` condensed to about a third of its words, the field
+definitions and the quoted rule left to `schema/fields.yaml` and
+`docs/methodology.md`, with 664 passed once the ledger entries it no longer
+quotes were removed with their checks.
 
 **Still open:** the `max_turns` cap fix has never run against a live cap; the
 Sentinel queries have never run; the A8 vendor answer is unconfirmed on the

@@ -76,7 +76,7 @@ figures:
     render: "{n} Recommended"
   - id: optional-count
     quoted: "10 Optional"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [README.md, docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'tier', 'optional')"}
@@ -221,12 +221,6 @@ figures:
     source: results/m7b-crosscheck.json
     inputs: {n: total.local_trials}
     render: "the {n} attack trials"
-  - id: a1-local
-    quoted: "9 of 10 trials"
-    in: [SPEC.md]
-    source: results/m7b-crosscheck.json
-    inputs: {s: "per_class[class=A1].local.successes", n: "per_class[class=A1].local.trials"}
-    render: "{s} of {n} trials"
   - id: a1-oracle-benign
     quoted: "1 of 100 benign sessions"
     in: [SPEC.md, README.md, docs/write-up.md]
@@ -250,7 +244,7 @@ figures:
     check: "successes == 0"
   - id: d-a01-benign
     quoted: "0/100 benign sessions"
-    in: [SPEC.md, docs/write-up.md]
+    in: [docs/write-up.md]
     source: results/baseline.json
     inputs: {fp: per_detector.d-a01.false_positives, n: per_detector.d-a01.benign_total}
     render: "{fp}/{n} benign sessions"
@@ -273,20 +267,6 @@ figures:
     source: results/baseline.json
     inputs: {fp: per_detector.d-a03.false_positives, n: per_detector.d-a03.benign_total}
     render: "{fp}/{n} benign false positives"
-  - id: a2-delivery
-    quoted: "6 of 10 trials"
-    in: [SPEC.md]
-    source: results/m7b-crosscheck.json
-    inputs: {d: "per_class[class=A2].m2.delivery", n: "per_class[class=A2].m2.trials", s: "per_class[class=A2].m2.successes"}
-    render: "{d} of {n} trials"
-    check: "s == 0"
-  - id: a4-b1-baseline
-    quoted: "none of the 30"
-    in: [SPEC.md]
-    source: results/necessity.json
-    inputs: {count: "baseline.false_positives.d-a04.count", n: "baseline.false_positives.d-a04.denominator"}
-    render: "none of the {n}"
-    check: "count == 0"
   - id: a10-delivery
     quoted: "any of the 10 trials"
     in: [SPEC.md]
@@ -294,14 +274,6 @@ figures:
     inputs: {d: "per_class[class=A10].m2.delivery", n: "per_class[class=A10].m2.trials"}
     render: "any of the {n} trials"
     check: "d == 0"
-  - id: a8-tool-calls
-    quoted: "15 tool calls against a threshold of 10"
-    in: [SPEC.md]
-    source: results/necessity.json
-    inputs: {calls: circular.A8.tool_pre_events_per_successful_trial, threshold: circular.A8.tool_call_threshold}
-    compute: {each: "calls[0]"}
-    render: "{each} tool calls against a threshold of {threshold}"
-    check: "set(calls) == {calls[0]}"
   - id: a4-oracle-benign
     quoted: "45 of 100 benign sessions"
     in: [SPEC.md]
@@ -310,22 +282,6 @@ figures:
     render: "{fired} of {of} benign sessions"
 
   # ------------------------------------------------------- the M7b comparison --
-  - id: m7b-cells
-    quoted: "148 of 370 cells"
-    in: [SPEC.md]
-    source: results/m7b-necessity.json
-    inputs: {differences: differences, fields: field_order, classes: classes}
-    compute: {d: "len(differences)", n: "len(fields) * len(classes)"}
-    render: "{d} of {n} cells"
-  - id: m7b-measured
-    quoted: "5 of them in measured states"
-    in: [SPEC.md]
-    source: results/m7b-necessity.json
-    inputs: {differences: differences}
-    compute:
-      measured: "{'X', 'x', '.', 'Xc', 'xc', '.c'}"
-      n: "len([d for d in differences if d['m5'] in measured or d['local'] in measured])"
-    render: "{n} of them in measured states"
   - id: context-length
     quoted: "65,536 tokens"
     in: [SPEC.md]
@@ -360,46 +316,6 @@ figures:
     compute: {cut: "abs(x)"}
     render: "{cut:.1f} per cent"
     check: "x < 0"
-  - id: hash-value
-    quoted: "22.8 per cent"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: postures.benign.change_vs_full_percent.hash.value}
-    compute: {cut: "abs(x)"}
-    render: "{cut:.1f} per cent"
-    check: "x < 0"
-  - id: truncate-length
-    quoted: "1,024 characters"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {n: rulings.truncate_chars}
-    render: "{n:,} characters"
-  - id: truncate-cuts
-    quoted: "0.6 and 1.2 per cent"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {raw: postures.benign.change_vs_full_percent.truncate.raw, value: postures.benign.change_vs_full_percent.truncate.value}
-    compute: {r: "abs(raw)", v: "abs(value)"}
-    render: "{r:.1f} and {v:.1f} per cent"
-    check: "raw < 0 and value < 0"
-  - id: spend-attack
-    quoted: "$2.8318"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: model_spend.attack.total.cost_usd}
-    render: "${x:.4f}"
-  - id: spend-attack-sessions
-    quoted: "100 attack sessions"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {n: model_spend.attack.total.sessions}
-    render: "{n} attack sessions"
-  - id: spend-benign
-    quoted: "$1.0860"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: model_spend.benign.total.cost_usd}
-    render: "${x:.4f}"
   - id: a8-share-of-spend
     quoted: "75.2 per cent"
     in: [SPEC.md]
@@ -413,86 +329,3 @@ figures:
     inputs: {a8: volume.attack.per_label.A8.raw_bytes, all: volume.attack.raw_bytes}
     compute: {share: "100 * a8 / all"}
     render: "{share:.1f} per cent"
-  - id: benign-events-per-session
-    quoted: "10.31 events"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.benign.events_per_session.mean}
-    render: "{x:.2f} events"
-  - id: benign-raw-bytes-per-session
-    quoted: "10,219.79 raw bytes"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.benign.raw_bytes_per_session.mean}
-    render: "{x:,.2f} raw bytes"
-  - id: attack-events-per-session
-    quoted: "13.68 events"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.attack.events_per_session.mean}
-    render: "{x:.2f} events"
-  - id: session-group-share
-    quoted: "23.2 per cent"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.benign.groups.session.raw_share_percent}
-    render: "{x:.1f} per cent"
-  - id: content-group-share
-    quoted: "20.3 per cent"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.benign.groups.content.raw_share_percent}
-    render: "{x:.1f} per cent"
-  - id: null-share
-    quoted: "10.1 per cent"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {x: volume.benign.nulls.raw_share_percent}
-    render: "{x:.1f} per cent"
-  - id: sessions-per-user
-    quoted: "10 sessions per user per day"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {n: rulings.sessions_per_user_per_day}
-    render: "{n} sessions per user per day"
-  - id: projection-1000
-    quoted: "0.1022 GB a day of raw bytes at 1,000 users"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {gb: "projections[users=1000].postures.full.raw.gb_per_day", users: "projections[users=1000].users"}
-    render: "{gb:.4f} GB a day of raw bytes at {users:,} users"
-  - id: projection-10000
-    quoted: "1.0220 GB at 10,000"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {gb: "projections[users=10000].postures.full.raw.gb_per_day", users: "projections[users=10000].users"}
-    render: "{gb:.4f} GB at {users:,}"
-  - id: projection-hash
-    quoted: "0.0908 and 0.9078 GB"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {a: "projections[users=1000].postures.hash.raw.gb_per_day", b: "projections[users=10000].postures.hash.raw.gb_per_day"}
-    render: "{a:.4f} and {b:.4f} GB"
-  - id: bytes-per-gb
-    quoted: "10^9 bytes"
-    in: [SPEC.md]
-    source: results/volume.json
-    inputs: {gb: rulings.bytes_per_gb}
-    render: "10^9 bytes"
-    check: "gb == 10 ** 9"
-
-  # --------------------------------------------------------------- the SIEM --
-  - id: sentinel-columns
-    quoted: "42 columns"
-    in: [SPEC.md]
-    source: siem/sentinel/astp-table.json
-    inputs: {columns: properties.schema.columns}
-    compute: {n: "len(columns)"}
-    render: "{n} columns"
-  - id: transformation-length
-    quoted: "2,683-character"
-    in: [SPEC.md]
-    source: siem/sentinel/astp-dcr.json
-    inputs: {kql: "properties.dataFlows[0].transformKql"}
-    compute: {n: "len(kql)"}
-    render: "{n:,}-character"

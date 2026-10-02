@@ -1,10 +1,11 @@
 """The generated blocks of SPEC.md, rendered from the register and the results.
 
 Ruled at M8 (spec/rulings.py, ruling 4): the verdict, the field register with
-its tier evidence, the field definitions, the M7b comparison and the quoted
-tiering rule are written by code from schema/fields.yaml, results/necessity.json,
-results/m7b-necessity.json and docs/methodology.md, so no figure in them is
-typed by hand. A test requires a fresh render to reproduce SPEC.md exactly. The
+its tier evidence and the M7b comparison are written by code from
+schema/fields.yaml, results/necessity.json and results/m7b-necessity.json, so no
+figure in them is typed by hand. The field definitions and the quoted tiering
+rule were dropped when SPEC.md was condensed on 2 October 2026; they live in
+schema/fields.yaml and docs/methodology.md. A test requires a fresh render to reproduce SPEC.md exactly. The
 prose around the blocks is written by hand and held by the figure ledger.
 
     .venv/bin/python -m spec.render            # exit 1 if SPEC.md differs from a fresh render
@@ -28,14 +29,13 @@ SPEC = REPO_ROOT / rulings.SPEC
 REGISTER = REPO_ROOT / "schema" / "fields.yaml"
 NECESSITY = REPO_ROOT / "results" / "necessity.json"
 M7B = REPO_ROOT / "results" / "m7b-necessity.json"
-METHODOLOGY = REPO_ROOT / "docs" / "methodology.md"
 
 CLASSES = tuple(f"A{i}" for i in range(1, 11))
 TIERS = ("required", "recommended", "optional", "not_required")
 TIER_WORDS = {"required": "Required", "recommended": "Recommended", "optional": "Optional",
               "not_required": "Not required"}
 MEASURED = {"X", "x", ".", "Xc", "xc", ".c"}
-BLOCKS = ("verdict", "register", "definitions", "m7b", "rule")
+BLOCKS = ("verdict", "register", "m7b")
 A9_EXPOSURE = (
     "That A9 result carries its exposure: the working session that built the detectors "
     f"{rulings.A9_EXPOSURE_PHRASES[0]}, the project's private working notes at M4 "
@@ -59,10 +59,6 @@ def _code(name: str) -> str:
 def _join(names: list[str]) -> str:
     names = [_code(n) for n in names]
     return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " and " + names[-1]
-
-
-def _type(field: dict) -> str:
-    return f"array of {field['items']}" if field["type"] == "array" else field["type"]
 
 
 def verdict_block(register: dict, necessity: dict) -> str:
@@ -99,8 +95,8 @@ def verdict_block(register: dict, necessity: dict) -> str:
 
 def register_block(register: dict, necessity: dict) -> str:
     out = [
-        "| Field | OTel | Security only | Tier | Why | Deciding cells | Cells, A1 to A10 |",
-        "|---|---|---|---|---|---|---|",
+        "| Field | OTel | Security only | Tier | Deciding cells | Cells, A1 to A10 |",
+        "|---|---|---|---|---|---|",
     ]
     for f in register["fields"]:
         cells = necessity["single"][f["name"]]["cells"]
@@ -108,7 +104,7 @@ def register_block(register: dict, necessity: dict) -> str:
         deciding = "; ".join(f["tier_cells"]) if f["tier_cells"] else "none"
         out.append(
             f"| {_code(f['name'])} | {f['otel']} | {'yes' if f['security_only'] else ''} | "
-            f"**{TIER_WORDS[f['tier']]}** | {f['tier_basis']} | {deciding} | `{codes}` |"
+            f"**{TIER_WORDS[f['tier']]}** | {deciding} | `{codes}` |"
         )
     holdouts = sorted((c for c, v in necessity["classes"].items() if v["holdout"]), key=CLASSES.index)
     single = sorted((c for c, v in necessity["classes"].items() if v["successful"] == 1), key=CLASSES.index)
@@ -125,20 +121,6 @@ def register_block(register: dict, necessity: dict) -> str:
     ]
     return "\n".join(out)
 
-
-def definitions_block(register: dict) -> str:
-    out = [
-        "| Field | Group | Type | OTel mapping | Attribute at the pinned commit | Rationale |",
-        "|---|---|---|---|---|---|",
-    ]
-    for f in register["fields"]:
-        rationale = re.sub(r"\s+", " ", f["rationale"]).strip()
-        attribute = _code(f["otel_attribute"]) if f.get("otel_attribute") else "none"
-        out.append(
-            f"| {_code(f['name'])} | {f['group']} | {_type(f)} | {f['otel']} | {attribute} | "
-            f"{rationale} |"
-        )
-    return "\n".join(out)
 
 
 def m7b_block(register: dict, necessity: dict, m7b: dict) -> str:
@@ -172,31 +154,13 @@ def m7b_block(register: dict, necessity: dict, m7b: dict) -> str:
     return "\n".join(out)
 
 
-def rule_block() -> str:
-    text = METHODOLOGY.read_text(encoding="utf-8")
-    start = text.index("## 3. The tiering rule")
-    end = text.index("## 5. The holdout commitment")
-    out = []
-    for line in text[start:end].rstrip().splitlines():
-        if line.strip() == "---":
-            continue
-        heading = re.match(r"^#{2,3} (.*)$", line)
-        if heading:
-            line = f"**{heading.group(1)}**"
-        out.append(">" if not line else f"> {line}")
-    while out and out[-1] == ">":
-        out.pop()
-    return "\n".join(re.sub(r"(>\n)+(?=>)", ">\n", "\n".join(out)).splitlines())
-
 
 def blocks() -> dict[str, str]:
     register, necessity, m7b = load()
     return {
         "verdict": verdict_block(register, necessity),
         "register": register_block(register, necessity),
-        "definitions": definitions_block(register),
         "m7b": m7b_block(register, necessity, m7b),
-        "rule": rule_block(),
     }
 
 
