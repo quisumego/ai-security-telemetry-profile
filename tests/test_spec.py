@@ -18,7 +18,7 @@ import pytest
 from lab.config import REPO_ROOT
 from spec import ledger, render, rulings
 
-DOCS = rulings.PUBLIC_DOCUMENTS
+DOCS = rulings.PUBLIC_DOCUMENTS + ("docs/worked-example.md",)
 ENTRIES = ledger.load()
 
 

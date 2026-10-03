@@ -441,3 +441,45 @@ figures:
     inputs: {fields: fields}
     compute: {n: "words(count(fields, 'tier', 'required'))"}
     render: "{n} Required fields"
+
+  # --------------------------------- the worked example, from 3 October 2026 --
+  - id: we-attack-success
+    quoted: "Attack success | 10/10 trials"
+    in: [docs/worked-example.md]
+    source: results/baseline.json
+    inputs: {s: per_class.A6.successes, n: per_class.A6.trials}
+    render: "Attack success | {s}/{n} trials"
+  - id: we-delivery
+    quoted: "reaching the agent | 10/10 trials"
+    in: [docs/worked-example.md]
+    source: results/m7b-crosscheck.json
+    inputs: {d: "per_class[class=A6].m2.delivery", n: "per_class[class=A6].m2.trials"}
+    render: "reaching the agent | {d}/{n} trials"
+  - id: we-detected
+    quoted: "Successful trials detected | 10 of 10"
+    in: [docs/worked-example.md]
+    source: results/baseline.json
+    inputs: {d: per_class.A6.detected, s: per_class.A6.successes, det: per_class.A6.detector}
+    render: "Successful trials detected | {d} of {s}"
+    check: "det == 'd-a06'"
+  - id: we-false-positives
+    quoted: "none in 100 benign sessions"
+    in: [docs/worked-example.md]
+    source: results/baseline.json
+    inputs: {fp: per_detector.d-a06.false_positives, n: per_detector.d-a06.benign_total, reads: per_detector.d-a06.reads}
+    render: "none in {n} benign sessions"
+    check: "fp == 0 and reads == ['retrieval.document_ids']"
+  - id: we-cell
+    quoted: "| 10/10 | 0/10 |"
+    in: [docs/worked-example.md]
+    source: results/necessity.json
+    inputs: {cell: "single['retrieval.document_ids'].cells.A6", tier: "tiers['retrieval.document_ids']"}
+    render: "| {cell[before]}/{cell[n]} | {cell[after]}/{cell[n]} |"
+    check: "cell['cell'] == 'X' and tier['tier'] == 'required' and tier['otel'] == 'partial'"
+  - id: we-local
+    quoted: "delivery was 0/10 and success 0/10"
+    in: [docs/worked-example.md]
+    source: results/m7b-crosscheck.json
+    inputs: {local: "per_class[class=A6].local", unmeasured: "per_class[class=A6].unmeasured"}
+    render: "delivery was {local[delivery]}/{local[trials]} and success {local[successes]}/{local[trials]}"
+    check: "unmeasured == True"
