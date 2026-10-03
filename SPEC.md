@@ -1,7 +1,7 @@
 # AI Security Telemetry Profile (ASTP)
 
-> **Status: complete, written at M8 on 1 October 2026 and condensed on 2
-> October 2026.** Every figure comes from a committed result file: the
+> **Status: complete, written at M8 on 1 October 2026, condensed on 2 October
+> 2026 and restyled on 3 October 2026.** Every figure comes from a committed result file: the
 > generated blocks are written by `spec.render`, and every other figure is
 > listed in `spec/figures.yaml` with its source.
 >
@@ -13,9 +13,9 @@
 > before the ablation ran but after the M4 baseline showed which classes had a
 > successful attack to detect.
 >
-> **Stages.** M0 rules and schema, M1 lab agent, M2 attack captures, M3 benign
-> captures, M4 detectors, M5 ablation and tiers, M6 volume and Sentinel, M7
-> vendor gap, M7b second model, M8 this document. Rulings from M5 on are in each
+> **Stages.** M0 Rules and schema, M1 Lab agent, M2 Attack captures, M3 Benign
+> captures, M4 Detectors, M5 Field removal and tiers, M6 Volume and Sentinel, M7
+> Vendor gap, M7b Second model, M8 Publication. Rulings from M5 on are in each
 > stage's `rulings.py`, earlier ones in `docs/build-log.md`.
 
 <!-- generated:verdict -->
@@ -33,11 +33,11 @@
 Security logging for LLM applications and agents that retrieve documents and
 call tools: which events to emit, which fields each carries, and a measured
 tier for each field. It layers on the OpenTelemetry GenAI conventions, pinned
-in `schema/otel-mapping.md`: of its 37 fields, 13 map fully, 6 map partially
+in [`schema/otel-mapping.md`](schema/otel-mapping.md): of its 37 fields, 13 map fully, 6 map partially
 and 18 have no equivalent.
 
 Ten attack classes from the OWASP Top 10 for LLM Applications 2025, with MITRE
-ATLAS references in `docs/attack-class-references.md`: A1 direct prompt
+ATLAS references in [`docs/attack-class-references.md`](docs/attack-class-references.md): A1 direct prompt
 injection, A2 indirect prompt injection, A3 sensitive information disclosure,
 A4 excessive agency, A5 improper output handling, A6 retrieval corpus
 poisoning, A7 system prompt leakage, A8 unbounded consumption, A9 cross-tenant
@@ -49,13 +49,13 @@ attack trials scored by oracles written before the runs; 100 benign sessions;
 seven detectors written against fixtures; and an ablation that nulled each
 field in the logs and re-ran them. The tiers are evidence about this schema and
 these detectors, not a general ranking. Separately,
-`docs/vendor-gap-analysis.md` found none of the seven security-only fields on
+[`docs/vendor-gap-analysis.md`](docs/vendor-gap-analysis.md) found none of the seven security-only fields on
 any of the 6 vendor surfaces assessed; that supports the case for a profile but
 does not test the claim, and most Azure verdicts are unconfirmed, not absent.
 
 ## 2. The event model
 
-One JSON object per line, validated against `schema/event.schema.json`, in six
+One JSON object per line, validated against [`schema/event.schema.json`](schema/event.schema.json), in six
 event types: `session_start`, `turn`, `retrieval`, `tool_pre`, `tool_post` and
 `session_end`. A group in an event carries all its registered keys, null where
 they do not apply, so the ablation nulls a key and never deletes one.
@@ -69,8 +69,9 @@ five tier Not required without ever being tested. Undertested is the reading
 ruled at M5, before the sweep and after the M4 baseline was known.
 
 Tiers were applied mechanically at M5 from a sweep of 37 fields singly and 103
-pairs, over the 100 attack trials and 100 benign sessions. Each field's rationale and attribute are in `schema/fields.yaml` and
-`schema/otel-mapping.md`.
+pairs, over the 100 attack trials and 100 benign sessions. Each field's rationale and attribute are in [`schema/fields.yaml`](schema/fields.yaml) and
+[`schema/otel-mapping.md`](schema/otel-mapping.md). [`docs/worked-example.md`](docs/worked-example.md)
+traces one Required field from its scenario to its tier.
 
 ### 3.1 Tiers and the evidence for each
 
@@ -152,7 +153,7 @@ The rest are `nr` and `nt` changing places as classes gained or lost successful 
 
 ## 4. The tiering rule
 
-From `docs/methodology.md` Sections 3 and 4, committed on its own on 12 August
+From [`docs/methodology.md`](docs/methodology.md) Sections 3 and 4, committed on its own on 12 August
 2026 as the second commit. **Required:** removing the field makes a
 class undetectable. **Recommended:** removing it cuts detection by 20
 percentage points or more, or pushes a false positive rate above 10 per cent,
@@ -173,7 +174,7 @@ repository was created.
 Retain Required and Optional fields; Not required is **not a recommendation to
 discard**, and `session.id` and `action.egress_target` are always kept. Hashing
 content cut benign raw bytes by 11.2 per cent; `control.canary_triggered` must
-be set before any text is hashed or cut. Detail: `results/volume.md` Section 5.
+be set before any text is hashed or cut. Detail: [`results/volume.md`](results/volume.md) Section 5.
 
 ## 6. Volume and cost model
 
@@ -185,13 +186,13 @@ not agent logging in general.
 
 Seven Sigma rules in `detect/sigma/`, none for A5, A9 or A10, whose attack never
 reached the model in any of the 10 trials on `claude-haiku-4-5`.
-`docs/sentinel-mapping.md` sets out a Sentinel table, a Data Collection Rule and
+[`docs/sentinel-mapping.md`](docs/sentinel-mapping.md) sets out a Sentinel table, a Data Collection Rule and
 KQL queries, none deployed or run.
 
 ## 8. Framework mapping
 
 Identifiers only, re-checked on 1 October 2026 in
-`docs/framework-references.md`; no claim of compliance.
+[`docs/framework-references.md`](docs/framework-references.md); no claim of compliance.
 
 - **DSIT Code of Practice, Principle 12**, log and analyse actions: Sections 2
   and 3 say which fields.
@@ -231,6 +232,8 @@ Identifiers only, re-checked on 1 October 2026 in
   session's task; the Sentinel queries and the cap outcome path have never run;
   `versions.claude_cli` names a CLI that never ran (all sessions ran the bundled
   2.1.233); and `corpus.digest` depends on the working tree, so a fresh clone computes
-  a different digest from the one the manifests record.
+  a different digest from the one the manifests record. Frozen files and
+  generated results keep the wording they had when written, so a note in one
+  can predate a later stage.
 - **Vendor verdicts** rest on documentation read on 23 September 2026, with no
   vendor log observed.
