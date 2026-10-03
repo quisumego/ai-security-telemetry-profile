@@ -80,7 +80,7 @@ def test_the_sweep_would_catch_a_figure_typed_by_hand():
 # Ruled on 3 October 2026: no document a reader opens cites a commit ID, except
 # the two the frozen methodology points to, named at the end of the build log.
 READER_DOCS = tuple(sorted(set(DOCS) | {p.relative_to(REPO_ROOT).as_posix()
-                                        for p in (REPO_ROOT / "docs").glob("*.md")}))
+                                        for p in (REPO_ROOT / "docs").glob("**/*.md")}))
 POINTED_TO_BY_THE_METHODOLOGY = {"docs/build-log.md": ("c8b28dd", "c353533")}
 
 

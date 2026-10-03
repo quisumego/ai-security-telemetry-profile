@@ -1,6 +1,17 @@
 # Mapping to the OpenTelemetry GenAI semantic conventions
 
-**Pinned snapshot**
+**Stage:** M0, Rules and schema
+
+**Purpose:** Each of the profile's fields mapped to the OpenTelemetry GenAI
+conventions at a pinned commit, with every convention string in one place. For
+anyone adopting the `gen_ai.*` names.
+
+---
+
+## 1. The pinned snapshot
+
+The conventions are moving, so the mapping is pinned to a dated commit; a later
+change to them is a single edit here.
 
 | Item | Value |
 |---|---|
@@ -12,28 +23,15 @@
 | Schema URL | not yet published, recorded as outstanding in the repository README |
 | Stability of every GenAI attribute at retrieval | Development |
 
-**Why this file exists.** The conventions are moving. Pinning them to a dated
-commit and keeping every convention string in one file means a later change to
-the conventions is a single edit here, not a hunt through the codebase.
+The GenAI conventions moved out of the main
+`open-telemetry/semantic-conventions` repository in v1.42.0 in June 2026; the
+copies left there are marked deprecated and point to the new location. At the
+retrieval date no GenAI span, event, metric or attribute was stable, and the
+dedicated repository had no versioned release. `user.id` comes from the general
+OpenTelemetry registry, verified the same day, also at Development status. No
+attribute name here or in `schema/fields.yaml` was written from memory.
 
-**Status of the conventions at the pinned snapshot.** The GenAI conventions were
-moved out of the main `open-telemetry/semantic-conventions` repository in
-v1.42.0 in June 2026 and now live in the dedicated repository named above. The
-copies that remain in the main repository are marked deprecated and point to the
-new location. At the retrieval date no GenAI span, event, metric or attribute
-was marked stable, and the dedicated repository had published no versioned
-release. This profile is therefore written against a moving target, and says so.
-
-One attribute in the mapping below, `user.id`, comes from the general
-OpenTelemetry attribute registry rather than the GenAI conventions. It was
-verified on the same date and was also Development status.
-
-No attribute name in this file or in `schema/fields.yaml` was written from
-memory. Each was read from the pinned snapshot on the retrieval date.
-
----
-
-## How to read the mapping
+## 2. How to read the mapping
 
 | Mapping | Meaning |
 |---|---|
@@ -41,14 +39,15 @@ memory. Each was read from the pinned snapshot on the retrieval date.
 | **partial** | A related attribute exists but does not carry the same meaning. The difference is stated. |
 | **none** | No equivalent attribute exists in the conventions. |
 
-Seven fields marked **none** are flagged `security_only: true` in the register.
-They are the profile's hypothesis: the claim under test is that the fields with
-the highest detection value are the ones the conventions do not cover. The
-ablation at M5 tests that claim and may refute it.
+**Seven fields marked none are flagged `security_only: true`** in the register,
+in bold below. They are the profile's hypothesis: that the fields with the
+highest detection value are the ones the conventions do not cover.
+[`SPEC.md`](../SPEC.md#3-the-field-register) Section 3 gives the result.
 
----
+## 3. The mapping, field by field
 
-## Session group
+In register order, by group: session, turn, content, retrieval, action and
+control.
 
 | ASTP field | Mapping | OpenTelemetry attribute | Note |
 |---|---|---|---|
@@ -59,66 +58,26 @@ ablation at M5 tests that claim and may refute it.
 | `session.client_app` | none | | |
 | `session.agent_id` | full | `gen_ai.agent.id` | |
 | `session.config_version` | none | | |
-
-## Turn group
-
-| ASTP field | Mapping | OpenTelemetry attribute | Note |
-|---|---|---|---|
 | `turn.index` | none | | Ordering is implicit in the conventions |
 | `turn.timestamp` | partial | none | Carried by span timing, not a named attribute |
 | `turn.model_id` | full | `gen_ai.request.model` | |
 | `turn.model_version` | full | `gen_ai.response.model` | |
-| `turn.tokens_in` | full | `gen_ai.usage.input_tokens` | **Measured wider than the attribute name suggests, see below** |
+| `turn.tokens_in` | full | `gen_ai.usage.input_tokens` | **Measured wider than the attribute name suggests, see Section 4** |
 | `turn.tokens_out` | full | `gen_ai.usage.output_tokens` | |
 | `turn.latency` | partial | `gen_ai.response.time_to_first_chunk` | Time to first chunk is not total turn latency |
 | `turn.finish_reason` | full | `gen_ai.response.finish_reasons` | |
-
-### What `turn.tokens_in` counts, and why it is wider than the attribute
-
-Recorded at M1, on 17 August 2026, before the first scored capture.
-
-The lab emits `turn.tokens_in` as the sum of the uncached, cache creation and
-cache read input counts, not as the provider's own `input_tokens` figure alone.
-
-The reason is prompt caching. The register says this field measures input
-volume and names oversized injected content and unbounded consumption as what
-it is for. Under caching, the provider's `input_tokens` counts only the
-uncached remainder of the request: the M1 authentication probe reported
-`input_tokens` of 10 against 4,601 cache creation tokens for the same call.
-Recording 10 would leave the field blind to exactly the growth it exists to
-detect, and the A8 measurement would be meaningless.
-
-The mapping is still stated as `full`, because the field carries the same
-quantity the attribute names, total tokens sent into the model call. Anyone
-comparing an ASTP capture against a provider's own billing figures should
-expect this field to read higher, and the difference is the cached portion.
-
-## Content group
-
-| ASTP field | Mapping | OpenTelemetry attribute | Note |
-|---|---|---|---|
 | `content.prompt_text` | full | `gen_ai.input.messages` | Content capture is opt-in in the conventions |
 | `content.prompt_hash` | none | | |
 | `content.response_text` | full | `gen_ai.output.messages` | Content capture is opt-in in the conventions |
 | `content.response_hash` | none | | |
 | `content.system_prompt_version` | partial | `gen_ai.system_instructions` | The conventions carry the instruction content, not a version identifier |
 | `content.redaction_applied` | none | | |
-
-## Retrieval group
-
-| ASTP field | Mapping | OpenTelemetry attribute | Note |
-|---|---|---|---|
 | `retrieval.document_ids` | partial | `gen_ai.retrieval.documents` | An unstructured attribute that may carry identifiers; no dedicated identifier attribute |
 | `retrieval.chunk_ids` | none | | |
 | `retrieval.scores` | none | | |
 | `retrieval.query_text` | full | `gen_ai.retrieval.query.text` | |
 | **`retrieval.source_provenance`** | **none** | | Security-only. No trust labelling of retrieved material exists in the conventions |
 | **`retrieval.permission_context`** | **none** | | Security-only. No access-scope attribute exists in the conventions |
-
-## Action group
-
-| ASTP field | Mapping | OpenTelemetry attribute | Note |
-|---|---|---|---|
 | `action.tool_name` | full | `gen_ai.tool.name` | |
 | `action.tool_arguments` | full | `gen_ai.tool.call.arguments` | |
 | `action.result_hash` | partial | `gen_ai.tool.call.result` | The conventions carry the result content, not a hash |
@@ -126,20 +85,27 @@ expect this field to read higher, and the difference is the cached portion.
 | **`action.permission_decision`** | **none** | | Security-only. No authorisation outcome attribute exists in the conventions |
 | **`action.egress_target`** | **none** | | Security-only. Destinations sit inside free-form tool arguments in the conventions |
 | **`action.context_document_ids`** | **none** | | Security-only. The conventions log retrieval and tool calls separately and define nothing that links them |
-
-## Control group
-
-| ASTP field | Mapping | OpenTelemetry attribute | Note |
-|---|---|---|---|
 | **`control.canary_triggered`** | **none** | | Security-only |
 | `control.policy_version` | none | | |
 | **`control.block_reason`** | **none** | | Security-only |
 
 No group in the conventions corresponds to the control group.
 
----
+## 4. What `turn.tokens_in` counts
 
-## Summary at the pinned snapshot
+**`turn.tokens_in` sums the uncached, cache creation and cache read input
+counts**, not the provider's own `input_tokens` figure alone. Recorded at M1, on
+17 August 2026, before the first scored capture.
+
+Under prompt caching the provider's `input_tokens` counts only the uncached
+remainder: the M1 authentication probe reported `input_tokens` of 10 against
+4,601 cache creation tokens for the same call. Recording 10 would leave the
+field blind to the growth it exists to detect, and the A8 measurement would be
+meaningless. The mapping stays `full`, because the field carries the quantity
+the attribute names, total tokens sent into the model call. Compared with a
+provider's own billing figures, this field reads higher by the cached portion.
+
+## 5. Summary at the pinned snapshot
 
 | Mapping | Field count |
 |---|---|
@@ -151,21 +117,15 @@ No group in the conventions corresponds to the control group.
 Of the 18 fields with no equivalent, **7 are flagged security-only** and form
 the hypothesis under test.
 
-## Attributes present in the conventions that this profile does not adopt
+**Attributes the profile does not adopt** are omitted on purpose: sampling
+parameters, embeddings, evaluation scoring, memory stores, prompt management
+and workflow naming carry no detection role in the threat model in `SPEC.md`,
+so none is emitted.
 
-Recorded so the omission is deliberate rather than accidental. The conventions
-also define attributes for sampling parameters, embeddings, evaluation scoring,
-memory stores, prompt management and workflow naming. None of them carries a
-detection role in the threat model in `SPEC.md`, so none is emitted. If the
-ablation shows the profile is missing a signal these would have covered, that
-is a finding and it gets reported.
+## 6. Re-checked 1 October 2026
 
----
-
-## Re-checked 1 October 2026
-
-Ruled at M8: the mapping above is stated as at the pinned commit, and a live
-check is recorded beside it. The register is not edited.
+The mapping above is stated as at the pinned commit, with a live check beside
+it. The register is not edited.
 
 | Item | Value |
 |---|---|
@@ -173,11 +133,11 @@ check is recorded beside it. The register is not edited.
 | Releases and tags at the head | none |
 | Read at | 21:28 UTC: `model/gen-ai/registry.yaml` at both commits, and `model/user/registry.yaml` on `main` of `open-telemetry/semantic-conventions` |
 
-- Every attribute this file maps to is present at the head, at Development
-  stability as at the pin, and none is deprecated. No GenAI attribute is marked
+- Every attribute mapped above is present at the head, at Development
+  stability as at the pin, and none is deprecated. No GenAI attribute is
   stable. `user.id` is still Development in the general registry.
 - Three of them carry longer notes than at the pin, and none of the additions
-  changes a mapping above. `gen_ai.usage.input_tokens` adds an example of
+  changes a mapping. `gen_ai.usage.input_tokens` adds an example of
   per-modality and cached counts as subsets of the total.
   `gen_ai.response.finish_reasons` adds how its positions align with the
   generations and when to report `error`. `gen_ai.output.messages` adds that
@@ -187,7 +147,9 @@ check is recorded beside it. The register is not edited.
   are not mapped by this profile.
 - At the pin, the note on `gen_ai.usage.input_tokens` already says the value
   should include cached tokens, so `turn.tokens_in` carries what the attribute
-  defines. The comparison in "What `turn.tokens_in` counts" above is with a
-  provider's own uncached `input_tokens` figure, not with the attribute.
-- The ablation this file anticipates ran at M5, and `SPEC.md` Section 3 gives
-  its result.
+  defines. Section 4 compares it with a provider's own uncached `input_tokens`
+  figure, not with the attribute.
+
+---
+
+**Sources:** `open-telemetry/semantic-conventions-genai` at the pinned commit and at its head on 30 September 2026; `model/user/registry.yaml` in `open-telemetry/semantic-conventions`.

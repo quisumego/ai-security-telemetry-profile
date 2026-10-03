@@ -55,6 +55,15 @@ from vendor_gap import rulings
 
 EVIDENCE_PATH = REPO_ROOT / rulings.EVIDENCE
 DOC_PATH = REPO_ROOT / rulings.DOC
+# Since 3 October 2026 the page is a hub with three topic pages, and each
+# generated block lives on exactly one of them.
+TOPIC_DIR = DOC_PATH.with_suffix("")
+PAGES = {
+    DOC_PATH: ("headline",),
+    TOPIC_DIR / "surfaces.md": ("surfaces", "counts"),
+    TOPIC_DIR / "classes.md": ("classes", "additions"),
+    TOPIC_DIR / "sources.md": ("sources", "quotes"),
+}
 RESULTS_PATH = REPO_ROOT / rulings.RESULTS
 COMMAND = ".venv/bin/python -m vendor_gap.analysis --write"
 
@@ -752,8 +761,12 @@ def blocks(doc: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def render_doc(text: str, doc: dict[str, Any]) -> str:
+def render_doc(text: str, doc: dict[str, Any], names: Sequence[str] | None = None) -> str:
+    """The page with its generated blocks rewritten; `names` limits it to the
+    blocks one page carries, and every named block must be there once."""
     for name, body in blocks(doc).items():
+        if names is not None and name not in names:
+            continue
         pattern = re.compile(
             rf"(<!-- generated:{re.escape(name)} -->\n)(?:.*?\n)?(<!-- /generated:{re.escape(name)} -->)", re.S
         )
@@ -773,8 +786,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(block_passes(doc))
     if args.write:
         RESULTS_PATH.write_text(dumps(doc), encoding="utf-8")
-        DOC_PATH.write_text(render_doc(DOC_PATH.read_text(encoding="utf-8"), doc), encoding="utf-8")
-        print(f"\nwrote {rulings.RESULTS} and {rulings.DOC}")
+        for path, names in PAGES.items():
+            path.write_text(render_doc(path.read_text(encoding="utf-8"), doc, names), encoding="utf-8")
+        print(f"\nwrote {rulings.RESULTS}, {rulings.DOC} and its {len(PAGES) - 1} topic pages")
     return 0
 
 

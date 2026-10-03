@@ -27,7 +27,8 @@ from detect.detectors import DETECTORS, DetectorConfig
 from lab.config import REPO_ROOT
 from vendor_gap import analysis, rulings
 
-DOC_TEXT = analysis.DOC_PATH.read_text(encoding="utf-8")
+# The hub and its three topic pages, read together as one page.
+DOC_TEXT = "\n\n".join(path.read_text(encoding="utf-8") for path in analysis.PAGES)
 # The page as prose, line breaks folded, for phrases that wrap.
 DOC_WORDS = " ".join(DOC_TEXT.split())
 
@@ -291,7 +292,10 @@ def test_the_results_file_is_what_a_fresh_run_produces(doc):
 
 
 def test_the_doc_blocks_are_what_the_generator_produces(doc):
-    assert analysis.render_doc(DOC_TEXT, doc) == DOC_TEXT
+    assert sorted(n for names in analysis.PAGES.values() for n in names) == sorted(analysis.blocks(doc))
+    for path, names in analysis.PAGES.items():
+        text = path.read_text(encoding="utf-8")
+        assert analysis.render_doc(text, doc, names) == text, path
 
 
 def test_the_results_hold_identifiers_and_counts_only(doc):
@@ -311,7 +315,7 @@ def test_tiers_shown_are_the_registers(fields):
 
 def test_every_source_cited_on_the_page_is_listed_and_every_listed_source_is_cited():
     listed = {s["n"] for s in analysis.evidence()["sources"]}
-    body = DOC_TEXT.split("<!-- /generated:sources -->", 1)[1]
+    body = re.sub(r"<!-- generated:sources -->.*?<!-- /generated:sources -->", " ", DOC_TEXT, flags=re.S)
     cited = {int(n) for n in re.findall(r"\[(\d+)\]", body)}
     assert cited == listed, cited ^ listed
 
@@ -324,7 +328,8 @@ def test_the_page_says_nothing_was_created_and_no_model_was_called():
 
 def test_the_page_states_the_five_class_limit_and_the_a9_exposure():
     assert "five classes only, and for two of them on a single session" in DOC_WORDS
-    paragraph = next(p for p in DOC_TEXT.split("\n\n") if "A9" in p and "holdout" in p)
+    hub = analysis.DOC_PATH.read_text(encoding="utf-8")
+    paragraph = next(p for p in hub.split("\n\n") if "A9" in p and "holdout" in p)
     assert "knew both holdout outcomes" in paragraph
 
 
