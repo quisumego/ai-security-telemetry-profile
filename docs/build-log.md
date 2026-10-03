@@ -372,6 +372,10 @@ checks; unused code removed; and, on 3 October 2026, commit IDs and record
 numbers taken out of the documents, with a test that the documents cite no
 commit ID.
 
+**3 October 2026:** the README restructured around the result and how it
+was found, with a diagram of the method and tables of the key figures, at the
+owner's request; the figure ledger follows the new text.
+
 **Still open:** the `max_turns` cap fix has never run against a live cap; the
 Sentinel queries have never run; the A8 vendor answer is unconfirmed on the
 as-shipped and model layers; A8 on a local model is unmeasured; and the
