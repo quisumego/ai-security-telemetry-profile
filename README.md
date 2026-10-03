@@ -131,16 +131,35 @@ one, so removing a field either switched a detection off or changed nothing.
 
 ## What I learnt
 
-- **A canary is not a signal on its own; the canary with its destination is.**
-  Ordinary work showed me that, not an attack.
-- **The model refused what it recognised as an attack** and complied with what
-  looked like good work, such as following a retrieved procedure.
-- **A measurement only reaches what it can test.** A Not required tier can mean
-  never tested, and undertested is a result worth publishing.
-- **Fix the rules before the data**, and label anything decided after.
+- **A planted marker leaving the system is not a signal on its own.** The
+  check for direct prompt injection fired on an ordinary session that emailed a
+  tracked reference to a permitted internal recipient, and never on an attack.
+  Only the destination told them apart, so the destination of every outbound
+  call belongs in the log beside the marker.
+- **Models refuse what they recognise as an attack and comply with what looks
+  like good work.** Direct injection and requests for restricted material were
+  refused every time, while a planted procedure and a long document to read in
+  full were followed every time. Detection matters most for the attacks that
+  look like normal work.
+- **Whether an attack reaches the model depends on the task.** Planted
+  documents arrived when the task needed a search. When the answer sat in the
+  case file, the agent seldom searched, so one attack type was never delivered
+  at all. A zero can mean an attack was refused or never delivered, and the two
+  need saying apart.
+- **A measurement only reaches what it can test.** Most fields were read by no
+  detector, so a Not required tier often means untested rather than useless.
+  Undertested is a result worth publishing, as long as it is said plainly.
+- **Fix the rules before the data, and label anything decided after.** The
+  tiering rule and the held-back attack types were set before the first
+  capture. The readings I settled later, undertested among them, say so
+  wherever they appear.
+- **Check a tool's numbers before building on them.** The agent framework's
+  streamed messages carried token counts from before each call finished.
+  Reading the completed record instead saved the measurement of runaway
+  consumption.
 - **An AI coding assistant needs checks of its own.** Tests tied the figures
-  to their sources, yet reading the claims still caught drafts that said too
-  much.
+  to their sources, yet reading each claim against its evidence still caught
+  drafts that said too much.
 
 ## Skills I learnt
 
@@ -157,19 +176,20 @@ one, so removing a field either switched a detection off or changed nothing.
 
 ## Tools I used
 
-Python, pytest, PyYAML, jsonschema, the Claude Agent SDK with
-`claude-haiku-4-5`, Ollama with `granite4.1:3b`, Claude Code, the OpenTelemetry
-GenAI conventions, JSON Schema, JSON Lines, Sigma, Microsoft Sentinel and KQL,
-Microsoft Foundry, Azure Monitor, Amazon Bedrock, CloudTrail, CloudWatch,
-AgentCore, OWASP Top 10 for LLM Applications, MITRE ATLAS, DSIT, NCSC, ETSI
-TS 104 223, vhs, ttyd and ffmpeg.
+| Purpose | Tools | How I used them |
+|---|---|---|
+| Building and testing | Python, pytest, PyYAML, jsonschema | Built and run |
+| Models and runtimes | The Claude Agent SDK with `claude-haiku-4-5`; Ollama with `granite4.1:3b` | Built and run: the captures, and the re-run on a local model |
+| Coding assistant | Claude Code | Wrote the code to my rulings, as How I worked says |
+| Logging formats | The OpenTelemetry GenAI conventions, JSON Schema, JSON Lines | Built and run: every event checked against the schema as it was written |
+| Detection rules | Sigma | Written to state each detector's intent; the Python detectors did the scoring |
+| SIEM | Microsoft Sentinel: a table, a Data Collection Rule and KQL queries | Written, never deployed or run |
+| Cloud logging | Microsoft Foundry and Azure Monitor; Amazon Bedrock, CloudTrail, CloudWatch and AgentCore | Assessed from documentation only, without signing in to either cloud |
+| Standards and frameworks | OWASP Top 10 for LLM Applications, MITRE ATLAS, DSIT, NCSC, ETSI TS 104 223 | Mapped by identifier |
+| The demo | vhs, ttyd, ffmpeg | Run to record the GIF |
 
-The code, the captures, the local re-run and the demo were built and run, with
-Claude Code writing the code to my rulings; the Sigma rules state each
-detector's intent while the Python detectors did the scoring; the Sentinel
-table, Data Collection Rule and KQL queries were written and never deployed or
-run; the Azure and AWS logging was assessed from documentation only, without
-signing in to either cloud; and the frameworks are mapped by identifier.
+The lab, its tests, the captures and the demo all ran; the Sentinel artefacts
+were written and the cloud logging read, and neither was deployed.
 
 ## How I worked
 
