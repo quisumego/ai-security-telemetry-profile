@@ -1,17 +1,21 @@
 # Build log
 
-What happened at each stage: the decisions, the results, what went wrong and
-what was corrected, and the records the rest of the repository points to.
-Condensed on 2 October 2026 at the owner's request; the full log, with every
-dated detail, is in the repository's history. Commit IDs are left out, except
-the two the methodology points to, given at the end.
+**Stage:** M0 to M8, every stage
+
+**Purpose:** What happened at each stage: the decisions, the results, what
+went wrong and what was corrected, and the records the rest of the repository
+points to. For anyone checking how a result came about.
+
+Condensed on 2 October 2026; the full log, with every dated detail, is in the
+repository's history. Commit IDs are left out, except the two the methodology
+points to, given at the end.
 
 The captures ran on a subscription allowance, no money was spent, and extra
 usage was off throughout. Estimated model spend is in `results/volume.md`.
 
 ---
 
-## M0. Scope, naming, schema, scaffold, 12 August 2026
+## M0. Rules and schema, 12 August 2026
 
 The M0 questions were put to the owner as one batch before any file was
 created, and ruled in one reply.
@@ -51,7 +55,7 @@ captures share the interactive allowance, the M2 runner had to be resumable,
 and `fallback_model` must never be set, or some sessions could run on another
 model with no visible failure.
 
-## M1. Instrumented lab agent, 17 August 2026
+## M1. Lab agent, 17 August 2026
 
 The Agent SDK spawns the Claude Code CLI, which authenticated from the owner's
 subscription with no API key set. Seven questions, six ruled:
@@ -71,6 +75,8 @@ canary register (outside the corpus, so no session can retrieve it), six
 tools, permission policy, emitter, hooks, harness and transcript reader; and
 two benign smoke captures, in no scored corpus.
 
+- **The two benign smoke captures held no canary value under `runs/`**; at M2
+  that was ruled a description of those captures, not a rule.
 - **The Python SDK has no session lifecycle hook**, so session and turn events
   are emitted by the harness in `lab/agent.py`. This departs from the plan's
   wording; the same events are emitted.
@@ -88,7 +94,7 @@ two benign smoke captures, in no scored corpus.
   a miss emits null, and a test requires every turn enriched. Unnoticed, this
   would have broken the A8 measurement.
 
-## M2. Attack corpus and capture, 21 September 2026
+## M2. Attack captures, 21 September 2026
 
 Ruled by the owner before anything was authored:
 
@@ -158,7 +164,7 @@ post-capture checks are `tests/test_post_capture.py`.
   cap as an outcome from the error's text and re-raises anything else. No scored
   capture has reached a cap, so the path has never run live.
 
-## M3. Benign corpus, 22 September 2026
+## M3. Benign captures, 22 September 2026
 
 The owner approved the task design first: 100 sessions from seed `20260922`,
 b1 (30 read-only claim summaries, A4's control), b2 (25 policy lookups), b3 (20
@@ -178,7 +184,7 @@ committed before any capture, and the corpus was tagged when the capture ended.
 - b3 never searched the documents, the same shortcut that held down A5's and
   A10's delivery.
 
-## M4. Detectors, baseline and the holdouts opened, 22 September 2026
+## M4. Detectors, 22 September 2026
 
 | # | Question | Ruling |
 |---|---|---|
@@ -208,7 +214,7 @@ the detectors were authored from fixtures only, and the result is weakened
 evidence, not a clean holdout. Every later A9 figure rests on this baseline and
 carries the same exposure.
 
-## M5. Ablation sweep, necessity matrix and tiers, 22 September 2026
+## M5. Field removal and tiers, 22 September 2026
 
 The rulings are in `ablation/rulings.py`, committed before any sweep code. One
 of them, made after the M4 baseline was known: the headline is undertested when
@@ -233,7 +239,7 @@ thirty of the thirty-seven fields are read by no detector; two `X` cells rest
 on one session each; the Optional split was read after the M4 results; and
 `session.id` could not matter to a harness that takes one file as one session.
 
-## M6. Cost, volume, retention and the Sentinel mapping, 23 September 2026
+## M6. Volume and Sentinel, 23 September 2026
 
 The rulings are in `cost/rulings.py`, committed before any model code; the
 results were tagged when written. Nothing deployed.
@@ -251,7 +257,7 @@ results were tagged when written. Nothing deployed.
   fields; every cell for them reads `nr`, `nt` or `ab`, so the page says what a
   posture loses could not be measured.
 
-## M7. Vendor gap analysis, Azure and AWS, 23 September 2026
+## M7. Vendor gap, 23 September 2026
 
 The rulings are in `vendor_gap/rulings.py`, committed before the evidence or
 any code; five came back unruled and were asked again before anything was
@@ -270,7 +276,7 @@ header.
 absent verdicts had no full field list behind them; three listed sources were
 never cited; and a trap resting on a search summary was cut back.
 
-## M7b. Local model cross-check, 23 September 2026
+## M7b. Second model, 23 September 2026
 
 The rulings are in `crosscheck/rulings.py`, committed before any code.
 The attacks ran on `granite4.1:3b`, on a CPU, through Ollama 0.34.3's
@@ -294,7 +300,7 @@ into the sixty-minute clock. The results were tagged when written.
   tests ran, amended before any push. Ollama's
   documented install line needs `--zstd` with GNU tar 1.35 reading a pipe.
 
-## M8. Write up and publish, 30 September to 2 October 2026
+## M8. Publication, 30 September to 3 October 2026
 
 No model call, no capture and no cloud resource.
 
@@ -346,6 +352,12 @@ commit ID.
 **3 October 2026:** the README restructured around the result and how it
 was found, with a diagram of the method and tables of the key figures, at the
 owner's request; the figure ledger follows the new text.
+
+**Later on 3 October 2026:** every page a reader opens restyled in one short,
+structured form: a two-line header on each reference page, numbered sections
+and tables, the vendor gap page split into a hub and three topic pages, and a
+worked example tracing one attack class from scenario to tier. No result,
+frozen file or pre-committed rule changed.
 
 **Still open:** the `max_turns` cap fix has never run against a live cap; the
 Sentinel queries have never run; the A8 vendor answer is unconfirmed on the
