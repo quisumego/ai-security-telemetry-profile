@@ -136,10 +136,10 @@ def test_a_fresh_build_reproduces_the_committed_results(module):
 
 
 def test_the_m5_results_and_the_register_are_untouched_by_m7b():
-    """Byte for byte as tagged at tiers-m5 and left by M6 and M7."""
+    """Byte for byte as at the vendor gap commit, left by M6 and M7."""
     import subprocess
 
     for path in ("results/necessity.json", "results/necessity-matrix.md", "schema/fields.yaml"):
-        committed = subprocess.run(("git", "show", f"gap-m7:{path}"), cwd=REPO_ROOT,
+        committed = subprocess.run(("git", "show", f"8392341f02f7372e2a00b3f646f93dedeab75276:{path}"), cwd=REPO_ROOT,
                                    capture_output=True, check=True).stdout
         assert (REPO_ROOT / path).read_bytes() == committed, path
