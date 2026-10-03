@@ -46,13 +46,6 @@ figures:
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'none')"}
     render: "{n} have no equivalent"
-  - id: required-count-readme
-    quoted: "3 tier Required"
-    in: [README.md]
-    source: schema/fields.yaml
-    inputs: {fields: fields}
-    compute: {n: "count(fields, 'tier', 'required')"}
-    render: "{n} tier Required"
   - id: required-count-post
     quoted: "3 fields tier Required"
     in: [docs/write-up.md]
@@ -60,13 +53,6 @@ figures:
     inputs: {fields: fields}
     compute: {n: "count(fields, 'tier', 'required')"}
     render: "{n} fields tier Required"
-  - id: recommended-count-readme
-    quoted: "0 tier Recommended"
-    in: [README.md]
-    source: schema/fields.yaml
-    inputs: {fields: fields}
-    compute: {n: "count(fields, 'tier', 'recommended')"}
-    render: "{n} tier Recommended"
   - id: recommended-count-post
     quoted: "0 Recommended"
     in: [docs/write-up.md]
@@ -76,14 +62,14 @@ figures:
     render: "{n} Recommended"
   - id: optional-count
     quoted: "10 Optional"
-    in: [README.md, docs/write-up.md]
+    in: [docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'tier', 'optional')"}
     render: "{n} Optional"
   - id: not-required-count
     quoted: "24 Not required"
-    in: [README.md, docs/write-up.md]
+    in: [docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'tier', 'not_required')"}
@@ -176,14 +162,14 @@ figures:
     render: "{m} of {n} fields"
   - id: unread-fields
     quoted: "30 of the 37 fields"
-    in: [SPEC.md]
+    in: [SPEC.md, README.md]
     source: results/necessity.json
     inputs: {fields: field_order, detectors: detectors}
     compute: {n: "len(fields)", unread: "n - len({f for d in detectors.values() for f in d['reads']})"}
     render: "{unread} of the {n} fields"
   - id: not-required-unmeasured
     quoted: "23 of the 24 Not required fields"
-    in: [SPEC.md]
+    in: [SPEC.md, README.md]
     source: results/volume.json
     inputs: {unmeasured: retention.not_required_unmeasured, total: retention.not_required}
     render: "{unmeasured} of the {total} Not required fields"
@@ -191,13 +177,13 @@ figures:
   # ----------------------------------------------- the rule's fixed numbers --
   - id: material-fall
     quoted: "20 percentage points"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md, README.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {n: methodology.material_fall_points}
     render: "{n} percentage points"
   - id: false-positive-ceiling
     quoted: "10 per cent"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md, README.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {n: methodology.fp_ceiling_percent}
     render: "{n} per cent"
@@ -237,7 +223,7 @@ figures:
     check: "successes == 0"
   - id: a1-attack-trials-post
     quoted: "none of the 10 attack trials"
-    in: [README.md, docs/write-up.md]
+    in: [docs/write-up.md]
     source: results/baseline.json
     inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
     render: "none of the {trials} attack trials"
@@ -250,7 +236,7 @@ figures:
     render: "{fp}/{n} benign sessions"
   - id: a6-goes-dark
     quoted: "falls from 10/10 to 0/10"
-    in: [docs/write-up.md]
+    in: [README.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {cell: "single['retrieval.document_ids'].cells.A6"}
     render: "falls from {cell[before]}/{cell[n]} to {cell[after]}/{cell[n]}"
@@ -329,3 +315,129 @@ figures:
     inputs: {a8: volume.attack.per_label.A8.raw_bytes, all: volume.attack.raw_bytes}
     compute: {share: "100 * a8 / all"}
     render: "{share:.1f} per cent"
+
+  # ------------------------------------------- the README, from 3 October 2026 --
+  - id: security-fields-readme
+    quoted: "the seven security fields"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {tiers: tiers}
+    compute: {n: "words(count(tiers, 'security_only', True))"}
+    render: "the {n} security fields"
+  - id: attack-types-and-trials
+    quoted: "10 attack types, 10 trials each"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {n: "len(classes)", t: "sorted({c['trials'] for c in classes.values()})[0]"}
+    render: "{n} attack types, {t} trials each"
+    check: "len({c['trials'] for c in classes.values()}) == 1"
+  - id: attack-types-words
+    quoted: "Ten attack types"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {n: "words(len(classes)).capitalize()"}
+    render: "{n} attack types"
+  - id: trials-each-words
+    quoted: "ten trials each"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {t: "words(sorted({c['trials'] for c in classes.values()})[0])"}
+    render: "{t} trials each"
+    check: "len({c['trials'] for c in classes.values()}) == 1"
+  - id: trials-per-type-words
+    quoted: "ten trials per attack type"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {t: "words(sorted({c['trials'] for c in classes.values()})[0])"}
+    render: "{t} trials per attack type"
+    check: "len({c['trials'] for c in classes.values()}) == 1"
+  - id: attack-designs-words
+    quoted: "ten attack designs"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {classes: classes}
+    compute: {n: "words(len(classes))"}
+    render: "{n} attack designs"
+  - id: detectors-readme
+    quoted: "7 detectors"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {detectors: detectors}
+    compute: {n: "len(detectors)"}
+    render: "{n} detectors"
+  - id: detectors-words
+    quoted: "Seven detectors"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {detectors: detectors}
+    compute: {n: "words(len(detectors)).capitalize()"}
+    render: "{n} detectors"
+  - id: held-back-words
+    quoted: "Two attack types were held back"
+    in: [README.md]
+    source: results/baseline.json
+    inputs: {per_class: per_class}
+    compute: {n: "words(count(per_class, 'holdout', True)).capitalize()"}
+    render: "{n} attack types were held back"
+  - id: required-of-fields
+    quoted: "3 of the 37"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {r: "count(fields, 'tier', 'required')", n: "len(fields)"}
+    render: "{r} of the {n}"
+  - id: tier-row-required
+    quoted: "| Required | 3 |"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'required')"}
+    render: "| Required | {n} |"
+  - id: tier-row-recommended
+    quoted: "| Recommended | 0 |"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'recommended')"}
+    render: "| Recommended | {n} |"
+  - id: tier-row-optional
+    quoted: "| Optional | 10 |"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'optional')"}
+    render: "| Optional | {n} |"
+  - id: tier-row-not-required
+    quoted: "| Not required | 24 |"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "count(fields, 'tier', 'not_required')"}
+    render: "| Not required | {n} |"
+  - id: canary-one-trial
+    quoted: "one successful trial"
+    in: [README.md]
+    source: results/necessity.json
+    inputs: {cell: "single['control.canary_triggered'].cells.A7"}
+    compute: {w: "words(cell['n'])"}
+    render: "{w} successful trial"
+    check: "cell['cell'] == 'X' and cell['before'] == cell['n']"
+  - id: vendor-security-fields
+    quoted: "None of the 7 security fields"
+    in: [README.md]
+    source: results/vendor-gap.json
+    inputs: {surfaces: surfaces}
+    compute: {n: "sorted({s['security_only']['absent'] for s in surfaces.values()})[0]"}
+    render: "None of the {n} security fields"
+    check: "all(s['security_only'] == {'absent': n} for s in surfaces.values())"
+  - id: required-fields-words
+    quoted: "three Required fields"
+    in: [README.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "words(count(fields, 'tier', 'required'))"}
+    render: "{n} Required fields"
