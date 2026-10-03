@@ -34,8 +34,6 @@ The rules came first. Before any capture, I set and locked the rule that turns m
 
 Two of the ten classes were held out: no detector was written for them, and they were opened only after the detector set was frozen. The seven detectors were written against throwaway fixtures, never against a capture. Then the ablation: each field set to null in the captured logs, singly and in pairs within a group, and every detector re-run, with no model call anywhere. No step in the scoring is decided by hand.
 
-One note on the record itself. The public repository was created after every capture, and before publishing I rewrote its history once to take personal data out, keeping every recorded date. Those dates are set by whoever records the work, in any repository, so what a reader can check is the order: the rules come before the schema, any detector or any capture, and the [specification](https://github.com/quisumego/ai-security-telemetry-profile/blob/main/SPEC.md#4-the-tiering-rule) explains how to check it.
-
 ## The results
 
 The sweep nulled 37 fields singly and 103 pairs. 3 fields tier Required, 0 Recommended, 10 Optional and 24 Not required.

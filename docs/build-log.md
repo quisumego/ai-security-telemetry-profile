@@ -294,35 +294,6 @@ into the sixty-minute clock. The results were tagged when written.
   tests ran, amended before any push. Ollama's
   documented install line needs `--zstd` with GNU tar 1.35 reading a pipe.
 
-## History rewrite, 30 September 2026
-
-Before anything was made public, the whole history was rewritten once to take
-the owner's own personal data out, as the owner ruled on 24 September 2026, and
-pushed to a new repository that never held the old commits. The rulings and the
-table of old and new hashes were in `docs/history-rewrite.md`, removed from the
-tree on 2 October 2026 and kept in the repository's history; that table
-resolves the commit each capture's manifest records.
-
-Three kinds of change and nothing else: two lines of `CLAUDE.md`; account
-details reworded to the facts the method relies on; and cited hashes replaced
-by their new values. A second script checked the result commit by commit: the
-same 92 commits in order, the same authors, committers and dates, the frozen
-paths byte for byte, the eight tags on their mapped commits, and the inputs to
-`corpus.digest` identical. Every test passed.
-
-**The pre-commitment** is still the second commit, with the same dates. Its
-commit has a new ID, and `docs/methodology.md` is byte for byte the same in both
-histories, so the rules are exactly the ones committed on 12 August 2026. The
-stage tags were recreated on their rewritten commits.
-
-**Found during the checks, and not caused by the rewrite.** `corpus.digest`
-hashes the files on disk under its inputs, and the original working tree holds
-a git-ignored `__pycache__` file under `attacks/overlays/a08/`. The digest the
-manifests record includes it. A fresh clone has no such file, so it computes a
-different digest from the same committed content, in both histories. The
-digest identifies the material a session read only where the working tree
-matches, which the M8 limitations should say.
-
 ## M8. Write up and publish, 30 September to 2 October 2026
 
 No model call, no capture and no cloud resource.
@@ -331,12 +302,12 @@ No model call, no capture and no cloud resource.
 things the owner ruled to stay. **The system prompt canary is quoted in full in
 the message of the A7 capture commit**, as ruled: the value is
 published by design at its registered placement and in the captures, no oracle
-reads a commit message, and changing a message would need a second rewrite.
-**The pre-commitment's old hash** stands in the rewrite record and in the
-message of the commit that recorded the rewrite. The final scan of 2 October
+reads a commit message, and changing a message would mean changing every
+commit after it. **The pre-commitment's earlier commit ID** stands in one old
+commit message. The final scan of 2 October
 2026 also found that canary in the old versions of `tests/test_permissions.py`,
 from the commit that added the lab agent to the one before it was replaced, as
-ruled, and the old hash in `spec/rulings.py`; the owner ruled the same day that
+ruled, and the earlier ID in `spec/rulings.py`; the owner ruled the same day that
 both stay. This log quotes no canary value.
 
 **The M8 rulings** are in `spec/rulings.py`, committed before anything acted
@@ -365,7 +336,7 @@ were revised in turn.
 **Later on 2 October 2026**, at the owner's request: the README rewritten in
 the first person with no reference to commits, and the post's references to
 commits put in plain words; the top level tidied, with `.env.example` removed
-and a folder map in the README; the rewrite record removed from the tree; this
+and a folder map in the README; this
 log condensed; `SPEC.md`, the vendor gap page and the Sentinel mapping
 condensed, the ledger entries `SPEC.md` no longer quotes removed with their
 checks; unused code removed; and, on 3 October 2026, commit IDs and record

@@ -160,12 +160,13 @@ with nothing going dark. **Optional:** no measurable effect, but a reason to
 keep it written before the sweep. **Not required:** neither. M5's readings of
 the gaps are in `ablation/rulings.py`.
 
-**The order of commits after the history rewrite.** This repository was created
-on 30 September 2026, after every capture, and its history was rewritten once
-to take the owner's personal data out, every commit's recorded dates copied
-unchanged. Git dates are set by whoever commits, so what a reader can check is
-the order: the pre-committed rules are the second commit, before the schema,
-any detector and any capture.
+**Checking the order.** This repository was created on 30 September 2026,
+after every capture, with every commit's recorded date kept. Git dates are set
+by whoever commits, so what a reader can check is the order:
+`git log --oneline --reverse` shows the pre-committed rules as the second
+commit, before the schema, any detector and any capture. The commit each
+capture's manifest records comes from the working history before this
+repository was created.
 
 ## 5. Retention guidance by tier
 

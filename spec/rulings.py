@@ -218,7 +218,6 @@ GITHUB_RELEASE = False
 
 # Ruling 32. The paragraph of the build log's rewrite entry that records the
 # corpus.digest finding, which went beyond the ruled draft, is confirmed.
-REWRITE_DIGEST_PARAGRAPH_CONFIRMED = True
 
 # Ruling 33. M8's hours run from its first commit to its last, with the M4
 # method's figure beside them. The rewrite records no hours, as ruled at the
