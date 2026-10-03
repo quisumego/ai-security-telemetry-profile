@@ -27,21 +27,21 @@ figures:
     render: "{n} fields"
   - id: otel-full
     quoted: "13 map fully"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md, README.md, docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'full')"}
     render: "{n} map fully"
   - id: otel-partial
     quoted: "6 map partially"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md, README.md, docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'partial')"}
     render: "{n} map partially"
   - id: otel-none
     quoted: "18 have no equivalent"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md, README.md, docs/write-up.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'none')"}

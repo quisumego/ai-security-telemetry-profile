@@ -40,6 +40,13 @@ GenAI conventions name fields for model calls, tokens and tools, built for
 observability rather than detection. This project measures which fields
 detection needs, one field at a time.
 
+| | Fields | For example |
+|---|---|---|
+| Borrowed from the OpenTelemetry GenAI conventions | 13 map fully, 6 map partially | `turn.model_id` is `gen_ai.request.model`; `retrieval.document_ids` partly matches `gen_ai.retrieval.documents` |
+| Added by this profile | 18 have no equivalent, among them the seven security fields | `retrieval.permission_context`, `action.egress_target`, `control.canary_triggered` |
+
+The added fields are the ones the result above is about.
+
 ## What I did
 
 ```mermaid
@@ -204,6 +211,24 @@ python -m venv .venv
   including what went wrong.
 - [`results/`](results/) and [`spec/figures.yaml`](spec/figures.yaml): every
   result, and the source of the figures quoted here.
+
+Which page belongs to which stage:
+
+| Stage | Where to read it |
+|---|---|
+| Rules and schema | [`docs/methodology.md`](docs/methodology.md), [`schema/otel-mapping.md`](schema/otel-mapping.md), [`docs/attack-class-references.md`](docs/attack-class-references.md), [`docs/framework-references.md`](docs/framework-references.md) |
+| Lab agent | [`lab/`](lab/) |
+| Attack captures | [`attacks/`](attacks/) |
+| Benign captures | [`benign/`](benign/) |
+| Detectors | [`detect/`](detect/) |
+| Field removal and tiers | [`results/necessity-matrix.md`](results/necessity-matrix.md), [`SPEC.md`](SPEC.md) |
+| Volume and Sentinel | [`results/volume.md`](results/volume.md), [`docs/sentinel-mapping.md`](docs/sentinel-mapping.md) |
+| Vendor gap | [`docs/vendor-gap-analysis.md`](docs/vendor-gap-analysis.md) |
+| Second model | [`crosscheck/`](crosscheck/) |
+| Publication | [`docs/write-up.md`](docs/write-up.md), [`docs/build-log.md`](docs/build-log.md) |
+
+[`docs/worked-example.md`](docs/worked-example.md) follows one attack type
+through these stages, from its scenario to its tier.
 
 What each folder holds:
 
