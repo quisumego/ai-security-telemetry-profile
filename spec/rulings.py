@@ -105,15 +105,23 @@ NEW_RESULTS_FILE = "results/benign.json"
 
 # Ruling 11. The write-up's title is option 3 of the plan's Section 10.
 TITLE = "I Removed Every Field From My AI Logs to Find Out Which Ones Matter"
+# Replaced on 4 October 2026, when the post was rewritten: the post's rulings 4
+# and 5 keep this title and rewrite the subtitle so the verdict reads in plain
+# words, and the lead sits in the subtitle and the first section in place of
+# ruling 7's first 150 words. The subtitle was "Only two of the seven fields I
+# added for security could be tested at all. Both were required. The claim came
+# back undertested."
 SUBTITLE = (
-    "Only two of the seven fields I added for security could be tested at all. "
-    "Both were required. The claim came back undertested."
+    "Only two of the seven security fields could be tested, and both were required. "
+    "The claim comes back undertested, weakened by my own rule, and not refuted."
 )
 
 # Ruling 12. The plan's Section 10 working assumptions are confirmed: a
 # professional profile purpose, a mixed security and GRC readership, 1,500 to
 # 2,000 words, Medium first and then LinkedIn.
-WORDS = (1_500, 2_000)
+# Replaced on 4 October 2026 for the post by its ruling 2, about 1,200 to 1,500
+# words, read as words of prose outside code blocks and image syntax.
+WORDS = (1_200, 1_700)
 
 # Ruling 13. The draft is committed at docs/write-up.md, so the style, canary
 # and figure tests hold it. It carries no table, because Medium's story editor

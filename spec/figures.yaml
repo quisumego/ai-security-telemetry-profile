@@ -27,46 +27,25 @@ figures:
     render: "{n} fields"
   - id: otel-full
     quoted: "13 map fully"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'full')"}
     render: "{n} map fully"
   - id: otel-partial
     quoted: "6 map partially"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'partial')"}
     render: "{n} map partially"
   - id: otel-none
     quoted: "18 have no equivalent"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: schema/fields.yaml
     inputs: {fields: fields}
     compute: {n: "count(fields, 'otel', 'none')"}
     render: "{n} have no equivalent"
-  - id: required-count-post
-    quoted: "3 fields tier Required"
-    in: [docs/write-up.md]
-    source: schema/fields.yaml
-    inputs: {fields: fields}
-    compute: {n: "count(fields, 'tier', 'required')"}
-    render: "{n} fields tier Required"
-  - id: recommended-count-post
-    quoted: "0 Recommended"
-    in: [docs/write-up.md]
-    source: schema/fields.yaml
-    inputs: {fields: fields}
-    compute: {n: "count(fields, 'tier', 'recommended')"}
-    render: "{n} Recommended"
-  - id: optional-count
-    quoted: "10 Optional"
-    in: [docs/write-up.md]
-    source: schema/fields.yaml
-    inputs: {fields: fields}
-    compute: {n: "count(fields, 'tier', 'optional')"}
-    render: "{n} Optional"
   - id: not-required-count
     quoted: "24 Not required"
     in: [docs/write-up.md]
@@ -90,20 +69,13 @@ figures:
     inputs: {tested: verdict.security_only_tested, tiers: tiers}
     compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
     render: "only {a} of the {b} could be tested"
-  - id: tested-two-of-seven-post
-    quoted: "only two of my seven security-only fields"
-    in: [docs/write-up.md]
-    source: results/necessity.json
-    inputs: {tested: verdict.security_only_tested, tiers: tiers}
-    compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
-    render: "only {a} of my {b} security-only fields"
   - id: tested-two-of-seven-subtitle
-    quoted: "Only two of the seven fields I added for security"
+    quoted: "Only two of the seven security fields could be tested"
     in: [docs/write-up.md]
     source: results/necessity.json
     inputs: {tested: verdict.security_only_tested, tiers: tiers}
     compute: {a: "words(len(tested))", b: "words(count(tiers, 'security_only', True))"}
-    render: "Only {a} of the {b} fields I added for security"
+    render: "Only {a} of the {b} security fields could be tested"
   - id: untested-other-five
     quoted: "other five"
     in: [SPEC.md, docs/write-up.md]
@@ -120,19 +92,19 @@ figures:
     render: "{a} of the {b} tier Not required"
     check: "all(tiers[f]['tier'] == 'not_required' for f in weakened)"
   - id: weakened-five-of-seven-post
-    quoted: "Five of the seven security-only fields"
+    quoted: "Five of the seven security fields"
     in: [docs/write-up.md]
     source: results/necessity.json
     inputs: {weakened: verdict.weakened_limb.security_only_optional_or_not_required, tiers: tiers}
     compute: {a: "words(len(weakened)).capitalize()", b: "words(count(tiers, 'security_only', True))"}
-    render: "{a} of the {b} security-only fields"
+    render: "{a} of the {b} security fields"
   - id: classes-with-a-success
-    quoted: "five of the ten classes"
+    quoted: "only five of the ten attack types worked"
     in: [docs/write-up.md]
     source: results/necessity.json
     inputs: {classes: classes}
     compute: {n: "words(len([c for c in classes.values() if c['successful'] > 0]))", t: "words(len(classes))"}
-    render: "{n} of the {t} classes"
+    render: "only {n} of the {t} attack types worked"
 
   # ------------------------------------------------------ the corpora and sweep --
   - id: attack-trials
@@ -143,7 +115,7 @@ figures:
     render: "{n} attack trials"
   - id: benign-sessions
     quoted: "100 benign sessions"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: results/benign.json
     inputs: {n: total.sessions}
     render: "{n} benign sessions"
@@ -191,13 +163,13 @@ figures:
   # ------------------------------------------------------ attack and detection --
   - id: m2-success
     quoted: "32/100"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: results/m7b-crosscheck.json
     inputs: {s: total.m2_successes, n: total.m2_trials}
     render: "{s}/{n}"
   - id: local-success
     quoted: "18/91"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: results/m7b-crosscheck.json
     inputs: {s: total.local_successes, n: total.local_trials}
     render: "{s}/{n}"
@@ -209,7 +181,7 @@ figures:
     render: "the {n} attack trials"
   - id: a1-oracle-benign
     quoted: "1 of 100 benign sessions"
-    in: [SPEC.md, README.md, docs/write-up.md]
+    in: [SPEC.md, README.md]
     source: results/benign.json
     inputs: {fired: oracle_false_positives.a01.fired, of: oracle_false_positives.a01.of, sessions: oracle_false_positives.a01.sessions}
     render: "{fired} of {of} benign sessions"
@@ -228,28 +200,22 @@ figures:
     inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
     render: "none of the {trials} attack trials"
     check: "successes == 0"
-  - id: d-a01-benign
-    quoted: "0/100 benign sessions"
-    in: [docs/write-up.md]
-    source: results/baseline.json
-    inputs: {fp: per_detector.d-a01.false_positives, n: per_detector.d-a01.benign_total}
-    render: "{fp}/{n} benign sessions"
   - id: a6-goes-dark
     quoted: "falls from 10/10 to 0/10"
-    in: [README.md, docs/write-up.md]
+    in: [README.md]
     source: results/necessity.json
     inputs: {cell: "single['retrieval.document_ids'].cells.A6"}
     render: "falls from {cell[before]}/{cell[n]} to {cell[after]}/{cell[n]}"
     check: "cell['cell'] == 'X'"
   - id: a9-holdout
     quoted: "10 of 10 successful A9"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md]
     source: results/baseline.json
     inputs: {caught: "holdout_generalisation.A9.fired.d-a03.on_successful", of: "holdout_generalisation.A9.fired.d-a03.successful_total"}
     render: "{caught} of {of} successful A9"
   - id: d-a03-benign
     quoted: "0/100 benign false positives"
-    in: [SPEC.md, docs/write-up.md]
+    in: [SPEC.md]
     source: results/baseline.json
     inputs: {fp: per_detector.d-a03.false_positives, n: per_detector.d-a03.benign_total}
     render: "{fp}/{n} benign false positives"
@@ -286,7 +252,7 @@ figures:
     check: "all(s['security_only'] == {'absent': 7} for s in surfaces.values())"
   - id: vendor-surfaces
     quoted: "the 6 surfaces"
-    in: [README.md, docs/write-up.md]
+    in: [README.md]
     source: results/vendor-gap.json
     inputs: {surfaces: surfaces}
     compute: {n: "len(surfaces)"}
@@ -349,7 +315,7 @@ figures:
     check: "len({c['trials'] for c in classes.values()}) == 1"
   - id: trials-per-type-words
     quoted: "ten trials per attack type"
-    in: [README.md]
+    in: [README.md, docs/write-up.md]
     source: results/necessity.json
     inputs: {classes: classes}
     compute: {t: "words(sorted({c['trials'] for c in classes.values()})[0])"}
@@ -483,3 +449,142 @@ figures:
     inputs: {local: "per_class[class=A6].local", unmeasured: "per_class[class=A6].unmeasured"}
     render: "delivery was {local[delivery]}/{local[trials]} and success {local[successes]}/{local[trials]}"
     check: "unmeasured == True"
+
+  # ------------------------------------------------ the post, from 4 October 2026 --
+  - id: post-attacked-it
+    quoted: "attacked it 100 times"
+    in: [docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {n: total.m2_trials}
+    render: "attacked it {n} times"
+  - id: post-ordinary-sessions
+    quoted: "100 ordinary sessions"
+    in: [docs/write-up.md]
+    source: results/benign.json
+    inputs: {n: total.sessions}
+    render: "{n} ordinary sessions"
+  - id: post-a1-declined
+    quoted: "Ten times, it declined"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
+    compute: {w: "words(trials).capitalize()"}
+    render: "{w} times, it declined"
+    check: "successes == 0"
+  - id: post-a1-declined-alt
+    quoted: "declined in all 10 trials"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {successes: per_class.A1.successes, trials: per_class.A1.trials}
+    render: "declined in all {trials} trials"
+    check: "successes == 0"
+  - id: post-security-flagged
+    quoted: "I flagged seven"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {tiers: tiers}
+    compute: {n: "words(count(tiers, 'security_only', True))"}
+    render: "I flagged {n}"
+  - id: post-only-two-tested
+    quoted: "only two could be tested"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {tested: verdict.security_only_tested}
+    compute: {n: "words(len(tested))"}
+    render: "only {n} could be tested"
+  - id: post-tiers-in-words
+    quoted: "three came out Required, none Recommended, ten Optional and 24 Not required"
+    in: [docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {r: "words(count(fields, 'tier', 'required'))", c: "count(fields, 'tier', 'recommended')", o: "words(count(fields, 'tier', 'optional'))", n: "count(fields, 'tier', 'not_required')", cw: "'none' if c == 0 else words(c)"}
+    render: "{r} came out Required, {cw} Recommended, {o} Optional and {n} Not required"
+  - id: post-tiers-alt
+    quoted: "Required 3, two of them security fields; Recommended 0; Optional 10; Not required 24"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {tiers: tiers}
+    compute: {r: "count(tiers, 'tier', 'required')", s: "words(len([f for f in tiers if tiers[f]['security_only'] and tiers[f]['tier'] == 'required']))", c: "count(tiers, 'tier', 'recommended')", o: "count(tiers, 'tier', 'optional')", n: "count(tiers, 'tier', 'not_required')"}
+    render: "Required {r}, {s} of them security fields; Recommended {c}; Optional {o}; Not required {n}"
+  - id: post-seven-detectors
+    quoted: "the seven detectors"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {detectors: detectors}
+    compute: {n: "words(len(detectors))"}
+    render: "the {n} detectors"
+  - id: post-holdouts
+    quoted: "two attack types back as holdouts"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {per_class: per_class}
+    compute: {n: "words(count(per_class, 'holdout', True))"}
+    render: "{n} attack types back as holdouts"
+  - id: post-a6-caught
+    quoted: "worked in 10 of 10 trials and was caught in all 10"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {s: per_class.A6.successes, n: per_class.A6.trials, d: per_class.A6.detected, det: per_class.A6.detector}
+    render: "worked in {s} of {n} trials and was caught in all {d}"
+    check: "d == s and det == 'd-a06'"
+  - id: post-a6-goes-dark
+    quoted: "detection falls to 0 of 10"
+    in: [docs/write-up.md]
+    source: results/necessity.json
+    inputs: {cell: "single['retrieval.document_ids'].cells.A6"}
+    render: "detection falls to {cell[after]} of {cell[n]}"
+    check: "cell['cell'] == 'X' and cell['before'] == cell['n']"
+  - id: post-a1-oracle-benign
+    quoted: "1 of 100 ordinary sessions"
+    in: [docs/write-up.md]
+    source: results/benign.json
+    inputs: {fired: oracle_false_positives.a01.fired, of: oracle_false_positives.a01.of, sessions: oracle_false_positives.a01.sessions}
+    render: "{fired} of {of} ordinary sessions"
+    check: "sessions == ['m3-b100']"
+  - id: post-d-a01-benign
+    quoted: "no false alarm in 100 ordinary sessions"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {fp: per_detector.d-a01.false_positives, n: per_detector.d-a01.benign_total, reads: per_detector.d-a01.reads}
+    render: "no false alarm in {n} ordinary sessions"
+    check: "fp == 0 and 'action.egress_target' in reads"
+  - id: post-log-sources
+    quoted: "six log sources"
+    in: [docs/write-up.md]
+    source: results/vendor-gap.json
+    inputs: {surfaces: surfaces}
+    compute: {n: "words(len(surfaces))"}
+    render: "{n} log sources"
+    check: "all(s['security_only'] == {'absent': 7} for s in surfaces.values())"
+  - id: post-local-success
+    quoted: "18 of 91 trials succeeded, against 32 of 100"
+    in: [docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {ls: total.local_successes, lt: total.local_trials, ms: total.m2_successes, mt: total.m2_trials}
+    render: "{ls} of {lt} trials succeeded, against {ms} of {mt}"
+  - id: post-a1-local
+    quoted: "worked 9 times in 10"
+    in: [docs/write-up.md]
+    source: results/m7b-crosscheck.json
+    inputs: {s: "per_class[class=A1].local.successes", n: "per_class[class=A1].local.trials", m2: "per_class[class=A1].m2.successes"}
+    render: "worked {s} times in {n}"
+    check: "m2 == 0"
+  - id: post-a9-holdout
+    quoted: "10 of 10 successful trials"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {caught: "holdout_generalisation.A9.fired.d-a03.on_successful", of: "holdout_generalisation.A9.fired.d-a03.successful_total"}
+    render: "{caught} of {of} successful trials"
+  - id: post-d-a03-benign
+    quoted: "0 of 100 false alarms"
+    in: [docs/write-up.md]
+    source: results/baseline.json
+    inputs: {fp: per_detector.d-a03.false_positives, n: per_detector.d-a03.benign_total}
+    render: "{fp} of {n} false alarms"
+  - id: post-went-dark
+    quoted: "the three fields that went dark"
+    in: [docs/write-up.md]
+    source: schema/fields.yaml
+    inputs: {fields: fields}
+    compute: {n: "words(count(fields, 'tier', 'required'))"}
+    render: "the {n} fields that went dark"

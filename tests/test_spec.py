@@ -157,14 +157,15 @@ def test_the_write_up_leads_with_the_headline():
     title, subtitle = text.splitlines()[0], text.splitlines()[2]
     assert title == f"# {rulings.TITLE}"
     assert subtitle == f"*{rulings.SUBTITLE}*"
-    words = re.findall(r"\S+", ledger.normalised(text.split("\n", 3)[3]))
-    _lead_ok(" ".join(words[:200]))
-    assert "undertested" in " ".join(words[:150]) and "weakened" in " ".join(words[:150])
-    assert "baseline was known" in text
+    # Ruled 4 October 2026: the lead sits in the subtitle and the first section.
+    first_section = ledger.normalised(subtitle + " " + text.split("\n", 3)[3].split("\n## ", 1)[0])
+    _lead_ok(first_section)
+    assert "baseline was known" in first_section
 
 
 def test_the_write_up_fits_medium_and_the_ruled_length():
     text = _text(rulings.WRITE_UP)
     assert not [line for line in text.splitlines() if line.lstrip().startswith("|")]
     low, high = rulings.WORDS
-    assert low <= len(re.findall(r"[A-Za-z0-9][A-Za-z0-9'.:_/-]*", text)) <= high
+    prose = re.sub(r"\]\([^)]*\)", "]", re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", ledger.FENCED.sub(" ", text)))
+    assert low <= len(re.findall(r"[A-Za-z0-9][A-Za-z0-9'.:_/-]*", prose)) <= high
